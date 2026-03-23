@@ -1,4 +1,4 @@
-# شيل همي - Service Marketplace Platform
+#  يلا بلاي - Service Marketplace Platform
 
 A scalable, production-ready Next.js 15 application with TypeScript, TailwindCSS, shadcn/ui, and Prisma.
 

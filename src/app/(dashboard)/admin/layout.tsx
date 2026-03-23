@@ -20,7 +20,7 @@ export default async function AdminLayout({
   const userRoleRaw = String(session.user.role || "").toUpperCase();
   const isAdminUser = userRoleRaw === "ADMIN" || userRoleRaw === "SUPER_ADMIN";
   if (!isAdminUser) {
-    redirect("/login?error=AccessDenied");
+    redirect("/profile");
   }
 
   const userRole: Role = (userRoleRaw as Role) || Role.ADMIN;

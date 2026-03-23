@@ -1,67 +1,109 @@
-import { prisma } from "@/lib/db";
-import { computePopularityScore } from "@/lib/platform";
-import { revalidatePath } from "next/cache";
+"use client";
 
-async function createApp(formData: FormData) {
-  "use server";
-  const title = String(formData.get("title") || "").trim();
-  const slug = String(formData.get("slug") || "").trim();
-  const categoryId = String(formData.get("categoryId") || "").trim();
-  if (!title || !slug || !categoryId) return;
-  await prisma.app.create({
-    data: {
-      title,
-      slug,
-      categoryId,
-      popularityScore: computePopularityScore({ downloads: 0, views: 0, rating: 0 }),
+import { useEffect, useState } from "react";
+import { PageHeader } from "@/components/common/PageHeader";
+import { DataTable } from "@/components/common/data-table/DataTable";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { toast } from "sonner";
+import { TableSkeleton } from "@/components/common/Skeletons";
+import { AppItem, getAppColumns } from "./_components/AppTable";
+import { AppForm } from "./_components/AppForm";
+import { AppModel } from "./_components/AppModel";
+
+export default function AppsPage() {
+  const [apps, setApps] = useState<AppItem[]>([]);
+  const [categories, setCategories] = useState<Array<{ id: string; name: string }>>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [selectedApp, setSelectedApp] = useState<AppItem | null>(null);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const [appsRes, categoriesRes] = await Promise.all([
+        fetch("/api/admin/apps"),
+        fetch("/api/admin/categories"),
+      ]);
+      if (!appsRes.ok || !categoriesRes.ok) throw new Error("Failed to fetch data");
+      const appsData = await appsRes.json();
+      const categoriesData = await categoriesRes.json();
+      setApps(appsData);
+      setCategories(categoriesData.map((c: any) => ({ id: c.id, name: c.name })));
+    } catch (error: any) {
+      toast.error("حدث خطأ أثناء تحميل التطبيقات");
+      console.error(error);
+      setApps([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const columns = getAppColumns(
+    (app) => {
+      setSelectedApp(app);
+      setIsEditDialogOpen(true);
     },
-  });
-  revalidatePath("/admin/content/apps");
-}
+    (app) => {
+      setSelectedApp(app);
+      setIsDeleteDialogOpen(true);
+    }
+  );
 
-export default async function AdminAppsPage() {
-  const [apps, categories] = await Promise.all([
-    prisma.app.findMany({ include: { category: true }, orderBy: { createdAt: "desc" } }),
-    prisma.category.findMany({ where: { isActive: true }, orderBy: { name: "asc" } }),
-  ]);
+  if (isLoading) {
+    return (
+      <div className="space-y-6" dir="rtl">
+        <PageHeader title="إدارة التطبيقات" description="إضافة وتعديل وحذف التطبيقات" />
+        <TableSkeleton rows={6} />
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Manage Applications</h1>
-      <form action={createApp} className="grid gap-3 rounded-xl border p-4 md:grid-cols-4">
-        <input name="title" placeholder="Title" className="rounded border px-3 py-2" required />
-        <input name="slug" placeholder="slug" className="rounded border px-3 py-2" required />
-        <select name="categoryId" className="rounded border px-3 py-2" required>
-          {categories.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-        <button className="rounded bg-blue-600 px-4 py-2 font-semibold text-white">Create</button>
-      </form>
-      <div className="rounded-xl border">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-100 dark:bg-gray-800">
-            <tr>
-              <th className="p-3 text-right">Title</th>
-              <th className="p-3 text-right">Category</th>
-              <th className="p-3 text-right">Downloads</th>
-              <th className="p-3 text-right">Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            {apps.map((app) => (
-              <tr key={app.id} className="border-t">
-                <td className="p-3">{app.title}</td>
-                <td className="p-3">{app.category.name}</td>
-                <td className="p-3">{app.downloads}</td>
-                <td className="p-3">{app.rating}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="space-y-6" dir="rtl">
+      <PageHeader
+        title="إدارة التطبيقات"
+        description="إضافة وتعديل وحذف التطبيقات"
+        actions={
+          <Button onClick={() => setIsCreateDialogOpen(true)}>
+            <Plus className="ml-2 h-4 w-4" />
+            تطبيق جديد
+          </Button>
+        }
+      />
+
+      <DataTable
+        columns={columns}
+        data={apps}
+        searchKey="title"
+        searchPlaceholder="ابحث باسم التطبيق..."
+      />
+
+      <AppForm
+        open={isCreateDialogOpen}
+        onOpenChange={setIsCreateDialogOpen}
+        categories={categories}
+        onSuccess={fetchData}
+      />
+      <AppForm
+        open={isEditDialogOpen}
+        onOpenChange={setIsEditDialogOpen}
+        app={selectedApp}
+        categories={categories}
+        onSuccess={fetchData}
+      />
+      <AppModel
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+        app={selectedApp}
+        onSuccess={fetchData}
+      />
     </div>
   );
 }

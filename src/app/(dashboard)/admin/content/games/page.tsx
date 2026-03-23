@@ -1,67 +1,109 @@
-import { prisma } from "@/lib/db";
-import { computePopularityScore } from "@/lib/platform";
-import { revalidatePath } from "next/cache";
+"use client";
 
-async function createGame(formData: FormData) {
-  "use server";
-  const title = String(formData.get("title") || "").trim();
-  const slug = String(formData.get("slug") || "").trim();
-  const categoryId = String(formData.get("categoryId") || "").trim();
-  if (!title || !slug || !categoryId) return;
-  await prisma.game.create({
-    data: {
-      title,
-      slug,
-      categoryId,
-      popularityScore: computePopularityScore({ downloads: 0, views: 0, rating: 0 }),
+import { useEffect, useState } from "react";
+import { PageHeader } from "@/components/common/PageHeader";
+import { DataTable } from "@/components/common/data-table/DataTable";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { toast } from "sonner";
+import { TableSkeleton } from "@/components/common/Skeletons";
+import { GameItem, getGameColumns } from "./_components/GameTable";
+import { GameForm } from "./_components/GameForm";
+import { GameModel } from "./_components/GameModel";
+
+export default function GamesPage() {
+  const [games, setGames] = useState<GameItem[]>([]);
+  const [categories, setCategories] = useState<Array<{ id: string; name: string }>>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [selectedGame, setSelectedGame] = useState<GameItem | null>(null);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const [gamesRes, categoriesRes] = await Promise.all([
+        fetch("/api/admin/games"),
+        fetch("/api/admin/categories"),
+      ]);
+      if (!gamesRes.ok || !categoriesRes.ok) throw new Error("Failed to fetch data");
+      const gamesData = await gamesRes.json();
+      const categoriesData = await categoriesRes.json();
+      setGames(gamesData);
+      setCategories(categoriesData.map((c: any) => ({ id: c.id, name: c.name })));
+    } catch (error: any) {
+      toast.error("حدث خطأ أثناء تحميل الألعاب");
+      console.error(error);
+      setGames([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const columns = getGameColumns(
+    (game) => {
+      setSelectedGame(game);
+      setIsEditDialogOpen(true);
     },
-  });
-  revalidatePath("/admin/content/games");
-}
+    (game) => {
+      setSelectedGame(game);
+      setIsDeleteDialogOpen(true);
+    }
+  );
 
-export default async function AdminGamesPage() {
-  const [games, categories] = await Promise.all([
-    prisma.game.findMany({ include: { category: true }, orderBy: { createdAt: "desc" } }),
-    prisma.category.findMany({ where: { isActive: true }, orderBy: { name: "asc" } }),
-  ]);
+  if (isLoading) {
+    return (
+      <div className="space-y-6" dir="rtl">
+        <PageHeader title="إدارة الألعاب" description="إضافة وتعديل وحذف الألعاب" />
+        <TableSkeleton rows={6} />
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Manage Games</h1>
-      <form action={createGame} className="grid gap-3 rounded-xl border p-4 md:grid-cols-4">
-        <input name="title" placeholder="Title" className="rounded border px-3 py-2" required />
-        <input name="slug" placeholder="slug" className="rounded border px-3 py-2" required />
-        <select name="categoryId" className="rounded border px-3 py-2" required>
-          {categories.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-        <button className="rounded bg-blue-600 px-4 py-2 font-semibold text-white">Create</button>
-      </form>
-      <div className="rounded-xl border">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-100 dark:bg-gray-800">
-            <tr>
-              <th className="p-3 text-right">Title</th>
-              <th className="p-3 text-right">Category</th>
-              <th className="p-3 text-right">Downloads</th>
-              <th className="p-3 text-right">Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            {games.map((game) => (
-              <tr key={game.id} className="border-t">
-                <td className="p-3">{game.title}</td>
-                <td className="p-3">{game.category.name}</td>
-                <td className="p-3">{game.downloads}</td>
-                <td className="p-3">{game.rating}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="space-y-6" dir="rtl">
+      <PageHeader
+        title="إدارة الألعاب"
+        description="إضافة وتعديل وحذف الألعاب"
+        actions={
+          <Button onClick={() => setIsCreateDialogOpen(true)}>
+            <Plus className="ml-2 h-4 w-4" />
+            لعبة جديدة
+          </Button>
+        }
+      />
+
+      <DataTable
+        columns={columns}
+        data={games}
+        searchKey="title"
+        searchPlaceholder="ابحث باسم اللعبة..."
+      />
+
+      <GameForm
+        open={isCreateDialogOpen}
+        onOpenChange={setIsCreateDialogOpen}
+        categories={categories}
+        onSuccess={fetchData}
+      />
+      <GameForm
+        open={isEditDialogOpen}
+        onOpenChange={setIsEditDialogOpen}
+        game={selectedGame}
+        categories={categories}
+        onSuccess={fetchData}
+      />
+      <GameModel
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+        game={selectedGame}
+        onSuccess={fetchData}
+      />
     </div>
   );
 }

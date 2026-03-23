@@ -106,19 +106,19 @@ export default function AdminPage() {
     <div className="space-y-6" dir="rtl">
       <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <PageHeader title="Dashboard" description="إدارة كاملة للمحتوى والإعلانات والتحليلات" />
+          <PageHeader title="لوحة التحكم" description="إدارة كاملة للمحتوى والإعلانات والتحليلات" />
           <div className="flex flex-wrap gap-2">
             <Button asChild>
               <Link href="/admin/content/games/new">
                 <Plus className="ml-1 h-4 w-4" />
-                Add Game
+                إضافة لعبة
               </Link>
             </Button>
             <Button variant="outline" asChild>
-              <Link href="/admin/content/apps/new">Add App</Link>
+              <Link href="/admin/content/apps/new">إضافة تطبيق</Link>
             </Button>
             <Button variant="outline" asChild>
-              <Link href="/admin/content/ads/new">Create Ad</Link>
+              <Link href="/admin/content/ads/new">إنشاء إعلان</Link>
             </Button>
           </div>
         </div>
@@ -131,14 +131,14 @@ export default function AdminPage() {
         <StatCard title="عدد التحميلات" value={counts.totalDownloads.toLocaleString()} icon={Download} />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Card className="border-slate-200">
+      <div className="grid gap-4 lg:grid-cols-1">
+        <Card className="border-slate-200 bg-white">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base">
+            <CardTitle className="flex items-center gap-2 text-base text-black">
               <BarChart3 className="h-4 w-4 text-blue-600" />
-              Views Over Time
+              المشاهدات عبر الوقت
             </CardTitle>
-            <CardDescription>آخر 7 أيام</CardDescription>
+            <CardDescription className="text-black">آخر 7 أيام</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-7 gap-2">
@@ -150,83 +150,15 @@ export default function AdminPage() {
             </div>
           </CardContent>
         </Card>
-        <Card className="border-slate-200">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base">
-              <TrendingUp className="h-4 w-4 text-emerald-600" />
-              Downloads Over Time
-            </CardTitle>
-            <CardDescription>آخر 7 أيام</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-7 gap-2">
-              {[55, 60, 75, 79, 84, 90, 95].map((value, index) => (
-                <div key={index} className="flex h-28 items-end">
-                  <div className="w-full rounded-t-md bg-emerald-500/80" style={{ height: `${value}%` }} />
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="border-slate-200 lg:col-span-1">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base">
-              <Flame className="h-4 w-4 text-orange-500" />
-              Top 5 Games by Views
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {topGames.map((item) => (
-              <div key={item.id} className="flex items-center justify-between rounded-md border border-slate-200 px-3 py-2">
-                <span className="text-sm font-medium">{item.name}</span>
-                <Badge variant="outline">{item.views.toLocaleString()}</Badge>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
 
-        <Card className="border-slate-200 lg:col-span-1">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base">
-              <Flame className="h-4 w-4 text-fuchsia-500" />
-              Top 5 Apps by Downloads
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {topApps.map((item) => (
-              <div key={item.id} className="flex items-center justify-between rounded-md border border-slate-200 px-3 py-2">
-                <span className="text-sm font-medium">{item.name}</span>
-                <Badge variant="outline">{item.downloads.toLocaleString()}</Badge>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card className="border-slate-200 lg:col-span-1">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base">
-              <Megaphone className="h-4 w-4 text-amber-600" />
-              Ads Status
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
-              إعلانات نشطة: <span className="font-semibold">{counts.activeAds}</span>
-            </div>
-            <div className="rounded-md border border-slate-200 px-3 py-2 text-sm">النوع: image / script</div>
-            <div className="rounded-md border border-slate-200 px-3 py-2 text-sm">Position: header / sidebar / between items / footer</div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Card className="border-slate-200">
-        <CardHeader className="flex flex-row items-center justify-between">
+      <Card className="border-slate-200 bg-white">
+        <CardHeader className="flex flex-row items-center  justify-between">
           <div>
-            <CardTitle>Games & Apps Management</CardTitle>
-            <CardDescription>Bulk Actions + Quick Toggle (Featured / Trending)</CardDescription>
+            <CardTitle className="text-black">إدارة الألعاب والتطبيقات</CardTitle>
+            <CardDescription className="text-black">إجراءات جماعية + تبديل سريع (مميز / رائج)</CardDescription>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" onClick={bulkPublish} disabled={selectedIds.length === 0}>
@@ -246,25 +178,25 @@ export default function AdminPage() {
                 <div className="col-span-1">
                   <Checkbox checked={selectedIds.includes(item.id)} onCheckedChange={() => toggleSelect(item.id)} />
                 </div>
-                <div className="col-span-3 font-medium">{item.name}</div>
-                <div className="col-span-2 text-slate-600">{item.category}</div>
-                <div className="col-span-3 text-slate-600">
-                  V:{item.views.toLocaleString()} / D:{item.downloads.toLocaleString()} / R:{item.rating}
+                <div className="col-span-3 font-medium text-black">{item.name}</div>
+                <div className="col-span-2  text-black  ">{item.category}</div>
+                <div className="col-span-3  text-black">
+                  مشاهدات: {item.views.toLocaleString()} / تحميلات: {item.downloads.toLocaleString()} / تقييم: {item.rating}
                 </div>
                 <div className="col-span-1">
                   <Button variant={item.isFeatured ? "default" : "outline"} size="sm" onClick={() => toggleFlag(item.id, "isFeatured")}>
-                    Featured
+                    مميز
                   </Button>
                 </div>
                 <div className="col-span-1">
                   <Button variant={item.isTrending ? "default" : "outline"} size="sm" onClick={() => toggleFlag(item.id, "isTrending")}>
-                    Trending
+                    رائج
                   </Button>
                 </div>
                 <div className="col-span-1 flex justify-end">
-                  <Button variant="ghost" size="sm" asChild>
+                  <Button variant="default" size="sm" asChild>
                     <Link href={item.type === "game" ? `/admin/content/games/${item.id}` : `/admin/content/apps/${item.id}`}>
-                      Edit
+                      تعديل
                     </Link>
                   </Button>
                 </div>
@@ -274,17 +206,7 @@ export default function AdminPage() {
         </CardContent>
       </Card>
 
-      <Card className="border-slate-200">
-        <CardHeader>
-          <CardTitle>Features جاهزة للربط</CardTitle>
-        </CardHeader>
-        <CardContent className="grid gap-2 text-sm text-slate-700 md:grid-cols-2">
-          <div className="rounded-md border border-slate-200 px-3 py-2">Quick Action: Add Game</div>
-          <div className="rounded-md border border-slate-200 px-3 py-2">Drag & Drop images (واجهة جاهزة للربط)</div>
-          <div className="rounded-md border border-slate-200 px-3 py-2">Bulk Delete / Bulk Publish</div>
-          <div className="rounded-md border border-slate-200 px-3 py-2">Toggle سريع: isFeatured / isTrending</div>
-        </CardContent>
-      </Card>
+
     </div>
   );
 }

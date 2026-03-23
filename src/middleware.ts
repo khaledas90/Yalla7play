@@ -54,6 +54,16 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  if (pathname.startsWith("/profile")) {
+    if (!token) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+    const role = token.role as Role;
+    if (!canAccessRoute(role, pathname)) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+  }
+
   return NextResponse.next();
 }
 

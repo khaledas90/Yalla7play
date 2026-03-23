@@ -162,7 +162,7 @@ export function HeaderClient() {
             className="flex cursor-pointer items-center gap-3 text-right"
           >
             <div className="relative w-26 h-26 flex items-center justify-center ">
-              <Image src={logo} alt="شيل همي" width={100} height={100} priority />
+              <Image src={logo} alt="يلا بلاي" width={100} height={100} priority />
             </div>
 
 

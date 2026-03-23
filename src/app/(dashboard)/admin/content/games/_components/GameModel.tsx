@@ -1,40 +1,32 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { ConfirmDialog } from "@/components/common/ConfirmDialog";
-import { Category } from "./CategoryTable";
 import { toast } from "sonner";
+import { GameItem } from "./GameTable";
 
-interface CategoryModelProps {
+interface GameModelProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  category: Category | null;
+  game: GameItem | null;
   onSuccess: () => void;
 }
 
-export function CategoryModel({
-  open,
-  onOpenChange,
-  category,
-  onSuccess,
-}: CategoryModelProps) {
+export function GameModel({ open, onOpenChange, game, onSuccess }: GameModelProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async () => {
-    if (!category) return;
-
+    if (!game) return;
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/admin/categories/${category.id}`, {
+      const response = await fetch(`/api/admin/games/${game.id}`, {
         method: "DELETE",
       });
-
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || "حدث خطأ");
       }
-
-      toast.success("تم حذف الفئة بنجاح");
+      toast.success("تم حذف اللعبة بنجاح");
       onOpenChange(false);
       onSuccess();
     } catch (error: any) {
@@ -44,18 +36,14 @@ export function CategoryModel({
     }
   };
 
-  if (!category) return null;
+  if (!game) return null;
 
   return (
     <ConfirmDialog
       open={open}
       onOpenChange={onOpenChange}
-      title="حذف الفئة"
-      description={`هل أنت متأكد من حذف الفئة "${category.name}"؟ ${
-        category.servicesCount > 0
-          ? `تحذير: هذه الفئة تحتوي على ${category.servicesCount} خدمة.`
-          : ""
-      }`}
+      title="حذف اللعبة"
+      description={`هل أنت متأكد من حذف اللعبة "${game.title}"؟`}
       confirmLabel="حذف"
       onConfirm={handleDelete}
       variant="destructive"

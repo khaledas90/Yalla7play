@@ -1,4 +1,4 @@
-import { PrismaClient, Role, OrderStatus } from "@prisma/client";
+import { PrismaClient, Role } from "@prisma/client";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import bcrypt from "bcryptjs";
 import { config } from "dotenv";
@@ -49,18 +49,14 @@ async function main() {
       password: adminPassword,
       name: "مدير النظام",
       role: Role.ADMIN,
-      phone: "7 8185 8647",
-      phoneCountryCode: "+962",
-      defaultProfitRate: null,
-      isActive: true,
     },
   });
   console.log("✅ Admin user created:", admin.email);
   console.log("   Email: admin@sheelhammy.com");
   console.log("   Password: Amer@@sheelhammy2002");
-  
+
   console.log("🎉 Seed completed successfully!");
-  
+
 }
 
 main()

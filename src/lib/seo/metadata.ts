@@ -20,22 +20,22 @@ const getSiteUrl = () => {
 };
 
 const getDefaultImage = () => {
- 
+
   return `${getSiteUrl()}/logo.svg`;
 };
 
 export async function generateSEOMetadata(config: SEOConfig = {}): Promise<Metadata> {
   const settings = await getSettings();
   const siteUrl = getSiteUrl();
-  
-  const title = config.title 
-    ? `${config.title} | ${settings.platformName || "شيل همي"}`
-    : settings.siteTitle || settings.platformName || "شيل همي";
-  
-  const description = config.description || settings.siteDescription || 
-    "شيل همّي منصة عربية متخصصة في الخدمات الأكاديمية والطلابية، نقدم حل الأسايمنت، إعداد الأبحاث، مشاريع التخرج، والتدقيق اللغوي لكافة التخصصات في الوطن العربي بجودة عالية وسرية تامة";
-  
-  const keywords = config.keywords || 
+
+  const title = config.title
+    ? `${config.title} | ${settings.platformName || "يلا بلاي"}`
+    : settings.siteTitle || settings.platformName || "يلا بلاي";
+
+  const description = config.description || settings.siteDescription ||
+    "يلا بلاي منصة عربية متخصصة في الخدمات الأكاديمية والطلابية، نقدم حل الأسايمنت، إعداد الأبحاث، مشاريع التخرج، والتدقيق اللغوي لكافة التخصصات في الوطن العربي بجودة عالية وسرية تامة";
+
+  const keywords = config.keywords ||
     (settings.siteKeywords ? settings.siteKeywords.split(",").map(k => k.trim()) : [
       "خدمات أكاديمية",
       "مساعدة طلاب",
@@ -68,17 +68,17 @@ export async function generateSEOMetadata(config: SEOConfig = {}): Promise<Metad
       "Thesis Support",
       "Academic Editing"
     ]);
-  
+
   const image = config.image || getDefaultImage();
   const url = config.url || siteUrl;
-  
+
   const metadata: Metadata = {
     title,
     description,
     keywords: keywords.join(", "),
-    authors: [{ name: settings.platformName || "شيل همي" }],
-    creator: settings.platformName || "شيل همي",
-    publisher: settings.platformName || "شيل همي",
+    authors: [{ name: settings.platformName || "يلا بلاي" }],
+    creator: settings.platformName || "يلا بلاي",
+    publisher: settings.platformName || "يلا بلاي",
     robots: {
       index: !config.noindex,
       follow: !config.nofollow,
@@ -96,7 +96,7 @@ export async function generateSEOMetadata(config: SEOConfig = {}): Promise<Metad
       url,
       title,
       description,
-      siteName: settings.platformName || "شيل همي",
+      siteName: settings.platformName || "يلا بلاي",
       images: [
         {
           url: image,
@@ -119,8 +119,8 @@ export async function generateSEOMetadata(config: SEOConfig = {}): Promise<Metad
           alt: title,
         },
       ],
-      creator: "@sheelhammy",
-      site: "@sheelhammy",
+      creator: "@yallablay",
+      site: "@yallablay",
     },
     icons: {
       icon: "/logo.svg",
@@ -136,7 +136,7 @@ export async function generateSEOMetadata(config: SEOConfig = {}): Promise<Metad
       yahoo: process.env.YAHOO_VERIFICATION,
     },
   };
-  
+
   return metadata;
 }
 

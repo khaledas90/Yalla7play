@@ -4,17 +4,12 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 type PublicSettings = {
   platformName: string;
-  platformDescription: string;
-  currency: string;
-  workingHoursStart: string;
-  workingHoursEnd: string;
+  logo: string | null;
+  primaryColor: string | null;
+  secondaryColor: string | null;
   siteTitle: string | null;
   siteDescription: string | null;
-  siteKeywords: string | null;
-  contactEmail: string | null;
-  contactPhone: string | null;
-  defaultFreeRevisions: number;
-  cancellationPolicy: string | null;
+  adsEnabled: boolean;
 };
 
 type SettingsContextType = {
@@ -41,18 +36,13 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       console.error("Error fetching settings:", error);
       // Use default settings on error
       setSettings({
-        platformName: "شيل همي",
-        platformDescription: "",
-        currency: "JOD",
-        workingHoursStart: "09:00",
-        workingHoursEnd: "17:00",
+        platformName: "يلا بلاي",
+        logo: null,
+        primaryColor: null,
+        secondaryColor: null,
         siteTitle: null,
         siteDescription: null,
-        siteKeywords: null,
-        contactEmail: null,
-        contactPhone: null,
-        defaultFreeRevisions: 2,
-        cancellationPolicy: null,
+        adsEnabled: true,
       });
     } finally {
       setIsLoading(false);

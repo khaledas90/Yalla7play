@@ -16,21 +16,22 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Eye, EyeOff, Loader2, Mail, Lock, LogIn } from "lucide-react";
 import { toast } from "sonner";
-import { Role } from "@prisma/client";
 
 interface SignInFormData {
   email: string;
   password: string;
 }
 
-function getRedirectPath(role: Role | undefined): string {
-  switch (role) {
+function getRedirectPath(role: string | undefined): string {
+  switch (String(role || "").toUpperCase()) {
+    case "USER":
+      return "/profile";
     case "SUPER_ADMIN":
       return "/admin";
     case "ADMIN":
       return "/admin";
     default:
-      return "/admin";
+      return "/profile";
   }
 
 }
@@ -44,10 +45,10 @@ export default function LoginForm() {
   const callbackUrl = useMemo(() => {
     const url = searchParams.get("callbackUrl");
     if (!url) {
-      return "/admin";
+      return "";
     }
 
-    return url.startsWith("/") ? url : "/admin";
+    return url.startsWith("/") ? url : "";
   }, [searchParams]);
 
   const {
@@ -91,10 +92,10 @@ export default function LoginForm() {
         toast.success("تم تسجيل الدخول بنجاح", {
           description: "مرحباً بك في النظام",
         });
-        if (result.url) {
+        if (callbackUrl && result.url) {
           router.replace(result.url);
         } else {
-          router.replace(callbackUrl || "/admin");
+          router.refresh();
         }
         router.refresh();
       }

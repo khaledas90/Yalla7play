@@ -9,31 +9,12 @@ import { toast } from "sonner";
 type Settings = {
   id: string;
   platformName: string;
-  platformDescription: string;
-  currency: string;
-  workingHoursStart: string;
-  workingHoursEnd: string;
-  defaultFreeRevisions: number;
-  cancellationPolicy: string | null;
-  quoteExpiryHours: number;
-  defaultEmployeeProfitRate: number;
-  autoAssignOrders: boolean;
-  maxOrdersPerEmployee: number;
-  enable2FA: boolean;
-  enableAuditLogs: boolean;
-  rateLimit: number;
-  deadlineReminderHours: number;
-  emailNotifications: boolean;
-  smsNotifications: boolean;
-  whatsappNotifications: boolean;
-  smsApiKey: string | null;
-  whatsappApiKey: string | null;
+  logo: string | null;
+  primaryColor: string | null;
+  secondaryColor: string | null;
   siteTitle: string | null;
   siteDescription: string | null;
-  siteKeywords: string | null;
-  contactEmail: string | null;
-  contactPhone: string | null;
-  platformFee: number;
+  adsEnabled: boolean;
 };
 
 export default function AdminSettingsPage() {
@@ -68,7 +49,7 @@ export default function AdminSettingsPage() {
       <div className="space-y-6" dir="rtl">
         <PageHeader
           title="الإعدادات"
-          description="إعدادات المنصة العامة والنظام"
+          description="الإعدادات الأساسية للموقع"
         />
         <TableSkeleton rows={5} />
       </div>
@@ -79,7 +60,7 @@ export default function AdminSettingsPage() {
     <div className="space-y-6" dir="rtl">
       <PageHeader
         title="الإعدادات"
-        description="إعدادات المنصة العامة والنظام"
+        description="الإعدادات الأساسية للموقع"
       />
       <SettingsForm settings={settings} onSuccess={handleSuccess} />
     </div>

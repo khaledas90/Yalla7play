@@ -37,7 +37,7 @@ export async function generateMetadata({
 
     return generateSEOMetadata({
       title: post.seoTitle || post.title,
-      description: post.seoDescription || post.excerpt || "مقال من مدونة شيل همي",
+      description: post.seoDescription || post.excerpt || "مقال من مدونة يلا بلاي",
       keywords: [
         "مقال",
         "مدونة",

@@ -76,12 +76,17 @@ export function FileUploader({
           body: formData,
         });
 
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.error || "فشل رفع الملف");
+        const contentType = response.headers.get("content-type") || "";
+        if (!contentType.includes("application/json")) {
+          throw new Error("استجابة غير متوقعة من خادم الرفع");
         }
 
         const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "فشل رفع الملف");
+        }
+
         uploadedUrls.push(data.url);
       }
 
@@ -92,7 +97,7 @@ export function FileUploader({
       } else {
         onChange(uploadedUrls[0] || null);
       }
-      
+
       setUploadError(null);
     } catch (error: any) {
       setUploadError(error.message || "حدث خطأ أثناء رفع الملف");

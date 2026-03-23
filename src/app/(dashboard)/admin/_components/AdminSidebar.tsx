@@ -9,7 +9,6 @@ import { useState } from "react";
 import { Role } from "@prisma/client";
 import {
   AppWindow,
-  BarChart3,
   Book,
   FolderTree,
   LayoutDashboard,
@@ -30,15 +29,15 @@ type NavItem = {
 };
 
 const DASHBOARD_NAV_ITEMS: NavItem[] = [
-  { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { href: "/admin/content/games", label: "Games", icon: Gamepad2 },
-  { href: "/admin/content/apps", label: "Apps", icon: AppWindow },
-  { href: "/admin/content/categories", label: "Categories", icon: FolderTree },
-  { href: "/admin/content/blog", label: "Blog", icon: Book },
-  { href: "/admin/content/ads", label: "Ads", icon: Megaphone },
-  { href: "/admin/settings", label: "Settings", icon: Settings },
-  { href: "/admin/employees", label: "Users", icon: Users },
-  { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
+  { href: "/admin", label: "لوحة التحكم", icon: LayoutDashboard, exact: true },
+  { href: "/admin/users", label: "المستخدمون", icon: Users },
+  { href: "/admin/content/games", label: "الألعاب", icon: Gamepad2 },
+  { href: "/admin/content/apps", label: "التطبيقات", icon: AppWindow },
+  { href: "/admin/content/categories", label: "التصنيفات", icon: FolderTree },
+  { href: "/admin/blog", label: "المدونة", icon: Book },
+  { href: "/admin/content/ads", label: "الإعلانات", icon: Megaphone },
+  { href: "/admin/settings", label: "الإعدادات", icon: Settings },
+
 ];
 
 interface AdminSidebarProps {

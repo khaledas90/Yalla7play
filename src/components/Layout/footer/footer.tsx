@@ -115,7 +115,7 @@ export function Footer() {
           {/* Brand */}
           <AnimatedContent distance={18} duration={0.65} className="sm:col-span-2 lg:col-span-4">
             <Link href="/" className="flex items-center gap-3">
-              <Image src={logo} alt="شيل همي" width={44} height={44} />
+              <Image src={logo} alt="يلا بلاي" width={44} height={44} />
               <span className="text-xl font-extrabold">
                 Yalla<span style={{ color: BRAND }}>7Play</span>
               </span>
