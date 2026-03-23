@@ -1,0 +1,146 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+}
+
+enum AdType {
+  IMAGE
+  SCRIPT
+}
+
+enum AdPosition {
+  HEADER
+  SIDEBAR
+  BETWEEN_ITEMS
+  FOOTER
+  POPUP
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(ADMIN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  icon      String?
+  createdAt DateTime @default(now())
+
+  games Game[]
+  apps  App[]
+}
+
+model Game {
+  id            String   @id @default(uuid())
+  title         String
+  slug          String   @unique
+  description   String   @db.Text
+  thumbnail     String
+  gallery       Json?
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id])
+  views         Int      @default(0)
+  downloads     Int      @default(0)
+  rating        Float    @default(0)
+  ratingCount   Int      @default(0)
+  isFeatured    Boolean  @default(false)
+  isTrending    Boolean  @default(false)
+  seoTitle      String?
+  seoDescription String?
+  published     Boolean  @default(true)
+  deletedAt     DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([views])
+  @@index([downloads])
+}
+
+model App {
+  id            String   @id @default(uuid())
+  title         String
+  slug          String   @unique
+  description   String   @db.Text
+  thumbnail     String
+  gallery       Json?
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id])
+  views         Int      @default(0)
+  downloads     Int      @default(0)
+  rating        Float    @default(0)
+  ratingCount   Int      @default(0)
+  isFeatured    Boolean  @default(false)
+  isTrending    Boolean  @default(false)
+  seoTitle      String?
+  seoDescription String?
+  published     Boolean  @default(true)
+  deletedAt     DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([views])
+  @@index([downloads])
+}
+
+model BlogPost {
+  id             String   @id @default(uuid())
+  title          String
+  slug           String   @unique
+  content        String   @db.LongText
+  thumbnail      String?
+  seoTitle       String?
+  seoDescription String?
+  published      Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Ad {
+  id        String     @id @default(uuid())
+  title     String
+  type      AdType
+  position  AdPosition
+  imageUrl  String?
+  link      String?
+  script    String?    @db.LongText
+  isActive  Boolean    @default(true)
+  frequency Int?
+  startAt   DateTime?
+  endAt     DateTime?
+  createdAt DateTime   @default(now())
+}
+
+model Setting {
+  id             String   @id @default(uuid())
+  siteName       String
+  logo           String?
+  primaryColor   String?
+  secondaryColor String?
+  seoTitle       String?
+  seoDescription String?
+  adsEnabled     Boolean  @default(true)
+  updatedAt      DateTime @updatedAt
+}
+
+model ViewLog {
+  id        String   @id @default(uuid())
+  entityId  String
+  type      String
+  ip        String?
+  createdAt DateTime @default(now())
+}
