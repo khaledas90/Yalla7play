@@ -15,12 +15,12 @@ interface StatCardProps {
 }
 
 const variantStyles = {
-  default: "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400",
-  primary: "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400",
-  success: "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400",
-  warning: "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400",
-  destructive: "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400",
-  info: "bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400",
+  default: "bg-blue-100 text-blue-600",
+  primary: "bg-blue-100 text-blue-600",
+  success: "bg-green-100 text-green-600",
+  warning: "bg-yellow-100 text-yellow-600",
+  destructive: "bg-red-100 text-red-600",
+  info: "bg-cyan-100 text-cyan-600",
 };
 
 export function StatCard({
@@ -34,16 +34,16 @@ export function StatCard({
   return (
     <div
       className={cn(
-        "rounded-lg border bg-white dark:bg-gray-800 p-6 shadow-sm",
+        "rounded-lg border bg-white p-6 shadow-sm",
         className
       )}
     >
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+          <p className="text-sm font-medium text-gray-600">
             {title}
           </p>
-          <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
+          <p className="mt-2 text-2xl font-bold text-gray-900">
             {value}
           </p>
           {trend && (
@@ -51,8 +51,8 @@ export function StatCard({
               className={cn(
                 "mt-1 text-xs",
                 trend.isPositive
-                  ? "text-green-600 dark:text-green-400"
-                  : "text-red-600 dark:text-red-400"
+                  ? "text-green-600"
+                  : "text-red-600"
               )}
             >
               {trend.isPositive ? "↑" : "↓"} {Math.abs(trend.value)}%

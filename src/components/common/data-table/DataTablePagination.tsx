@@ -19,7 +19,7 @@ interface DataTablePaginationProps<TData> {
 export function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) {
   return (
     <div className="flex items-center justify-between px-2">
-      <div className="flex-1 text-sm text-gray-600 dark:text-gray-400">
+      <div className="flex-1 text-sm text-gray-600">
         {table.getFilteredSelectedRowModel().rows.length} من{" "}
         {table.getFilteredRowModel().rows.length} صف محدد.
       </div>

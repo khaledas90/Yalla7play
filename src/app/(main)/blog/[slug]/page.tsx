@@ -307,7 +307,7 @@ export default function BlogPostPage() {
               prose-table:w-full prose-table:my-6 prose-table:border-collapse
               prose-th:border prose-th:border-gray-300 prose-th:bg-gray-100 prose-th:px-4 prose-th:py-2 prose-th:text-right
               prose-td:border prose-td:border-gray-300 prose-td:px-4 prose-td:py-2
-              dark:prose-invert dark:prose-headings:text-gray-100 dark:prose-p:text-gray-300 dark:prose-strong:text-gray-100 dark:prose-li:text-gray-300 dark:prose-blockquote:text-gray-200 dark:prose-blockquote:bg-gray-800"
+             "
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
 

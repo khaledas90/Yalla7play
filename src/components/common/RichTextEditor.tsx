@@ -59,7 +59,7 @@ export function RichTextEditor({
       StarterKit.configure({
         codeBlock: {
           HTMLAttributes: {
-            class: "bg-gray-100 dark:bg-gray-800 rounded p-2 font-mono text-sm",
+            class: "bg-gray-100 rounded p-2 font-mono text-sm",
           },
         },
       }),

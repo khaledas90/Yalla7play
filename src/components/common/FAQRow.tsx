@@ -15,8 +15,8 @@ export default function FAQRow({
       <div className="group">
         <div
           className={`relative overflow-hidden rounded-xl transition-all duration-300 ${isOpen
-            ? "bg-white dark:bg-gray-800 shadow-xl ring-2 ring-[#0056d2]/15"
-            : "bg-white/70 dark:bg-gray-800/60 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 hover:shadow-md"
+            ? "bg-white shadow-xl ring-2 ring-[#0056d2]/15"
+            : "bg-white/70 backdrop-blur-sm hover:bg-white hover:shadow-md"
             }`}
         >
           <div
@@ -42,7 +42,7 @@ export default function FAQRow({
             <span
               className={`flex-1 text-sm sm:text-base font-semibold transition-colors duration-200 ${isOpen
                 ? "text-[#0056d2]"
-                : "text-gray-800 dark:text-gray-200 group-hover:text-[#0056d2]"
+                : "text-gray-800 group-hover:text-[#0056d2]"
                 }`}
             >
               {item.q}
@@ -70,7 +70,7 @@ export default function FAQRow({
           >
             <div className="overflow-hidden">
               <div className="px-5 pb-4 pr-16">
-                <div className="pt-2 text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+                <div className="pt-2 text-sm sm:text-base text-gray-600 leading-relaxed">
                   {item.a}
                 </div>
               </div>

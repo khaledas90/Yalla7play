@@ -7,12 +7,12 @@ import Image from "next/image";
 import logo from "@/assets/logo.png";
 
 const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Games", href: "/games" },
-  { name: "Applications", href: "/applications" },
-  { name: "Blog", href: "/blog" },
-  { name: "About", href: "/about-us" },
-  { name: "Contact", href: "/contact-us" },
+  { name: "الرئيسية", href: "/" },
+  { name: "الألعاب", href: "/games" },
+  { name: "التطبيقات", href: "/applications" },
+  { name: "المدونة", href: "/blog" },
+  { name: "من نحن", href: "/about-us" },
+  { name: "اتصل بنا", href: "/contact-us" },
 ];
 
 const BRAND = "#3B82F6";
@@ -136,7 +136,7 @@ export function HeaderClient() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-        ? "bg-white/70 dark:bg-gray-900/70 backdrop-blur-lg shadow-sm border-b border-gray-100 dark:border-gray-800"
+        ? "bg-white/70 backdrop-blur-lg shadow-sm border-b border-gray-100"
         : "bg-transparent backdrop-blur-sm"
         }`}
     >
@@ -178,7 +178,7 @@ export function HeaderClient() {
                   disabled={isNavigating}
                   className={`relative cursor-pointer px-4 py-2 rounded-xl text-md font-medium transition ${active
                     ? "bg-[#EEF5FF]"
-                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    : "text-gray-700 hover:bg-gray-50"
                     } ${isNavigating ? "opacity-70 cursor-not-allowed" : ""}`}
                   style={{ color: active ? BRAND : undefined }}
                 >
@@ -198,8 +198,8 @@ export function HeaderClient() {
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search games & apps..."
-              className="w-56 rounded-xl border border-gray-200 bg-white/80 px-3 py-2 text-sm text-gray-800 outline-none ring-blue-400/30 focus:ring dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
+              placeholder="ابحث عن ألعاب وتطبيقات..."
+              className="w-56 rounded-xl border border-gray-200 bg-white/80 px-3 py-2 text-sm text-right text-gray-800 outline-none ring-blue-400/30 focus:ring"
             />
           </div>
 
@@ -224,7 +224,7 @@ export function HeaderClient() {
         {/* MOBILE MENU */}
         {isMobileMenuOpen && (
           <div className="lg:hidden pb-6 animate-in fade-in-0 zoom-in-95 slide-in-from-top-2 duration-200">
-            <div className="flex flex-col gap-2 bg-white dark:bg-gray-900 rounded-2xl p-4 shadow-xl border border-gray-100 dark:border-gray-800 mt-4">
+            <div className="flex flex-col gap-2 bg-white rounded-2xl p-4 shadow-xl border border-gray-100 mt-4">
               {navigation.map((item) => {
                 const active = isActive(item.href);
                 return (
@@ -234,7 +234,7 @@ export function HeaderClient() {
                     disabled={isNavigating}
                     className={`text-right cursor-pointer px-4 py-3 rounded-xl text-sm font-medium transition ${active
                       ? "bg-[#EEF5FF]"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+                      : "text-gray-700 hover:bg-gray-50"
                       } ${isNavigating ? "opacity-70 cursor-not-allowed" : ""}`}
                     style={{ color: active ? BRAND : undefined }}
                   >
@@ -244,7 +244,7 @@ export function HeaderClient() {
               })}
 
               {/* MOBILE WHATSAPP (ONLY INSIDE MENU) */}
-              <div className="border-t border-gray-200 dark:border-gray-800 pt-3 mt-3">
+              <div className="border-t border-gray-200 pt-3 mt-3">
                 <a
                   href={WHATSAPP_LINK}
                   target="_blank"

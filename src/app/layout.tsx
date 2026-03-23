@@ -6,7 +6,6 @@ import { Toaster } from "sonner";
 import { BackToTop } from "@/components/common/back-to-top";
 import { ConditionalLayout } from "@/components/Layout/conditional-layout";
 import { SettingsProvider } from "@/contexts/SettingsContext";
-import { generateSEOMetadata } from "@/lib/seo/metadata";
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import ConditionalAnimation from "@/components/ConditionalAnimation";

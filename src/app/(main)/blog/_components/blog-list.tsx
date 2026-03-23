@@ -82,24 +82,24 @@ export function BlogList() {
             {skeletonCards.map((i) => (
               <div
                 key={i}
-                className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col h-full"
+                className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col h-full"
               >
-                <div className="w-full aspect-[16/10] bg-gray-200 dark:bg-gray-800 animate-pulse" />
+                <div className="w-full aspect-[16/10] bg-gray-200 animate-pulse" />
                 <div className="p-5 flex flex-col flex-1 min-h-[280px]">
-                  <div className="h-5 w-3/4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse mb-3" />
-                  <div className="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded animate-pulse mb-2" />
-                  <div className="h-4 w-5/6 bg-gray-200 dark:bg-gray-700 rounded animate-pulse mb-4" />
+                  <div className="h-5 w-3/4 bg-gray-200 rounded animate-pulse mb-3" />
+                  <div className="h-4 w-full bg-gray-200 rounded animate-pulse mb-2" />
+                  <div className="h-4 w-5/6 bg-gray-200 rounded animate-pulse mb-4" />
                   <div className="flex gap-1.5 mb-4">
-                    <div className="h-5 w-16 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse" />
-                    <div className="h-5 w-20 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse" />
+                    <div className="h-5 w-16 bg-gray-200 rounded-full animate-pulse" />
+                    <div className="h-5 w-20 bg-gray-200 rounded-full animate-pulse" />
                   </div>
-                  <div className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <div className="mt-auto pt-4 border-t border-gray-200">
                     <div className="flex items-center justify-between">
                       <div className="flex flex-col gap-1.5">
-                        <div className="h-3 w-24 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
-                        <div className="h-3 w-20 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+                        <div className="h-3 w-24 bg-gray-200 rounded animate-pulse" />
+                        <div className="h-3 w-20 bg-gray-200 rounded animate-pulse" />
                       </div>
-                      <div className="h-8 w-16 bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse" />
+                      <div className="h-8 w-16 bg-gray-200 rounded-xl animate-pulse" />
                     </div>
                   </div>
                 </div>
@@ -137,9 +137,9 @@ export function BlogList() {
               <Link
                 key={post.id}
                 href={`/blog/${post.slug}`}
-                className="group relative bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full hover:-translate-y-1"
+                className="group relative bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full hover:-translate-y-1"
               > 
-                <div className="relative w-full aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-800">
+                <div className="relative w-full aspect-[16/10] overflow-hidden bg-gray-100">
                   {post.image ? (
                     <Image
                       src={post.image}
@@ -150,11 +150,11 @@ export function BlogList() {
                       priority={false}
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
-                      <div className="w-20 h-20 rounded-2xl bg-white/80 dark:bg-gray-900/80 border-2 border-gray-300 dark:border-gray-700 flex items-center justify-center shadow-lg">
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                      <div className="w-20 h-20 rounded-2xl bg-white/80 border-2 border-gray-300 flex items-center justify-center shadow-lg">
                         <Icon
                           icon="solar:document-text-bold"
-                          className="w-10 h-10 text-gray-500 dark:text-gray-400"
+                          className="w-10 h-10 text-gray-500"
                         />
                       </div>
                     </div>
@@ -186,14 +186,14 @@ export function BlogList() {
                 <div className="flex flex-col flex-1 p-5 min-h-[280px]">
                   {/* Title */}
                   <div className="mb-3">
-                    <h3 className="text-gray-900 dark:text-white text-lg font-extrabold leading-tight line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    <h3 className="text-gray-900 text-lg font-extrabold leading-tight line-clamp-2 group-hover:text-blue-600 transition-colors">
                       {post.title}
                     </h3>
                   </div>
 
                   {/* Excerpt */}
                   {post.excerpt && (
-                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-3 mb-4 flex-1">
+                    <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-1">
                       {post.excerpt}
                     </p>
                   )}
@@ -205,13 +205,13 @@ export function BlogList() {
                         <Badge
                           key={t}
                           variant="outline"
-                          className="rounded-full text-xs px-2 py-0.5 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300"
+                          className="rounded-full text-xs px-2 py-0.5 border-gray-300 text-gray-700"
                         >
                           {t}
                         </Badge>
                       ))}
                       {post.tags.length > 3 && (
-                        <span className="text-xs text-gray-500 dark:text-gray-400 px-2 py-0.5">
+                        <span className="text-xs text-gray-500 px-2 py-0.5">
                           +{post.tags.length - 3}
                         </span>
                       )}
@@ -219,18 +219,18 @@ export function BlogList() {
                   )}
 
                   {/* Meta Information */}
-                  <div className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <div className="mt-auto pt-4 border-t border-gray-200">
                     <div className="flex items-center justify-between gap-3">
                       {/* Author & Date */}
                       <div className="flex flex-col gap-1.5 flex-1 min-w-0">
                         {post.author && (
-                          <div className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
+                          <div className="flex items-center gap-1.5 text-xs text-gray-600">
                             <Icon icon="solar:user-bold" className="w-3.5 h-3.5 flex-shrink-0" />
                             <span className="font-medium truncate">{post.author}</span>
                           </div>
                         )}
                         {post.publishedAt && (
-                          <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-500">
+                          <div className="flex items-center gap-1.5 text-xs text-gray-500">
                             <Icon icon="solar:calendar-bold" className="w-3.5 h-3.5 flex-shrink-0" />
                             <span>{formatDate(post.publishedAt)}</span>
                           </div>

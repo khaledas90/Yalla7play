@@ -75,7 +75,7 @@ export function HeroSection() {
   return (
     <section
       dir="rtl"
-      className="relative min-h-[100vh] flex items-center overflow-hidden pt-10 bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 dark:from-gray-900 dark:via-blue-950 dark:to-gray-900"
+      className="relative min-h-[100vh] flex items-center overflow-hidden pt-10 bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200"
     >
 
       <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#0056d2]/10 via-[#0056d2]/5 to-transparent" />
@@ -129,11 +129,11 @@ export function HeroSection() {
                   </span>
                 </div>
 
-                <h1 className="text-4xl sm:text-5xl lg:text-5xl font-bold mb-6 text-gray-900 dark:text-white leading-tight">
+                <h1 className="text-4xl sm:text-5xl lg:text-5xl font-bold mb-6 text-gray-900 leading-tight">
                   {slide.title}
                 </h1>
 
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-lg leading-relaxed">
+                <p className="text-lg text-gray-600 mb-8 max-w-lg leading-relaxed">
                   {slide.description}
                 </p>
 
@@ -141,7 +141,7 @@ export function HeroSection() {
                   {slide.features.map((f) => (
                     <div key={f} className="flex items-center gap-2">
                       <Icon icon="solar:stars-line-duotone" className="w-4 h-4 text-[#0056d2]" />
-                      <span className="text-sm font-normal text-gray-600 dark:text-gray-400">
+                      <span className="text-sm font-normal text-gray-600">
                         {f}
                       </span>
                     </div>

@@ -95,7 +95,7 @@ const SectionHeader = () => (
     </div>
 
     <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
-      <span className="text-black dark:text-white">ماذا يقول </span>
+      <span className="text-black">ماذا يقول </span>
       <span className="relative inline-block" style={{ color: "#0056d2" }}>
         طلابنا
         <svg className="absolute -bottom-2 left-0 w-full" height="12" viewBox="0 0 200 12" fill="none">
@@ -104,7 +104,7 @@ const SectionHeader = () => (
       </span>
     </h2>
 
-    <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
+    <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
       اكتشف تجارب طلابنا الحقيقية مع خدماتنا الأكاديمية
     </p>
   </div>
@@ -142,7 +142,7 @@ export function TestimonialsSection() {
 
   if (isLoading) {
     return (
-      <section dir="rtl" className="py-16 bg-gradient-to-b from-white dark:from-gray-900 via-blue-50/20 dark:via-gray-900 to-white dark:to-gray-900">
+      <section dir="rtl" className="py-16 bg-gradient-to-b from-white via-blue-50/20 to-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <SectionHeader />
           <div className="flex justify-center py-12" style={{ color: "#0056d2" }}>
@@ -159,7 +159,7 @@ export function TestimonialsSection() {
   return (
     <>
 
-      <section dir="rtl" className="py-16 bg-gradient-to-b from-white dark:from-gray-900 via-blue-50/20 dark:via-gray-900 to-white dark:to-gray-900">
+      <section dir="rtl" className="py-16 bg-gradient-to-b from-white via-blue-50/20 to-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <AnimatedContent distance={22} duration={0.7}>
             <SectionHeader />
@@ -182,12 +182,12 @@ export function TestimonialsSection() {
                   </Marquee>
                 )}
 
-                <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-white dark:from-gray-900" />
-                <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-white dark:from-gray-900" />
+                <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-white" />
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-white" />
               </div>
             </AnimatedContent>
           ) : (
-            <div className="flex justify-center items-center py-12 text-gray-500 dark:text-gray-400">
+            <div className="flex justify-center items-center py-12 text-gray-500">
               لا توجد آراء متاحة حالياً
             </div>
           )}

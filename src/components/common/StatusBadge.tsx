@@ -11,68 +11,68 @@ const statusConfig: Record<string, { label: string; className: string }> = {
   // Order Statuses
   PENDING: {
     label: "قيد الانتظار",
-    className: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400",
+    className: "bg-yellow-100 text-yellow-800",
   },
   QUOTED: {
     label: "بانتظار موافقة السعر",
-    className: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
+    className: "bg-blue-100 text-blue-800",
   },
   PAID: {
     label: "مدفوع",
-    className: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
+    className: "bg-green-100 text-green-800",
   },
   ASSIGNED: {
     label: "تم الإسناد",
-    className: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-400",
+    className: "bg-indigo-100 text-indigo-800",
   },
   IN_PROGRESS: {
     label: "قيد التنفيذ",
-    className: "bg-cyan-100 text-cyan-800 dark:bg-cyan-900/30 dark:text-cyan-400",
+    className: "bg-cyan-100 text-cyan-800",
   },
   DELIVERED: {
     label: "تم التسليم",
-    className: "bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-400",
+    className: "bg-teal-100 text-teal-800",
   },
   REVISION: {
     label: "تعديل",
-    className: "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400",
+    className: "bg-orange-100 text-orange-800",
   },
   COMPLETED: {
     label: "مكتمل",
-    className: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
+    className: "bg-green-100 text-green-800",
   },
   CANCELLED: {
     label: "ملغي",
-    className: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
+    className: "bg-red-100 text-red-800",
   },
   OVERDUE: {
     label: "متأخر",
-    className: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
+    className: "bg-red-100 text-red-800",
   },
   // Payment Statuses
   FAILED: {
     label: "فشل",
-    className: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
+    className: "bg-red-100 text-red-800",
   },
   REFUNDED: {
     label: "مسترد",
-    className: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300",
+    className: "bg-gray-100 text-gray-800",
   },
   // User Statuses
   ACTIVE: {
     label: "نشط",
-    className: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
+    className: "bg-green-100 text-green-800",
   },
   INACTIVE: {
     label: "معطل",
-    className: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300",
+    className: "bg-gray-100 text-gray-800",
   },
 };
 
 export function StatusBadge({ status, className }: StatusBadgeProps) {
   const config = statusConfig[status] || {
     label: status,
-    className: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300",
+    className: "bg-gray-100 text-gray-800",
   };
 
   return (

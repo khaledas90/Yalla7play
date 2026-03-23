@@ -17,11 +17,11 @@ export function PageHeader({
   return (
     <div className={cn("flex items-center justify-between mb-6", className)}>
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-3xl font-bold text-gray-900">
           {title}
         </h1>
         {description && (
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-sm text-gray-600">
             {description}
           </p>
         )}

@@ -68,13 +68,13 @@ export function DataTable<TData, TValue>({
         searchPlaceholder={searchPlaceholder}
         filterOptions={filterOptions}
       />
-      <div className="rounded-md border bg-white dark:bg-gray-800">
+      <div className="rounded-md border bg-white">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id} className="text-md font-medium text-right text-gray-900 dark:text-white">
+                  <TableHead key={header.id} className="text-md font-medium text-right text-gray-900">
                     {header.isPlaceholder
                       ? null
                       : flexRender(header.column.columnDef.header, header.getContext())}
@@ -89,7 +89,7 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                  className="hover:bg-gray-50"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

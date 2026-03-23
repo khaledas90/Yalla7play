@@ -71,7 +71,7 @@ export function FAQSection() {
 
   return (
     <section
-      className="relative py-16 overflow-hidden bg-white dark:bg-gray-950"
+      className="relative py-16 overflow-hidden bg-white"
       dir="rtl"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
@@ -95,7 +95,7 @@ export function FAQSection() {
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-4xl font-extrabold mb-6">
-            <span className="text-black dark:text-white">كل ما تحتاج </span>
+            <span className="text-black">كل ما تحتاج </span>
             <span className="relative inline-block" style={{ color: "#0056d2" }}>
               معرفته
               <svg
@@ -114,7 +114,7 @@ export function FAQSection() {
             </span>
           </h2>
 
-          <p className="text-lg md:text-ms text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-ms text-gray-600 max-w-3xl mx-auto leading-relaxed">
             إجابات سريعة ومباشرة لأهم استفساراتك
           </p>
         </AnimatedContent>
@@ -124,7 +124,7 @@ export function FAQSection() {
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="h-20 bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse"
+                className="h-20 bg-gray-200 rounded-xl animate-pulse"
               />
             ))}
           </div>
@@ -132,9 +132,9 @@ export function FAQSection() {
           <div className="text-center py-12">
             <Icon
               icon="solar:question-circle-bold"
-              className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4"
+              className="w-16 h-16 text-gray-300 mx-auto mb-4"
             />
-            <p className="text-gray-400 dark:text-gray-500 text-lg">
+            <p className="text-gray-400 text-lg">
               لا توجد أسئلة شائعة متاحة حالياً
             </p>
           </div>

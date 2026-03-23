@@ -111,23 +111,23 @@ export default function LoginForm() {
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <Card className="border-2 shadow-xl bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm">
+      <Card className="border-2 shadow-xl bg-white/95 backdrop-blur-sm">
         <CardHeader className="space-y-3 pb-6">
           <div className="flex flex-col items-center space-y-2">
-            <div className="p-3 rounded-full bg-blue-600 dark:bg-blue-700">
+            <div className="p-3 rounded-full bg-blue-600">
               <LogIn className="h-6 w-6 text-white" />
             </div>
-            <CardTitle className="text-3xl font-bold text-center text-gray-900 dark:text-white">
+            <CardTitle className="text-3xl font-bold text-center text-gray-900">
               تسجيل الدخول
             </CardTitle>
-            <CardDescription className="text-center text-gray-600 dark:text-gray-400">
+            <CardDescription className="text-center text-gray-600">
               أدخل بياناتك للوصول إلى حسابك
             </CardDescription>
           </div>
         </CardHeader>
         <CardContent className="space-y-5">
           {error && (
-            <Alert variant="destructive" className="border-red-500 bg-red-50 dark:bg-red-900/20">
+            <Alert variant="destructive" className="border-red-500 bg-red-50">
               <AlertDescription className="text-sm font-medium">
                 {error}
               </AlertDescription>
@@ -138,7 +138,7 @@ export default function LoginForm() {
             <div className="space-y-2">
               <label
                 htmlFor="email"
-                className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
+                className="text-sm font-medium text-gray-700 flex items-center gap-2"
               >
                 <Mail className="h-4 w-4" />
                 البريد الإلكتروني
@@ -170,7 +170,7 @@ export default function LoginForm() {
             <div className="space-y-2">
               <label
                 htmlFor="password"
-                className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
+                className="text-sm font-medium text-gray-700 flex items-center gap-2"
               >
                 <Lock className="h-4 w-4" />
                 كلمة المرور
@@ -197,7 +197,7 @@ export default function LoginForm() {
                   type="button"
                   variant="ghost"
                   size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-gray-500 hover:text-gray-700"
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
                   disabled={loading}
@@ -235,12 +235,12 @@ export default function LoginForm() {
             </Button>
           </form>
 
-          <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-            <p className="text-xs text-center text-gray-500 dark:text-gray-400">
+          <div className="pt-4 border-t border-gray-200">
+            <p className="text-xs text-center text-gray-500">
               نسيت كلمة المرور؟{" "}
               <a
                 href="#"
-                className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium hover:underline"
+                className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
               >
                 استعادة كلمة المرور
               </a>

@@ -190,7 +190,7 @@ export function BlogForm({
         {isLoadingData ? (
           <div className="flex items-center justify-center py-12 flex-1">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 dark:border-gray-100 mx-auto mb-2"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-2"></div>
               <p className="text-sm text-gray-500">جاري تحميل البيانات...</p>
             </div>
           </div>

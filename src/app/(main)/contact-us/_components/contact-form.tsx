@@ -289,27 +289,27 @@ function ContactFormContent() {
       href={href}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
-      className="group flex items-start gap-4 rounded-3xl border border-black/10 dark:border-gray-700 bg-white dark:bg-gray-800 p-4
-                 shadow-[0_10px_28px_rgba(0,0,0,0.06)] dark:shadow-gray-900/50
-                 hover:shadow-[0_14px_36px_rgba(0,0,0,0.10)] dark:hover:shadow-gray-900/70
-                 hover:border-black/15 dark:hover:border-gray-600 transition-all"
+      className="group flex items-start gap-4 rounded-3xl border border-black/10 bg-white p-4
+                 shadow-[0_10px_28px_rgba(0,0,0,0.06)]
+                 hover:shadow-[0_14px_36px_rgba(0,0,0,0.10)]
+                 hover:border-black/15 transition-all"
     >
-      <div className="w-11 h-11 rounded-2xl bg-[#E1EFFF] dark:bg-blue-900/30 border border-black/10 dark:border-gray-700 flex items-center justify-center shrink-0">
-        <Icon icon={icon} className="w-6 h-6 text-[#0056D2] dark:text-blue-400" />
+      <div className="w-11 h-11 rounded-2xl bg-[#E1EFFF] border border-black/10 flex items-center justify-center shrink-0">
+        <Icon icon={icon} className="w-6 h-6 text-[#0056D2]" />
       </div>
 
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <div className="text-sm font-extrabold text-black dark:text-white">{title}</div>
+          <div className="text-sm font-extrabold text-black">{title}</div>
           {badge ? (
-            <span className="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-[#E1EFFF] dark:bg-blue-900/30 text-[#0056D2] dark:text-blue-300 border border-black/10 dark:border-gray-700">
+            <span className="text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-[#E1EFFF] text-[#0056D2] border border-black/10">
               {badge}
             </span>
           ) : null}
         </div>
 
-        <div className="text-sm text-black/70 dark:text-gray-300 mt-1 break-words">{value}</div>
-        <div className="mt-2 text-xs font-bold text-[#0056D2] dark:text-blue-400 opacity-0 group-hover:opacity-100 transition">
+        <div className="text-sm text-black/70 mt-1 break-words">{value}</div>
+        <div className="mt-2 text-xs font-bold text-[#0056D2] opacity-0 group-hover:opacity-100 transition">
           اضغط للتواصل
         </div>
       </div>
@@ -317,19 +317,19 @@ function ContactFormContent() {
   );
 
   const FieldLabel = ({ children }: { children: React.ReactNode }) => (
-    <label className="block text-sm font-extrabold text-black dark:text-white mb-2.5">{children}</label>
+    <label className="block text-sm font-extrabold text-black mb-2.5">{children}</label>
   );
 
   const inputBase =
-    "w-full pr-12 pl-4 py-4 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 text-base " +
-    "focus:border-[#0056D2] dark:focus:border-blue-500 focus:ring-4 focus:ring-[#0056D2]/10 dark:focus:ring-blue-500/20 focus:outline-none transition-all duration-300 " +
-    "hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-sm " +
+    "w-full pr-12 pl-4 py-4 rounded-2xl border-2 border-gray-200 bg-white text-gray-900 placeholder:text-gray-400 text-base " +
+    "focus:border-[#0056D2] focus:ring-4 focus:ring-[#0056D2]/10 focus:outline-none transition-all duration-300 " +
+    "hover:border-gray-300 hover:shadow-sm " +
     "disabled:opacity-50 disabled:cursor-not-allowed";
 
   const selectBase =
-    "w-full pr-12 pl-4 py-4 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-base appearance-none cursor-pointer " +
-    "focus:border-[#0056D2] dark:focus:border-blue-500 focus:ring-4 focus:ring-[#0056D2]/10 dark:focus:ring-blue-500/20 focus:outline-none transition-all duration-300 " +
-    "hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-sm " +
+    "w-full pr-12 pl-4 py-4 rounded-2xl border-2 border-gray-200 bg-white text-gray-900 text-base appearance-none cursor-pointer " +
+    "focus:border-[#0056D2] focus:ring-4 focus:ring-[#0056D2]/10 focus:outline-none transition-all duration-300 " +
+    "hover:border-gray-300 hover:shadow-sm " +
     "disabled:opacity-50 disabled:cursor-not-allowed";
 
   const container = {
@@ -345,15 +345,15 @@ function ContactFormContent() {
   return (
     <section
       dir="rtl"
-      className="py-12 sm:py-16 lg:py-20 relative overflow-hidden bg-white dark:bg-gray-900"
+      className="py-12 sm:py-16 lg:py-20 relative overflow-hidden bg-white"
     > 
       <div className="pointer-events-none absolute inset-0">
  
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,#E1EFFF40,transparent_55%)] dark:bg-[radial-gradient(circle_at_20%_20%,rgba(30,58,138,0.15),transparent_55%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_60%,#E1EFFF30,transparent_55%)] dark:bg-[radial-gradient(circle_at_80%_60%,rgba(30,64,175,0.1),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,#E1EFFF40,transparent_55%)](circle_at_20%_20%,rgba(30,58,138,0.15),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_60%,#E1EFFF30,transparent_55%)](circle_at_80%_60%,rgba(30,64,175,0.1),transparent_55%)]" />
  
-        <div className="absolute -top-32 -left-32 w-[520px] h-[520px] bg-[#E1EFFF]/5 dark:bg-blue-900/10 rounded-full blur-1xl" />
-        <div className="absolute -bottom-32 -right-32 w-[520px] h-[520px] bg-[#E1EFFF]/30 dark:bg-blue-800/20 rounded-full blur-3xl" />
+        <div className="absolute -top-32 -left-32 w-[520px] h-[520px] bg-[#E1EFFF]/5 rounded-full blur-1xl" />
+        <div className="absolute -bottom-32 -right-32 w-[520px] h-[520px] bg-[#E1EFFF]/30 rounded-full blur-3xl" />
       </div>
 
 
@@ -371,47 +371,47 @@ function ContactFormContent() {
               href={WHATSAPP_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-3 rounded-xl border border-green-200 dark:border-green-800/50 bg-white dark:bg-gray-800 p-4 hover:shadow-md hover:border-green-300 dark:hover:border-green-700 transition-all"
+              className="group flex items-center gap-3 rounded-xl border border-green-200 bg-white p-4 hover:shadow-md hover:border-green-300 transition-all"
             >
               <div className="w-10 h-10 rounded-lg bg-green-500 flex items-center justify-center shrink-0">
                 <Icon icon="logos:whatsapp-icon" className="w-5 h-5 text-white" />
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <h3 className="text-sm font-bold text-gray-900 dark:text-white">واتساب</h3>
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">
+                  <h3 className="text-sm font-bold text-gray-900">واتساب</h3>
+                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-green-100 text-green-700">
                     الأفضل
                   </span>
                 </div>
-                <p className="text-xs text-gray-600 dark:text-gray-400">رسالة جاهزة</p>
+                <p className="text-xs text-gray-600">رسالة جاهزة</p>
               </div>
             </a>
 
             {/* Phone Card */}
             <a
               href="tel:+962781858647"
-              className="group flex items-center gap-3 rounded-xl border border-blue-200 dark:border-blue-800/50 bg-white dark:bg-gray-800 p-4 hover:shadow-md hover:border-blue-300 dark:hover:border-blue-700 transition-all"
+              className="group flex items-center gap-3 rounded-xl border border-blue-200 bg-white p-4 hover:shadow-md hover:border-blue-300 transition-all"
             >
               <div className="w-10 h-10 rounded-lg bg-blue-500 flex items-center justify-center shrink-0">
                 <Icon icon="solar:phone-calling-bold" className="w-5 h-5 text-white" />
               </div>
               <div className="min-w-0 flex-1">
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-0.5">اتصال مباشر</h3>
-                <p className="text-xs text-gray-600 dark:text-gray-400">+962 781 858 647</p>
+                <h3 className="text-sm font-bold text-gray-900 mb-0.5">اتصال مباشر</h3>
+                <p className="text-xs text-gray-600">+962 781 858 647</p>
               </div>
             </a>
 
             {/* Email Card */}
             <a
               href="mailto:info@sheelhammy.com"
-              className="group flex items-center gap-3 rounded-xl border border-purple-200 dark:border-purple-800/50 bg-white dark:bg-gray-800 p-4 hover:shadow-md hover:border-purple-300 dark:hover:border-purple-700 transition-all"
+              className="group flex items-center gap-3 rounded-xl border border-purple-200 bg-white p-4 hover:shadow-md hover:border-purple-300 transition-all"
             >
               <div className="w-10 h-10 rounded-lg bg-purple-500 flex items-center justify-center shrink-0">
                 <Icon icon="solar:letter-bold" className="w-5 h-5 text-white" />
               </div>
               <div className="min-w-0 flex-1">
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-0.5">البريد الإلكتروني</h3>
-                <p className="text-xs text-gray-600 dark:text-gray-400 truncate">info@sheelhammy.com</p>
+                <h3 className="text-sm font-bold text-gray-900 mb-0.5">البريد الإلكتروني</h3>
+                <p className="text-xs text-gray-600 truncate">info@sheelhammy.com</p>
               </div>
             </a>
           </div>
@@ -419,37 +419,37 @@ function ContactFormContent() {
           {/* Working Hours & Info - Compact Row */}
           <div className="mt-3 sm:mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {/* Working Hours */}
-            <div className="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3">
-              <div className="w-9 h-9 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
-                <Icon icon="solar:clock-circle-bold" className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-3">
+              <div className="w-9 h-9 rounded-lg bg-blue-100 flex items-center justify-center shrink-0">
+                <Icon icon="solar:clock-circle-bold" className="w-4 h-4 text-blue-600" />
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-2 mb-1">
-                  <span className="text-xs font-bold text-gray-900 dark:text-white">أوقات الدوام</span>
-                  <span className="text-[10px] text-gray-500 dark:text-gray-400">توقيت الأردن</span>
+                  <span className="text-xs font-bold text-gray-900">أوقات الدوام</span>
+                  <span className="text-[10px] text-gray-500">توقيت الأردن</span>
                 </div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">
+                <div className="text-xs text-gray-600">
                   <span className="font-medium">السبت–الخميس:</span>{" "}
-                  <span className="font-bold text-gray-900 dark:text-white">10 ص–10 م</span>
+                  <span className="font-bold text-gray-900">10 ص–10 م</span>
                 </div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">
+                <div className="text-xs text-gray-600">
                   <span className="font-medium">الجمعة:</span>{" "}
-                  <span className="font-bold text-gray-900 dark:text-white">2 م–10 م</span>
+                  <span className="font-bold text-gray-900">2 م–10 م</span>
                 </div>
               </div>
             </div>
 
             {/* After Hours Note */}
-            <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3">
-              <div className="w-9 h-9 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center shrink-0">
-                <Icon icon="solar:chat-round-dots-bold" className="w-4 h-4 text-green-600 dark:text-green-400" />
+            <div className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3">
+              <div className="w-9 h-9 rounded-lg bg-green-100 flex items-center justify-center shrink-0">
+                <Icon icon="solar:chat-round-dots-bold" className="w-4 h-4 text-green-600" />
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-bold text-gray-900 dark:text-white">خارج الدوام</span>
-                  <span className="text-[10px] text-gray-500 dark:text-gray-400">متاح 24/7</span>
+                  <span className="text-xs font-bold text-gray-900">خارج الدوام</span>
+                  <span className="text-[10px] text-gray-500">متاح 24/7</span>
                 </div>
-                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p className="text-xs text-gray-600 leading-relaxed">
                   استقبل رسالتك بأي وقت — ونرجع نرد عليك بأول وقت دوام.
                 </p>
               </div>
@@ -461,19 +461,19 @@ function ContactFormContent() {
         <motion.div variants={item} className="w-full md:w-6xl mx-auto">
           <form
             onSubmit={handleSubmit}
-            className="relative bg-white dark:bg-gray-800 rounded-3xl p-3 sm:p-6 md:p-10 lg:p-12 border border-gray-200 dark:border-gray-700
-             shadow-xl dark:shadow-gray-900/50"
+            className="relative bg-white rounded-3xl p-3 sm:p-6 md:p-10 lg:p-12 border border-gray-200
+             shadow-xl"
           >
             {/* Card Title */}
             <div className="mb-6 sm:mb-8 text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-bold mb-4">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-bold mb-4">
                 <Icon icon="solar:check-circle-bold" className="w-4 h-4" />
                 <span>إرسال سريع وآمن</span>
               </div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2">
                 نموذج الطلب
               </h3>
-              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 px-2">
+              <p className="text-sm sm:text-base text-gray-600 px-2">
                 املأ المعلومات أدناه — وسيفتح واتساب برسالة جاهزة ومنظمة بكل التفاصيل
               </p>
              
@@ -486,7 +486,7 @@ function ContactFormContent() {
                   <div className="relative group">
                     <Icon
                       icon="solar:user-bold"
-                      className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] dark:text-blue-400 z-10 pointer-events-none transition-colors"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] z-10 pointer-events-none transition-colors"
                     />
                     <input
                       type="text"
@@ -503,12 +503,12 @@ function ContactFormContent() {
 
                 <div>
                   <FieldLabel>
-                    البريد الإلكتروني <span className="text-xs font-bold text-black/40 dark:text-gray-500">(اختياري)</span>
+                    البريد الإلكتروني <span className="text-xs font-bold text-black/40">(اختياري)</span>
                   </FieldLabel>
                   <div className="relative group">
                     <Icon
                       icon="solar:letter-bold"
-                      className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] dark:text-blue-400 z-10 pointer-events-none transition-colors"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] z-10 pointer-events-none transition-colors"
                     />
                     <input
                       type="email"
@@ -533,7 +533,7 @@ function ContactFormContent() {
                     <div className="relative group">
                       <Icon
                         icon="solar:flag-bold"
-                        className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] dark:text-blue-400 z-10 pointer-events-none"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] z-10 pointer-events-none"
                       />
                       <select
                         name="phoneCountryDial"
@@ -557,7 +557,7 @@ function ContactFormContent() {
                     <div className="relative group">
                       <Icon
                         icon="solar:phone-bold"
-                        className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] dark:text-blue-400 z-10 pointer-events-none"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] z-10 pointer-events-none"
                       />
                       <input
                         type="tel"
@@ -573,9 +573,9 @@ function ContactFormContent() {
                     </div>
                   </div>
 
-                  <p className="mt-2 text-xs text-black/60 dark:text-gray-400">
+                  <p className="mt-2 text-xs text-black/60">
                     سيتم إرسال الرقم بصيغة:{" "}
-                    <span className="font-extrabold text-black dark:text-white">{fullPhone || "+962 ..."}</span>
+                    <span className="font-extrabold text-black">{fullPhone || "+962 ..."}</span>
                   </p>
                 </div>
 
@@ -584,7 +584,7 @@ function ContactFormContent() {
                   <div className="relative group">
                     <Icon
                       icon="solar:book-2-bold"
-                      className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] dark:text-blue-400 z-10 pointer-events-none"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] z-10 pointer-events-none"
                     />
                     <select
                       name="service"
@@ -618,7 +618,7 @@ function ContactFormContent() {
                   <div className="relative group">
                     <Icon
                       icon="solar:graduation-cap-bold"
-                      className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] dark:text-blue-400 z-10 pointer-events-none"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] z-10 pointer-events-none"
                     />
                     <select
                       name="academicLevel"
@@ -647,7 +647,7 @@ function ContactFormContent() {
                   <div className="relative group">
                     <Icon
                       icon="solar:book-bold"
-                      className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] dark:text-blue-400 z-10 pointer-events-none"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] z-10 pointer-events-none"
                     />
                     <input
                       type="text"
@@ -667,7 +667,7 @@ function ContactFormContent() {
                   <div className="relative group">
                     <Icon
                       icon="solar:buildings-2-bold"
-                      className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] dark:text-blue-400 z-10 pointer-events-none"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] z-10 pointer-events-none"
                     />
                     <input
                       type="text"
@@ -685,7 +685,7 @@ function ContactFormContent() {
                   <div className="relative group">
                     <Icon
                       icon="solar:calendar-date-bold"
-                      className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] dark:text-blue-400 z-10 pointer-events-none"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] z-10 pointer-events-none"
                     />
                     <input
                       type="date"
@@ -704,7 +704,7 @@ function ContactFormContent() {
                     <div className="relative group">
                       <Icon
                         icon="solar:translation-bold"
-                        className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] dark:text-blue-400 z-10 pointer-events-none"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] z-10 pointer-events-none"
                       />
                       <select
                         name="language"
@@ -728,7 +728,7 @@ function ContactFormContent() {
                     <div className="relative group">
                       <Icon
                         icon="solar:bolt-bold"
-                        className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] dark:text-blue-400 z-10 pointer-events-none"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0056D2] z-10 pointer-events-none"
                       />
                       <select
                         name="urgency"
@@ -754,7 +754,7 @@ function ContactFormContent() {
               <div className="relative group">
                 <Icon
                   icon="solar:chat-round-dots-bold"
-                  className="absolute right-4 top-4 w-5 h-5 text-[#0056D2] dark:text-blue-400 z-10 pointer-events-none"
+                  className="absolute right-4 top-4 w-5 h-5 text-[#0056D2] z-10 pointer-events-none"
                 />
                 <textarea
                   name="message"
@@ -763,9 +763,9 @@ function ContactFormContent() {
                   required={false}
                   rows={5}
                   className={
-                    "w-full pr-12 pl-4 py-4 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 text-base " +
-                    "focus:border-[#0056D2] dark:focus:border-blue-500 focus:ring-4 focus:ring-[#0056D2]/10 dark:focus:ring-blue-500/20 focus:outline-none transition-all duration-300 resize-none " +
-                    "hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-sm"
+                    "w-full pr-12 pl-4 py-4 rounded-2xl border-2 border-gray-200 bg-white text-gray-900 placeholder:text-gray-400 text-base " +
+                    "focus:border-[#0056D2] focus:ring-4 focus:ring-[#0056D2]/10 focus:outline-none transition-all duration-300 resize-none " +
+                    "hover:border-gray-300 hover:shadow-sm"
                   }
                   placeholder="اكتب المطلوب بالتفصيل + تعليمات الدكتور + تنسيق APA/MLA..."
                 />
@@ -796,9 +796,9 @@ function ContactFormContent() {
             </Button>
 
             <div className="mt-4 sm:mt-6 text-center">
-              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-gray-50 border border-gray-200">
                 <Icon icon="solar:shield-check-bold" className="w-4 h-4 text-green-500 shrink-0" />
-                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-xs sm:text-sm text-gray-600">
                   بالضغط على إرسال، سيتم فتح واتساب مع رسالة منظمة بكل المعلومات
                 </p>
               </div>
@@ -813,7 +813,7 @@ function ContactFormContent() {
 export function ContactForm() {
   return (
     <Suspense fallback={
-      <section dir="rtl" className="py-20 relative overflow-hidden bg-white dark:bg-gray-900">
+      <section dir="rtl" className="py-20 relative overflow-hidden bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
           <div className="text-center py-20">
             <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />

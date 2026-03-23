@@ -120,8 +120,8 @@ export const AnimatedThemeToggler = ({
       className={cn(
         className,
         "cursor-pointer w-10 h-10 flex items-center justify-center rounded-xl transition-colors",
-        "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
-        "text-gray-700 dark:text-gray-300"
+        "bg-gray-100 hover:bg-gray-200",
+        "text-gray-700"
       )}
       {...props}
     >

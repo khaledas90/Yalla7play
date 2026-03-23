@@ -37,7 +37,7 @@ export function AboutSection() {
   return (
     <section
       dir="rtl"
-      className="py-10 bg-gradient-to-b from-white dark:from-gray-900 via-blue-50/20 dark:via-gray-900 to-white dark:to-gray-900"
+      className="py-10 bg-gradient-to-b from-white via-blue-50/20 to-white"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -88,10 +88,10 @@ export function AboutSection() {
                         <div className="w-10 h-10 rounded-xl bg-[#EFF6FF] flex items-center justify-center flex-shrink-0">
                           <Icon icon={s.icon} className="w-5 h-5 text-[#0056d2]" />
                         </div>
-                        <h3 className="text-lg font-bold text-gray-900 dark:text-white">{s.title}</h3>
+                        <h3 className="text-lg font-bold text-gray-900">{s.title}</h3>
                       </div>
 
-                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base md:text-lg">
+                      <p className="text-gray-700 leading-relaxed text-base md:text-lg">
                         {s.text}
                       </p>
                     </div>
@@ -118,7 +118,7 @@ export function AboutSection() {
             <div className="relative p-4 lg:p-6">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[#0056d2]/10 rounded-full blur-3xl -z-10" />
               <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#0056d2]/5 rounded-full blur-3xl -z-10" />
-              <div className="relative overflow-hidden  rounded-3xl bg-white/5 dark:bg-blue-900/10 backdrop-blur-[2px] border border-white/10 dark:border-blue-800/20">
+              <div className="relative overflow-hidden  rounded-3xl bg-white/5 backdrop-blur-[2px] border border-white/10">
                 <div className="relative  z-10 p-4">
                   <Image
                     src={aboutImage}

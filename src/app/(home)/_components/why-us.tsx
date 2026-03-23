@@ -124,7 +124,7 @@ export function WhyUsSection() {
 
   return (
     <section id="why-us-section" dir="rtl" className="relative py-16 sm:py-20 overflow-hidden">
-      <div className="absolute inset-0 bg-white dark:bg-slate-950" />
+      <div className="absolute inset-0 bg-white" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
 
@@ -184,15 +184,15 @@ export function WhyUsSection() {
                   className={[
                     "relative h-full cursor-pointer",
                     "rounded-[28px] p-6",
-                    "bg-white/95 dark:bg-slate-900/92",
+                    "bg-white/95",
                     "backdrop-blur-xl backdrop-saturate-150",
-                    "border border-[#e1efff] dark:border-white/10",
+                    "border border-[#e1efff]",
                     "shadow-[0_10px_30px_-22px_rgba(0,0,0,0.14)]",
                     "hover:shadow-[0_14px_40px_-24px_rgba(0,0,0,0.18)]",
                     "transform transition-all duration-400 ease-out",
                     "hover:-translate-y-1",
-                    "hover:border-[#0056d2]/45 dark:hover:border-white/20",
-                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0056d2]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950",
+                    "hover:border-[#0056d2]/45",
+                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0056d2]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-white",
                     "flex flex-col",
                   ].join(" ")}
                 >
@@ -217,14 +217,14 @@ export function WhyUsSection() {
                       </div>
 
                       <div className="flex-1 pt-1">
-                        <h3 className="text-lg font-extrabold text-[#000000] dark:text-white transition-colors duration-300 group-hover:text-[#0056d2]">
+                        <h3 className="text-lg font-extrabold text-[#000000] transition-colors duration-300 group-hover:text-[#0056d2]">
                           {feature.title}
                         </h3>
                       </div>
                     </div>
                   </div>
 
-                  <p className="text-black/70 dark:text-white/75 text-sm sm:text-[15px] leading-relaxed flex-grow">
+                  <p className="text-black/70 text-sm sm:text-[15px] leading-relaxed flex-grow">
                     {feature.description}
                   </p>
 
@@ -240,7 +240,7 @@ export function WhyUsSection() {
                       قراءة المزيد
                       <Icon
                         icon="solar:arrow-left-line-duotone"
-                        className="w-5 h-5 text-black/60 dark:text-white/70"
+                        className="w-5 h-5 text-black/60"
                       />
                     </button>
 

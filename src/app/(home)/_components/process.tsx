@@ -65,7 +65,7 @@ export function ProcessSection() {
   const steps = useMemo(() => PROCESS_STEPS, []);
 
   return (
-    <section dir="rtl" className="py-10 bg-[#e1efff] dark:bg-gray-900">
+    <section dir="rtl" className="py-10 bg-[#e1efff]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 lg:w-7xl w-full">
         <AnimatedContent distance={22} duration={0.7} className="text-center mb-16">
           <div
@@ -130,22 +130,22 @@ export function ProcessSection() {
                   aria-label={`فتح تفاصيل الخطوة ${step.number}: ${step.title}`}
                 >
                   <div className="relative mb-4">
-                    <div className="w-[78px] h-[78px] rounded-2xl bg-white/90 dark:bg-gray-800/80 border border-[#0056d2]/25 dark:border-blue-400/20 shadow-sm backdrop-blur flex items-center justify-center transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
-                      <div className="w-[58px] h-[58px] rounded-xl bg-[#EFF6FF] dark:bg-blue-900/20 border border-[#0056d2]/25 dark:border-blue-400/20 flex items-center justify-center">
+                    <div className="w-[78px] h-[78px] rounded-2xl bg-white/90 border border-[#0056d2]/25 shadow-sm backdrop-blur flex items-center justify-center transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+                      <div className="w-[58px] h-[58px] rounded-xl bg-[#EFF6FF] border border-[#0056d2]/25 flex items-center justify-center">
                         <Icon icon={step.icon} className="w-9 h-9 text-[#0056d2]" />
                       </div>
                     </div>
 
-                    <div className="absolute -top-2 -right-2 w-8 h-8 rounded-xl bg-gradient-to-br from-[#0056d2] to-[#2563EB] dark:from-blue-500 dark:to-blue-600 text-white text-xs font-bold flex items-center justify-center shadow-md">
+                    <div className="absolute -top-2 -right-2 w-8 h-8 rounded-xl bg-gradient-to-br from-[#0056d2] to-[#2563EB] text-white text-xs font-bold flex items-center justify-center shadow-md">
                       {step.number}
                     </div>
                   </div>
 
-                  <h3 className="text-base md:text-lg font-bold text-gray-900 dark:text-white group-hover:text-[#0056d2] dark:group-hover:text-blue-400 transition-colors">
+                  <h3 className="text-base md:text-lg font-bold text-gray-900 group-hover:text-[#0056d2] transition-colors">
                     {step.title}
                   </h3>
 
-                  <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                  <p className="mt-2 text-xs text-gray-500">
                     عرض التفاصيل
                   </p>
                 </button>

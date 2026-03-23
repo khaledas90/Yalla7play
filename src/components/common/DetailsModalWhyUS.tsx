@@ -81,7 +81,7 @@ export default function DetailsModalWhyUS({
           <div
             className={[
               "absolute inset-0 w-full h-full",
-              "bg-black/55 dark:bg-black/70",
+              "bg-black/55",
               "backdrop-blur-[10px]",
             ].join(" ")}
           />
@@ -97,15 +97,15 @@ export default function DetailsModalWhyUS({
               className={[
                 "w-full max-w-md",
                 "rounded-2xl",
-                "bg-white dark:bg-slate-950",
-                "border border-[#e1efff] dark:border-white/10",
+                "bg-white",
+                "border border-[#e1efff]",
                 "shadow-[0_22px_80px_-40px_rgba(0,0,0,0.55)]",
                 "transition-all duration-200 ease-out",
                 open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0",
               ].join(" ")}
             >
               {/* header */}
-              <div className="p-4 border-b border-[#e1efff] dark:border-white/10">
+              <div className="p-4 border-b border-[#e1efff]">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
@@ -116,12 +116,12 @@ export default function DetailsModalWhyUS({
                         <Icon icon={feature.icon} className="w-5 h-5 text-white" />
                       </span>
   
-                      <h3 className="text-[17px] sm:text-lg font-extrabold text-[#000000] dark:text-white truncate">
+                      <h3 className="text-[17px] sm:text-lg font-extrabold text-[#000000] truncate">
                         {feature.title}
                       </h3>
                     </div>
   
-                    <p className="mt-2 text-[13px] sm:text-sm text-black/70 dark:text-white/75 leading-relaxed">
+                    <p className="mt-2 text-[13px] sm:text-sm text-black/70 leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
@@ -147,7 +147,7 @@ export default function DetailsModalWhyUS({
               {/* content */}
               <div className="p-4">
                 <div className="rounded-2xl bg-[#e1efff]/40 border border-[#e1efff] p-3.5">
-                  <h4 className="text-xs font-extrabold text-[#000000] dark:text-white mb-3 flex items-center gap-2">
+                  <h4 className="text-xs font-extrabold text-[#000000] mb-3 flex items-center gap-2">
                     <span className="w-1.5 h-4 rounded-full" style={{ backgroundColor: THEME.primary }} />
                     التفاصيل
                   </h4>
@@ -159,7 +159,7 @@ export default function DetailsModalWhyUS({
                           className="mt-2 w-1.5 h-1.5 rounded-full shrink-0"
                           style={{ backgroundColor: THEME.primary }}
                         />
-                        <span className="text-[13px] sm:text-sm text-black/80 dark:text-white/80 leading-relaxed">
+                        <span className="text-[13px] sm:text-sm text-black/80 leading-relaxed">
                           {p}
                         </span>
                       </li>
@@ -167,7 +167,7 @@ export default function DetailsModalWhyUS({
                   </ul>
   
                   {feature.details?.note && (
-                    <div className="mt-3 rounded-xl bg-white/85 dark:bg-white/5 border border-white/60 dark:border-white/10 p-3">
+                    <div className="mt-3 rounded-xl bg-white/85 border border-white/60 p-3">
                       <div className="flex gap-2.5">
                         <span
                           className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
@@ -175,7 +175,7 @@ export default function DetailsModalWhyUS({
                         >
                           <Icon icon="solar:lightbulb-bold" className="w-4 h-4 text-white" />
                         </span>
-                        <div className="text-[13px] sm:text-sm text-black/80 dark:text-white/80 leading-relaxed">
+                        <div className="text-[13px] sm:text-sm text-black/80 leading-relaxed">
                           <span className="font-extrabold">ملاحظة: </span>
                           {feature.details.note}
                         </div>

@@ -17,7 +17,7 @@ type CatalogItem = {
     createdAt: Date;
     category: { id: string; name: string; slug: string };
 };
-type BlogPost = { id: string; title: string; slug: string; excerpt: string };
+type BlogPost = { id: string; title: string; slug: string; excerpt: string; image?: string };
 
 const categories: Category[] = [
     { id: "c1", name: "أكشن", slug: "action" },
@@ -42,10 +42,10 @@ const appsMock: CatalogItem[] = [
 ];
 
 const blogPostsMock: BlogPost[] = [
-    { id: "b1", title: "أفضل ألعاب 2026 للأجهزة المتوسطة", slug: "best-games-2026", excerpt: "اختيارات قوية بأداء ممتاز ومساحة أقل." },
-    { id: "b2", title: "كيف تختار التطبيق المناسب لإدارة يومك", slug: "pick-right-productivity-app", excerpt: "خطوات عملية لاختيار تطبيق فعلي ومفيد." },
-    { id: "b3", title: "مقارنة بين ألعاب السباقات الأكثر تحميلا", slug: "racing-games-comparison", excerpt: "مقارنة سريعة بين الأداء والجرافيك." },
-    { id: "b4", title: "نصائح لتحسين تجربة اللعب على الهاتف", slug: "mobile-gaming-tips", excerpt: "إعدادات مهمة لرفع الـ FPS وتحسين البطارية." },
+    { id: "b1", title: "أفضل ألعاب 2026 للأجهزة المتوسطة", slug: "best-games-2026", excerpt: "اختيارات قوية بأداء ممتاز ومساحة أقل.", image: "/placeholder.svg" },
+    { id: "b2", title: "كيف تختار التطبيق المناسب لإدارة يومك", slug: "pick-right-productivity-app", excerpt: "خطوات عملية لاختيار تطبيق فعلي ومفيد.", image: "/placeholder.svg" },
+    { id: "b3", title: "مقارنة بين ألعاب السباقات الأكثر تحميلا", slug: "racing-games-comparison", excerpt: "مقارنة سريعة بين الأداء والجرافيك.", image: "/placeholder.svg" },
+    { id: "b4", title: "نصائح لتحسين تجربة اللعب على الهاتف", slug: "mobile-gaming-tips", excerpt: "إعدادات مهمة لرفع الـ FPS وتحسين البطارية.", image: "/placeholder.svg" },
 ];
 
 const adsMock = [

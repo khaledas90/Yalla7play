@@ -6,12 +6,6 @@ import { Icon } from "@iconify/react";
 import AnimatedContent from "@/components/animated-content";
 
 import logo from "@/assets/logo.png";
-import arabbank from "@/assets/Arabbank.png";
-import cliq from "@/assets/cliq.png";
-import moneygram from "@/assets/moneygram.png";
-import uwallet from "@/assets/Uwallet.png";
-import westrn from "@/assets/Westrn.png";
-import zaincash from "@/assets/Zainchah.png";
 
 const BRAND = "#3B82F6";
 const WHATSAPP_NUMBER = "962781858647";
@@ -28,38 +22,37 @@ const socialLinks = [
 const footerLinks = {
   contact: [
     {
-      name: "info@sheelhammy.com",
-      href: "mailto:info@sheelhammy.com",
+      name: "info@yalla7play.com",
+      href: "mailto:info@yalla7play.com",
       icon: "solar:letter-bold",
     },
     {
       name: (
         <span dir="ltr" className="inline-block">
-          +962 7 8185 8647
+          +966 500 000 000
         </span>
       ),
-      href: "tel:+962781858647",
+      href: "tel:+966500000000",
       icon: "solar:phone-calling-bold",
     },
     {
-      name: "24/7 Online Support",
+      name: "دعم متاح 24/7",
       href: "#",
       icon: "solar:global-bold",
     },
   ],
   company: [
-    { name: "Blog", href: "/blog" },
-    { name: "About", href: "/about-us" },
-    { name: "Games", href: "/games" },
-    { name: "Applications", href: "/applications" },
-    { name: "Contact", href: "/contact-us" },
-
+    { name: "المدونة", href: "/blog" },
+    { name: "من نحن", href: "/about-us" },
+    { name: "الألعاب", href: "/games" },
+    { name: "التطبيقات", href: "/applications" },
+    { name: "اتصل بنا", href: "/contact-us" },
+    { name: "انضم للعمل معنا", href: "/join-us" },
   ],
   policies: [
-    { name: "Terms of Service", href: "/terms-of-service" },
-    { name: "Privacy Policy", href: "/privacy-policy" },
-    { name: "Refund Policy", href: "/refund-policy" },
-    { name: "Payment Policy", href: "/payment-policy" },
+    { name: "شروط الاستخدام", href: "/terms" },
+    { name: "سياسة الخصوصية", href: "/privacy-policy" },
+    { name: "من نحن", href: "/about-us" },
   ],
 };
 
@@ -121,9 +114,8 @@ export function Footer() {
               </span>
             </Link>
 
-            <p className="mt-4 text-slate-600 text-sm md:text-base leading-relaxed max-w-md break-words">
-              Yalla7Play is a modern platform to discover the best games and applications by
-              categories, rankings, and editorial content, with a fast and responsive experience.
+            <p className="mt-4 text-slate-600 text-sm md:text-base leading-relaxed max-w-md break-words font-medium">
+              يلا7 بلاي هي منصتك العصرية لاكتشاف وتحميل أفضل الألعاب والتطبيقات المختارة بعناية، مع توفير تجربة مستخدم سريعة وآمنة.
             </p>
             <div className="mt-6 flex items-center gap-2 flex-wrap">
               {socialLinks.map((s) => (
@@ -142,9 +134,15 @@ export function Footer() {
                 </a>
               ))}
             </div>
+            <div className="mt-6">
+               <Link href="/join-us" className="inline-flex items-center gap-2 rounded-xl bg-orange-50 px-4 py-2 text-sm font-black text-orange-600 transition hover:bg-orange-100 border border-orange-100">
+                  <Icon icon="solar:crown-minimalistic-bold" className="w-4 h-4" />
+                  برنامج الناشرين
+               </Link>
+            </div>
           </AnimatedContent>
           <AnimatedContent distance={18} duration={0.65} delay={0.06} className="sm:col-span-1 lg:col-span-3">
-            <SectionTitle>Contact</SectionTitle>
+            <SectionTitle>تواصل معنا</SectionTitle>
             <div className="space-y-4">
               {footerLinks.contact.map((item) => (
                 <FooterItem
@@ -161,7 +159,7 @@ export function Footer() {
 
 
           <AnimatedContent distance={18} duration={0.65} delay={0.12} className="sm:col-span-1 lg:col-span-2">
-            <SectionTitle>Quick Links</SectionTitle>
+            <SectionTitle>روابط سريعة</SectionTitle>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
@@ -177,7 +175,7 @@ export function Footer() {
           </AnimatedContent>
 
           <AnimatedContent distance={18} duration={0.65} delay={0.18} className="sm:col-span-2 lg:col-span-3">
-            <SectionTitle>Policies</SectionTitle>
+            <SectionTitle>السياسات</SectionTitle>
             <ul className="space-y-3">
               {footerLinks.policies.map((link) => (
                 <li key={link.name}>
