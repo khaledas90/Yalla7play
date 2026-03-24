@@ -13,8 +13,8 @@ if (!connectionString) {
 }
 
 const email = process.env.NEW_ADMIN_EMAIL || "admin@yalla7play.com";
-const password = process.env.NEW_ADMIN_PASSWORD || "Admin@123456";
-const roleInput = process.env.NEW_ADMIN_ROLE || "ADMIN";
+const password = process.env.NEW_ADMIN_PASSWORD || "Adminyalla7play@123456";
+const roleInput = process.env.NEW_ADMIN_ROLE || "SUPER_ADMIN";
 const role = roleInput === "SUPER_ADMIN" ? Role.SUPER_ADMIN : Role.ADMIN;
 
 async function createPrismaClient() {
