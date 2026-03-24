@@ -20,57 +20,6 @@ type BlogPost = {
   tags: string[] | null;
 };
 
-const MOCK_POSTS: BlogPost[] = [
-  {
-    id: "1",
-    title: "أفضل ألعاب الأكشن لعام 2026 التي يجب عليك تجربتها",
-    slug: "best-action-games-2026",
-    excerpt: "تعرف على قائمة أقوى ألعاب الأكشن والمغامرات التي ستصدر هذا العام مع مراجعة شاملة لأسلوب اللعب والرسوميات.",
-    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop",
-    author: "أحمد علي",
-    publishedAt: "2026-03-20T10:00:00Z",
-    views: 1250,
-    category: "ألعاب",
-    tags: ["أكشن", "2026", "مراجعات"]
-  },
-  {
-    id: "2",
-    title: "كيفية حماية هاتفك وتطبيقاتك من الاختراق والبرمجيات الضارة",
-    slug: "protect-your-phone-security",
-    excerpt: "دليل شامل لأهم الخطوات والإجراءات التي تضمن لك أماناً تاماً لهاتفك وحماية بياناتك الشخصية من المتطفلين.",
-    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2070&auto=format&fit=crop",
-    author: "سارة محمود",
-    publishedAt: "2026-03-18T14:30:00Z",
-    views: 840,
-    category: "تقنية",
-    tags: ["أمان", "خصوصية", "نصائح"]
-  },
-  {
-    id: "3",
-    title: "مراجعة شاملة لأفضل تطبيقات المونتاج على الجوال",
-    slug: "best-video-editing-apps-mobile",
-    excerpt: "إذا كنت صانع محتوى، فإليك أفضل التطبيقات التي ستساعدك على إنتاج فيديوهات احترافية مباشرة من هاتفك.",
-    image: "https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=2070&auto=format&fit=crop",
-    author: "محمد حسن",
-    publishedAt: "2026-03-15T09:15:00Z",
-    views: 2100,
-    category: "تطبيقات",
-    tags: ["مونتاج", "صناعة محتوى", "تطبيقات"]
-  },
-  {
-    id: "4",
-    title: "أسرار الربح من صناعة محتوى الألعاب في الوطن العربي",
-    slug: "earn-money-from-gaming-content",
-    excerpt: "اكتشف كيف يمكنك تحويل شغفك بالألعاب إلى مصدر دخل حقيقي ومستدام من خلال المنصات المختلفة.",
-    image: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=2070&auto=format&fit=crop",
-    author: "ياسين كريم",
-    publishedAt: "2026-03-12T11:00:00Z",
-    views: 3500,
-    category: "انضم إلينا",
-    tags: ["ربح", "يوتيوب", "ألعاب"]
-  }
-];
-
 export function BlogList() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -92,13 +41,7 @@ export function BlogList() {
       const response = await fetch(url);
 
       if (!response.ok) {
-        // Use Mock Data if API fails or doesn't exist
-        setPosts(MOCK_POSTS);
-        const uniqueCategories = Array.from(
-          new Set(MOCK_POSTS.map((p) => p.category).filter(Boolean))
-        ) as string[];
-        setCategories(uniqueCategories);
-        return;
+        throw new Error("Failed to fetch posts");
       }
 
       const contentType = response.headers.get("content-type");
@@ -109,27 +52,16 @@ export function BlogList() {
       const data = await response.json();
 
       const postsArray = data.posts || (Array.isArray(data) ? data : []);
-      
-      if (postsArray.length === 0) {
-        setPosts(MOCK_POSTS);
-        const uniqueCategories = Array.from(
-          new Set(MOCK_POSTS.map((p) => p.category).filter(Boolean))
-        ) as string[];
-        setCategories(uniqueCategories);
-      } else {
-        setPosts(postsArray);
-        const uniqueCategories = Array.from(
-          new Set(postsArray.map((p: BlogPost) => p.category).filter(Boolean))
-        ) as string[];
-        setCategories(uniqueCategories);
-      }
-    } catch (error: any) {
-      console.error("Error fetching blog posts:", error);
-      setPosts(MOCK_POSTS);
+
+      setPosts(postsArray);
       const uniqueCategories = Array.from(
-        new Set(MOCK_POSTS.map((p) => p.category).filter(Boolean))
+        new Set(postsArray.map((p: BlogPost) => p.category).filter(Boolean))
       ) as string[];
       setCategories(uniqueCategories);
+    } catch (error: any) {
+      console.error("Error fetching blog posts:", error);
+      setPosts([]);
+      setCategories([]);
     } finally {
       setIsLoading(false);
     }
@@ -143,19 +75,29 @@ export function BlogList() {
         <div className="grid md:grid-cols-2 gap-6 items-stretch">
           {skeletonCards.map((i) => (
             <div key={i} className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col h-full animate-pulse">
-               <div className="w-full aspect-[16/10] bg-gray-100" />
-               <div className="p-6 space-y-4">
-                 <div className="h-6 w-3/4 bg-gray-100 rounded" />
-                 <div className="h-4 w-full bg-gray-100 rounded" />
-                 <div className="h-4 w-5/6 bg-gray-100 rounded" />
-               </div>
+              <div className="w-full aspect-[16/10] bg-gray-100" />
+              <div className="p-6 space-y-4">
+                <div className="h-6 w-3/4 bg-gray-100 rounded" />
+                <div className="h-4 w-full bg-gray-100 rounded" />
+                <div className="h-4 w-5/6 bg-gray-100 rounded" />
+              </div>
             </div>
           ))}
         </div>
         <div className="space-y-8">
-           <div className="h-64 bg-gray-50 rounded-[3rem] animate-pulse" />
-           <div className="h-48 bg-gray-50 rounded-[3rem] animate-pulse" />
+          <div className="h-64 bg-gray-50 rounded-[3rem] animate-pulse" />
+          <div className="h-48 bg-gray-50 rounded-[3rem] animate-pulse" />
         </div>
+      </div>
+    );
+  }
+
+  if (!posts.length) {
+    return (
+      <div className="rounded-[2rem] border border-slate-100 bg-white p-10 text-center shadow-sm">
+        <Icon icon="solar:document-text-bold" className="mx-auto mb-4 h-14 w-14 text-slate-300" />
+        <h3 className="text-2xl font-black text-slate-800">لا توجد مقالات منشورة</h3>
+        <p className="mt-2 text-sm font-bold text-slate-500">تأكد من إضافة مقالات منشورة من لوحة التحكم.</p>
       </div>
     );
   }
@@ -199,7 +141,7 @@ export function BlogList() {
                 <h3 className="text-gray-900 text-xl font-black leading-tight mb-4 group-hover:text-[#FF8A00] transition-colors line-clamp-2">
                   {post.title}
                 </h3>
-                
+
                 {post.excerpt && (
                   <p className="text-gray-500 text-sm font-bold leading-relaxed line-clamp-3 mb-6 flex-1">
                     {post.excerpt}
@@ -229,7 +171,7 @@ export function BlogList() {
 
       {/* Sidebar Column (About Us style) */}
       <aside className="space-y-8">
-        {/* Join Us Ad Card (Copying About Us Sidebar pattern) */}
+        {/* Join Us Ad Card (Copying About Us Sidebar pattern)
         <div className="rounded-[3rem] bg-slate-900 p-8 text-white shadow-xl shadow-orange-900/10 relative overflow-hidden">
           <div className="relative z-10">
             <h3 className="text-2xl font-black mb-4 flex items-center gap-3">
@@ -244,22 +186,9 @@ export function BlogList() {
             </Link>
           </div>
           <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-[#FF8A00]/10 blur-2xl" />
-        </div>
+        </div> */}
 
-        {/* Contact/Newsletter Card */}
-        <div className="rounded-[3rem] border border-[#FFEDCC] bg-[#FFF8EE]/30 p-8 border-dashed">
-          <div className="flex flex-col items-center text-center space-y-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm text-[#FF8A00]">
-              <Icon icon="solar:letter-bold" className="h-8 w-8" />
-            </div>
-            <h4 className="text-xl font-black text-slate-800">اشترك في النشرة</h4>
-            <p className="text-sm font-bold text-slate-500">احصل على آخر المقالات والتحديثات مباشرة في بريدك.</p>
-            <div className="w-full space-y-2">
-              <input type="email" placeholder="بريدك الإلكتروني" className="w-full px-4 py-3 rounded-xl border border-[#FFEDCC] bg-white outline-none focus:ring-2 ring-[#FF8A00]/20" />
-              <button className="w-full py-3 rounded-xl bg-slate-800 text-white font-black hover:bg-slate-700 transition">إرسال</button>
-            </div>
-          </div>
-        </div>
+
       </aside>
 
     </div>

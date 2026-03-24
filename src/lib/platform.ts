@@ -1,3 +1,5 @@
+import { prisma } from "@/lib/db";
+
 type Category = { id: string; name: string; slug: string };
 type CatalogItem = {
     id: string;
@@ -17,50 +19,62 @@ type CatalogItem = {
     createdAt: Date;
     category: { id: string; name: string; slug: string };
 };
-type BlogPost = { id: string; title: string; slug: string; excerpt: string; image?: string };
+export type DownloadLink = { name: string; url: string };
+export type ContentDetailsItem = CatalogItem & {
+    updatedAt?: Date;
+    version?: string | null;
+    updateInfo?: string | null;
+    operatingSystem?: string | null;
+    developer?: string | null;
+    size?: string | null;
+    storeType?: "PLAY_STORE" | "APP_STORE" | "OTHER";
+    playStoreUrl?: string | null;
+    appStoreUrl?: string | null;
+    downloadUrl?: DownloadLink[];
+    securityCheck?: string | null;
+    seoTitle?: string | null;
+    seoDescription?: string | null;
+};
 
-const categories: Category[] = [
-    { id: "c1", name: "أكشن", slug: "action" },
-    { id: "c2", name: "رياضة", slug: "sports" },
-    { id: "c3", name: "سباقات", slug: "racing" },
-    { id: "c4", name: "إنتاجية", slug: "productivity" },
-    { id: "c5", name: "تصميم", slug: "design" },
-];
+function mapCatalogItem(item: any): CatalogItem {
+    return {
+        id: item.id,
+        title: item.title,
+        slug: item.slug,
+        description: item.description,
+        thumbnail: item.thumbnail || null,
+        gallery: Array.isArray(item.gallery) ? item.gallery : [],
+        rating: item.rating ?? 0,
+        ratingCount: item.ratingCount ?? 0,
+        views: item.views ?? 0,
+        downloads: item.downloads ?? 0,
+        popularityScore: 0,
+        isFeatured: Boolean(item.isFeatured),
+        isTrending: Boolean(item.isTrending),
+        published: Boolean(item.published),
+        createdAt: item.createdAt,
+        category: {
+            id: item.category.id,
+            name: item.category.name,
+            slug: item.category.slug,
+        },
+    };
+}
 
-const gamesMock: CatalogItem[] = [
-    { id: "g1", title: "قتال الأبطال", slug: "heroes-battle", description: "لعبة أكشن جماعية سريعة.", thumbnail: "/placeholder.svg", rating: 4.8, ratingCount: 340, views: 9800, downloads: 7400, popularityScore: 0, isFeatured: true, isTrending: true, published: true, createdAt: new Date("2026-03-10"), category: categories[0] },
-    { id: "g2", title: "مدير الكرة", slug: "football-manager-pro", description: "لعبة إدارة فريق كرة قدم.", thumbnail: "/placeholder.svg", rating: 4.6, ratingCount: 280, views: 8700, downloads: 6900, popularityScore: 0, isFeatured: false, isTrending: true, published: true, createdAt: new Date("2026-03-09"), category: categories[1] },
-    { id: "g3", title: "سرعة المدينة", slug: "city-rush", description: "سباقات شوارع برسوم عالية.", thumbnail: "/placeholder.svg", rating: 4.7, ratingCount: 310, views: 9100, downloads: 7200, popularityScore: 0, isFeatured: true, isTrending: false, published: true, createdAt: new Date("2026-03-12"), category: categories[2] },
-    { id: "g4", title: "قناص الظل", slug: "shadow-sniper", description: "مهمات تكتيكية متعددة.", thumbnail: "/placeholder.svg", rating: 4.5, ratingCount: 210, views: 8000, downloads: 6100, popularityScore: 0, isFeatured: false, isTrending: false, published: true, createdAt: new Date("2026-03-08"), category: categories[0] },
-];
-
-const appsMock: CatalogItem[] = [
-    { id: "a1", title: "منظم المهام الذكي", slug: "smart-tasker", description: "تنظيم يومك وإدارة الأعمال.", thumbnail: "/placeholder.svg", rating: 4.7, ratingCount: 190, views: 7600, downloads: 6200, popularityScore: 0, isFeatured: true, isTrending: true, published: true, createdAt: new Date("2026-03-11"), category: categories[3] },
-    { id: "a2", title: "استوديو التصميم", slug: "design-studio-plus", description: "أدوات تصميم واجهات سريعة.", thumbnail: "/placeholder.svg", rating: 4.8, ratingCount: 240, views: 6900, downloads: 5800, popularityScore: 0, isFeatured: true, isTrending: false, published: true, createdAt: new Date("2026-03-13"), category: categories[4] },
-    { id: "a3", title: "محول الملفات", slug: "file-convertor", description: "تحويل صيغ الملفات بسهولة.", thumbnail: "/placeholder.svg", rating: 4.4, ratingCount: 150, views: 5500, downloads: 5000, popularityScore: 0, isFeatured: false, isTrending: false, published: true, createdAt: new Date("2026-03-07"), category: categories[3] },
-    { id: "a4", title: "مفكرة السحابة", slug: "cloud-notes", description: "تدوين ومزامنة عبر الأجهزة.", thumbnail: "/placeholder.svg", rating: 4.6, ratingCount: 175, views: 6200, downloads: 5300, popularityScore: 0, isFeatured: false, isTrending: true, published: true, createdAt: new Date("2026-03-06"), category: categories[3] },
-];
-
-const blogPostsMock: BlogPost[] = [
-    { id: "b1", title: "أفضل ألعاب 2026 للأجهزة المتوسطة", slug: "best-games-2026", excerpt: "اختيارات قوية بأداء ممتاز ومساحة أقل.", image: "/placeholder.svg" },
-    { id: "b2", title: "كيف تختار التطبيق المناسب لإدارة يومك", slug: "pick-right-productivity-app", excerpt: "خطوات عملية لاختيار تطبيق فعلي ومفيد.", image: "/placeholder.svg" },
-    { id: "b3", title: "مقارنة بين ألعاب السباقات الأكثر تحميلا", slug: "racing-games-comparison", excerpt: "مقارنة سريعة بين الأداء والجرافيك.", image: "/placeholder.svg" },
-    { id: "b4", title: "نصائح لتحسين تجربة اللعب على الهاتف", slug: "mobile-gaming-tips", excerpt: "إعدادات مهمة لرفع الـ FPS وتحسين البطارية.", image: "/placeholder.svg" },
-];
-
-const adsMock = [
-    {
-        id: "ad1",
-        title: "إعلان تجريبي",
-        position: "BETWEEN_ITEMS",
-        type: "IMAGE",
-        imageUrl: "/placeholder.svg",
-        link: "#",
-        script: null,
-        frequency: 5,
-        isActive: true,
-    },
-] as const;
+function toDownloadLinks(value: unknown): DownloadLink[] {
+    if (!Array.isArray(value)) return [];
+    return value
+        .map((entry) => {
+            if (entry && typeof entry === "object") {
+                const row = entry as Record<string, unknown>;
+                const name = String(row.name || "").trim();
+                const url = String(row.url || "").trim();
+                if (name && url) return { name, url };
+            }
+            return null;
+        })
+        .filter(Boolean) as DownloadLink[];
+}
 
 
 const POPULARITY_WEIGHTS = {
@@ -70,7 +84,11 @@ const POPULARITY_WEIGHTS = {
 } as const;
 
 export function computePopularityScore(input: { downloads: number; views: number; rating: number }) {
-    return input.views * POPULARITY_WEIGHTS.views + input.downloads * POPULARITY_WEIGHTS.downloads + input.rating * POPULARITY_WEIGHTS.rating;
+    return (
+        input.views * POPULARITY_WEIGHTS.views +
+        input.downloads * POPULARITY_WEIGHTS.downloads +
+        input.rating * POPULARITY_WEIGHTS.rating
+    );
 }
 
 function withScore(items: CatalogItem[]) {
@@ -81,17 +99,46 @@ function withScore(items: CatalogItem[]) {
 }
 
 export async function getPlatformHomeData() {
-    const merged = [...withScore(gamesMock), ...withScore(appsMock)].sort((a, b) => b.popularityScore - a.popularityScore);
-    const trending = merged.filter((item) => item.isTrending);
+    const [categories, games, apps, blogPosts] = await Promise.all([
+        prisma.category.findMany({ orderBy: { createdAt: "desc" } }),
+        prisma.game.findMany({
+            where: { published: true, deletedAt: null },
+            include: { category: true },
+            orderBy: { createdAt: "desc" },
+            take: 40,
+        }),
+        prisma.app.findMany({
+            where: { published: true, deletedAt: null },
+            include: { category: true },
+            orderBy: { createdAt: "desc" },
+            take: 40,
+        }),
+        prisma.blog.findMany({
+            where: { isPublished: true },
+            orderBy: { publishedAt: "desc" },
+            take: 8,
+        }),
+    ]);
+
+    const merged = withScore([...games.map(mapCatalogItem), ...apps.map(mapCatalogItem)]).sort(
+        (a, b) => b.popularityScore - a.popularityScore
+    );
+
     return {
-        categories,
+        categories: categories.map((c) => ({ id: c.id, name: c.name, slug: c.slug })),
         featured: merged.filter((item) => item.isFeatured).slice(0, 6),
         mostPopular: [...merged].sort((a, b) => b.views - a.views).slice(0, 8),
-        trending: trending.slice(0, 8),
+        trending: merged.filter((item) => item.isTrending).slice(0, 8),
         mostDownloaded: [...merged].sort((a, b) => b.downloads - a.downloads).slice(0, 8),
         mostViewed: [...merged].sort((a, b) => b.views - a.views).slice(0, 8),
         latestAdded: [...merged].sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt)).slice(0, 8),
-        blogPosts: blogPostsMock,
+        blogPosts: blogPosts.map((post) => ({
+            id: post.id,
+            title: post.title,
+            slug: post.slug,
+            excerpt: post.excerpt || "",
+            image: post.image || "/placeholder.svg",
+        })),
     };
 }
 
@@ -105,25 +152,63 @@ export async function getCatalogData(options: {
     const page = options.page ?? 1;
     const pageSize = options.pageSize ?? 12;
     const sort = options.sort ?? "popular";
-    const source = options.type === "games" ? withScore(gamesMock) : withScore(appsMock);
-    const filtered = options.category ? source.filter((i) => i.category.slug === options.category) : source;
-    const ordered = [...filtered].sort((a, b) =>
+
+    const where = {
+        published: true,
+        deletedAt: null,
+        ...(options.category ? { category: { slug: options.category } } : {}),
+    } as const;
+
+    const orderBy =
         sort === "downloads"
-            ? b.downloads - a.downloads
+            ? { downloads: "desc" as const }
             : sort === "rating"
-                ? b.rating - a.rating
-                : sort === "latest"
-                    ? +new Date(b.createdAt) - +new Date(a.createdAt)
-                    : b.popularityScore - a.popularityScore
+                ? { rating: "desc" as const }
+                : { createdAt: "desc" as const };
+
+    const [categories, total, rows] = await Promise.all([
+        prisma.category.findMany({ orderBy: { createdAt: "desc" } }),
+        options.type === "games"
+            ? prisma.game.count({ where })
+            : prisma.app.count({ where }),
+        options.type === "games"
+            ? prisma.game.findMany({
+                where,
+                include: { category: true },
+                orderBy,
+                skip: (page - 1) * pageSize,
+                take: pageSize,
+            })
+            : prisma.app.findMany({
+                where,
+                include: { category: true },
+                orderBy,
+                skip: (page - 1) * pageSize,
+                take: pageSize,
+            }),
+    ]);
+
+    const items = withScore((rows as any[]).map(mapCatalogItem)).sort((a, b) =>
+        sort === "popular" ? b.popularityScore - a.popularityScore : 0
     );
-    const total = ordered.length;
-    const start = (page - 1) * pageSize;
-    const items = ordered.slice(start, start + pageSize);
-    return { items, total, page, pageSize, categories };
+
+    return {
+        items,
+        total,
+        page,
+        pageSize,
+        categories: categories.map((c) => ({ id: c.id, name: c.name, slug: c.slug })),
+    };
 }
 
 export async function getAdsByPlacement(placement: string) {
-    return adsMock.filter((ad) => ad.position === placement && ad.isActive);
+    return prisma.ad.findMany({
+        where: {
+            position: placement as any,
+            isActive: true,
+        },
+        orderBy: { createdAt: "desc" },
+    });
 }
 
 export function shouldRenderInlineAd(index: number, frequency: number) {
@@ -136,9 +221,51 @@ export function isImageAd(ad: { type: string }) {
 }
 
 export async function getGameBySlug(slug: string) {
-    return withScore(gamesMock).find((game) => game.slug === slug) || null;
+    const game = await prisma.game.findFirst({
+        where: { slug, published: true, deletedAt: null },
+        include: { category: true },
+    });
+    if (!game) return null;
+    const base = withScore([mapCatalogItem(game)])[0];
+    return {
+        ...base,
+        updatedAt: game.updatedAt,
+        version: game.version,
+        updateInfo: game.updateInfo,
+        operatingSystem: game.operatingSystem,
+        developer: game.developer,
+        size: game.size,
+        storeType: game.storeType,
+        playStoreUrl: game.playStoreUrl,
+        appStoreUrl: game.appStoreUrl,
+        downloadUrl: toDownloadLinks(game.downloadUrl),
+        securityCheck: game.securityCheck,
+        seoTitle: game.seoTitle,
+        seoDescription: game.seoDescription,
+    } as ContentDetailsItem;
 }
 
 export async function getAppBySlug(slug: string) {
-    return withScore(appsMock).find((app) => app.slug === slug) || null;
+    const app = await prisma.app.findFirst({
+        where: { slug, published: true, deletedAt: null },
+        include: { category: true },
+    });
+    if (!app) return null;
+    const base = withScore([mapCatalogItem(app)])[0];
+    return {
+        ...base,
+        updatedAt: app.updatedAt,
+        version: app.version,
+        updateInfo: app.updateInfo,
+        operatingSystem: app.operatingSystem,
+        developer: app.developer,
+        size: app.size,
+        storeType: app.storeType,
+        playStoreUrl: app.playStoreUrl,
+        appStoreUrl: app.appStoreUrl,
+        downloadUrl: toDownloadLinks(app.downloadUrl),
+        securityCheck: app.securityCheck,
+        seoTitle: app.seoTitle,
+        seoDescription: app.seoDescription,
+    } as ContentDetailsItem;
 }

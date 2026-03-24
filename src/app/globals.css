@@ -409,7 +409,7 @@ body {
   line-height: 1.5;
 }
 
-[class*="text-"] ul,
+/* [class*="text-"] ul,
 [class*="text-"] ol,
 p[class*="text-"] ul,
 p[class*="text-"] ol,
@@ -438,4 +438,4 @@ span[class*="text-"] li {
   list-style-position: outside;
 }
  
- 
+  */

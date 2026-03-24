@@ -34,67 +34,6 @@ type BlogPost = {
   seoDescription: string | null;
 };
 
-const MOCK_DETAILS: Record<string, BlogPost> = {
-  "earn-money-from-gaming-content": {
-    id: "4",
-    title: "أسرار الربح من صناعة محتوى الألعاب في الوطن العربي",
-    slug: "earn-money-from-gaming-content",
-    excerpt: "اكتشف كيف يمكنك تحويل شغفك بالألعاب إلى مصدر دخل حقيقي ومستدام من خلال المنصات المختلفة واستراتيجيات التسويق الحديثة.",
-    content: `
-      <h2>مقدمة في عالم الربح من الألعاب</h2>
-      <p>لم يعد اللعب مجرد تسلية فحسب، بل أصبح صناعة تدر مليارات الدولارات سنوياً. في عالمنا العربي، هناك فرص هائلة لصناع المحتوى الذين يمتلكون الشغف والقدرة على تقديم محتوى مميز.</p>
-      
-      <h3>1. إنشاء قناة على يوتيوب وتويتش</h3>
-      <p>البث المباشر (Streaming) هو أحد أسرع الطرق لبناء قاعدة جماهيرية. يمكنك من خلال منصة <strong>Twitch</strong> أو <strong>YouTube Gaming</strong> الحصول على دعم مباشر من المتابعين عبر التبرعات أو الاشتراكات الشهرية.</p>
-
-      <blockquote>
-        الصبر والاستمرار هما مفتاح النجاح في عالم صناعة المحتوى. لا تتوقع نتائج سريعة من الشهر الأول.
-      </blockquote>
-
-      <h3>2. التسويق بالعمولة (Affiliate Marketing)</h3>
-      <p>يمكنك مراجعة الأجهزة والملحقات الخاصة بالألعاب ووضع روابط لشراء هذه المنتجات. ستحصل على عمولة مقابل كل عملية شراء تتم من خلالك.</p>
-
-      <h3>3. الانضمام إلى برنامج يلا7 بلاي</h3>
-      <p>نحن في <strong>يلا7 بلاي</strong> نوفر فرصة ذهبية للمبدعين لزيادة أرباحهم من خلال مشاركة روابط الألعاب والتطبيقات الموثوقة والحصول على مكافآت دورية بناءً على الأداء.</p>
-
-      <h3>خاتمة</h3>
-      <p>صناعة محتوى الألعاب تتطلب إبداعاً وتطويراً مستمراً. ابدأ الآن بالأدوات المتاحة لك وطوّر مهاراتك مع مرور الوقت.</p>
-    `,
-    image: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=2070&auto=format&fit=crop",
-    author: "ياسين كريم",
-    publishedAt: "2026-03-12T11:00:00Z",
-    views: 3500,
-    category: "انضم إلينا",
-    tags: ["ربح", "يوتيوب", "ألعاب"],
-    seoTitle: "الربح من محتوى الألعاب",
-    seoDescription: "دليل شامل للربح من صناعة محتوى الألعاب"
-  },
-  "best-action-games-2026": {
-    id: "1",
-    title: "أفضل ألعاب الأكشن لعام 2026 التي يجب عليك تجربتها",
-    slug: "best-action-games-2026",
-    excerpt: "تعرف على قائمة أقوى ألعاب الأكشن والمغامرات التي ستصدر هذا العام مع مراجعة شاملة لأسلوب اللعب والرسوميات.",
-    content: `
-      <p>هذا العام يعد من أقوى الأعوام لمحبي ألعاب الأكشن. إليكم تفاصيل أهم الإصدارات المرتقبة...</p>
-      <h2>ألعاب عالم مفتوح جديدة</h2>
-      <p>شهدنا تطوراً مذهلاً في تقنيات الرسوميات وأسلوب اللعب...</p>
-    `,
-    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop",
-    author: "أحمد علي",
-    publishedAt: "2026-03-20T10:00:00Z",
-    views: 1250,
-    category: "ألعاب",
-    tags: ["أكشن", "2026", "مراجعات"],
-    seoTitle: "أفضل ألعاب 2026",
-    seoDescription: "أفضل ألعاب الأكشن"
-  }
-};
-
-const MOCK_RELATED = [
-  MOCK_DETAILS["earn-money-from-gaming-content"],
-  MOCK_DETAILS["best-action-games-2026"]
-];
-
 export default function BlogPostPage() {
   const params = useParams();
   const slug = params?.slug as string;
@@ -129,7 +68,7 @@ export default function BlogPostPage() {
     if (post && post.publishedAt) {
       const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yalla7play.com";
       const image = post.image || `${siteUrl}/og-image.jpg`;
-      
+
       const data = generateStructuredData({
         type: "Article",
         data: {
@@ -150,31 +89,21 @@ export default function BlogPostPage() {
     setIsLoading(true);
     try {
       const response = await fetch(`/api/blog/${slug}`);
-      
+
       const contentType = response.headers.get("content-type");
       if (!response.ok || !contentType || !contentType.includes("application/json")) {
-        // Use Mock Data
-        if (MOCK_DETAILS[slug]) {
-          setPost(MOCK_DETAILS[slug]);
-          setRelatedPosts(MOCK_RELATED.filter(p => p.slug !== slug).slice(0, 3));
-        } else {
-          throw new Error("Post not found or invalid response type");
-        }
-        return;
+        throw new Error("Post not found or invalid response type");
       }
 
       const data = await response.json();
       setPost(data);
-      
+
       // Fetch related posts
       fetchRelatedPosts(data.id);
     } catch (error) {
       console.error("Error fetching blog post:", error);
-      // Final fallback to mock if available for this slug
-      if (MOCK_DETAILS[slug]) {
-        setPost(MOCK_DETAILS[slug]);
-        setRelatedPosts(MOCK_RELATED.filter(p => p.slug !== slug).slice(0, 3));
-      }
+      setPost(null);
+      setRelatedPosts([]);
     } finally {
       setIsLoading(false);
     }
@@ -198,7 +127,7 @@ export default function BlogPostPage() {
     }
   };
 
- 
+
   const tagsArray = useMemo(() => parseTags(post?.tags || null), [post?.tags]);
 
   // Share functionality
@@ -217,7 +146,7 @@ export default function BlogPostPage() {
   const shareOnPlatform = (platform: string) => {
     const encodedUrl = encodeURIComponent(shareUrl);
     const encodedTitle = encodeURIComponent(shareTitle);
-    
+
     const shareLinks: Record<string, string> = {
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
       twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
@@ -274,7 +203,7 @@ export default function BlogPostPage() {
   if (!post) {
     return (
       <main>
-        <div className="container mx-auto px-4 py-20 text-center">
+        <div className="container min-h-screen mx-auto mt-40 px-4 py-20 text-center">
           <Icon
             icon="solar:document-text-bold"
             className="w-16 h-16 mx-auto text-gray-400 mb-4"
@@ -309,50 +238,50 @@ export default function BlogPostPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Custom Blog Detail Hero (About Us Style) */}
           <AnimatedContent distance={22} duration={0.7}>
-          <div className="relative overflow-hidden rounded-[2rem] md:rounded-[3rem] bg-gradient-to-br from-[#0b1c3d] to-[#1a237e] p-8 md:p-12 text-white shadow-2xl mb-12 md:mb-16">
-            <div className="relative z-10 max-w-4xl">
-              {/* Category Badge */}
-              {post.category && (
-                <div className="mb-6">
-                  <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-[10px] md:text-xs font-black text-[#FF8A00] uppercase tracking-widest">
-                    <Icon icon="solar:bookmark-bold" className="w-3.5 h-3.5" />
-                    {post.category}
-                  </span>
-                </div>
-              )}
-
-              
-              <h1 className="text-3xl font-black md:text-6xl mb-6 leading-tight">
-                {post.title}
-              </h1>
-              
-              {post.excerpt && (
-                <p className="text-lg md:text-xl text-blue-100 leading-relaxed font-bold opacity-90 max-w-2xl">
-                  {post.excerpt}
-                </p>
-              )}
-
-              {/* Quick Meta in Hero */}
-              <div className="mt-8 md:mt-10 flex flex-wrap gap-4 md:gap-6 text-xs md:sm font-bold text-blue-200">
-
-                <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10">
-                    <Icon icon="solar:user-bold" className="w-4 h-4" />
+            <div className="relative overflow-hidden rounded-[2rem] md:rounded-[3rem] bg-gradient-to-br from-[#0b1c3d] to-[#1a237e] p-8 md:p-12 text-white shadow-2xl mb-12 md:mb-16">
+              <div className="relative z-10 max-w-4xl">
+                {/* Category Badge */}
+                {post.category && (
+                  <div className="mb-6">
+                    <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-[10px] md:text-xs font-black text-[#FF8A00] uppercase tracking-widest">
+                      <Icon icon="solar:bookmark-bold" className="w-3.5 h-3.5" />
+                      {post.category}
+                    </span>
                   </div>
-                  <span>{post.author || "فريق يلا7 بلاي"}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10">
-                    <Icon icon="solar:calendar-bold" className="w-4 h-4" />
+                )}
+
+
+                <h1 className="text-3xl font-black md:text-6xl mb-6 leading-tight">
+                  {post.title}
+                </h1>
+
+                {post.excerpt && (
+                  <p className="text-lg md:text-xl text-blue-100 leading-relaxed font-bold opacity-90 max-w-2xl">
+                    {post.excerpt}
+                  </p>
+                )}
+
+                {/* Quick Meta in Hero */}
+                <div className="mt-8 md:mt-10 flex flex-wrap gap-4 md:gap-6 text-xs md:sm font-bold text-blue-200">
+
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10">
+                      <Icon icon="solar:user-bold" className="w-4 h-4" />
+                    </div>
+                    <span>{post.author || "فريق يلا7 بلاي"}</span>
                   </div>
-                  <span>{formatDate(post.publishedAt)}</span>
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10">
+                      <Icon icon="solar:calendar-bold" className="w-4 h-4" />
+                    </div>
+                    <span>{formatDate(post.publishedAt)}</span>
+                  </div>
                 </div>
               </div>
+              {/* Background elements for hero */}
+              <div className="absolute -right-20 -bottom-20 h-96 w-96 rounded-full bg-white/5 blur-3xl opacity-30" />
+              <div className="absolute -left-10 top-1/4 h-32 w-32 rounded-full bg-[#FF8A00]/10 blur-2xl" />
             </div>
-            {/* Background elements for hero */}
-            <div className="absolute -right-20 -bottom-20 h-96 w-96 rounded-full bg-white/5 blur-3xl opacity-30" />
-            <div className="absolute -left-10 top-1/4 h-32 w-32 rounded-full bg-[#FF8A00]/10 blur-2xl" />
-          </div>
           </AnimatedContent>
 
         </div>
@@ -360,49 +289,49 @@ export default function BlogPostPage() {
 
 
 
-      <article dir="rtl" className="py-12 bg-gradient-to-b from-white to-gray-50/30">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <div className="mb-8 pb-6 border-b border-gray-200">
-            <div className="flex flex-wrap items-center gap-4 mb-4 text-sm justify-center lg:justify-start">
-              <span className="flex items-center gap-2 text-slate-500 font-bold bg-[#FFF8EE] px-3 py-1.5 rounded-xl border border-orange-100">
-                <Icon icon="solar:eye-bold" className="w-4 h-4 text-[#FF8A00]" />
-                {post.views} مشاهدة
-              </span>
+        <article dir="rtl" className="py-12 bg-gradient-to-b from-white to-gray-50/30">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+            <div className="mb-8 pb-6 border-b border-gray-200">
+              <div className="flex flex-wrap items-center gap-4 mb-4 text-sm justify-center lg:justify-start">
+                <span className="flex items-center gap-2 text-slate-500 font-bold bg-[#FFF8EE] px-3 py-1.5 rounded-xl border border-orange-100">
+                  <Icon icon="solar:eye-bold" className="w-4 h-4 text-[#FF8A00]" />
+                  {post.views} مشاهدة
+                </span>
+              </div>
+
+
+
+              {tagsArray.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {tagsArray.map((tag: string, index: number) => (
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className="px-2.5 py-1 text-xs bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+                    >
+                      #{tag}
+                    </Badge>
+                  ))}
+                </div>
+              )}
             </div>
 
-
- 
-            {tagsArray.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-4">
-                {tagsArray.map((tag: string, index: number) => (
-                  <Badge 
-                    key={index} 
-                    variant="secondary"
-                    className="px-2.5 py-1 text-xs bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
-                  >
-                    #{tag}
-                  </Badge>
-                ))}
+            {post.image && (
+              <div className="flex justify-center mb-12">
+                <div className="relative w-[600px] h-[300px]  overflow-hidden">
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    fill
+                    className="object-contain p-2"
+                    priority
+                  />
+                </div>
               </div>
             )}
-          </div>
- 
-          {post.image && (
-            <div className="flex justify-center mb-12">
-              <div className="relative w-[600px] h-[300px]  overflow-hidden">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  className="object-contain p-2"
-                  priority
-                />
-              </div>
-            </div>
-          )}
- 
-          <div
-            className="prose prose-lg prose-slate max-w-none
+
+            <div
+              className="prose prose-lg prose-slate max-w-none
               prose-headings:font-bold prose-headings:text-gray-900 prose-headings:mt-8 prose-headings:mb-4
               prose-h1:text-4xl prose-h1:leading-tight prose-h1:border-b prose-h1:border-gray-200 prose-h1:pb-4
               prose-h2:text-3xl prose-h2:leading-tight prose-h2:mt-10 prose-h2:mb-4
@@ -422,150 +351,150 @@ export default function BlogPostPage() {
               prose-th:border prose-th:border-gray-300 prose-th:bg-gray-100 prose-th:px-4 prose-th:py-2 prose-th:text-right
               prose-td:border prose-td:border-gray-300 prose-td:px-4 prose-td:py-2
              "
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
 
-          {/* Related Posts */}
-          {relatedPosts.length > 0 && (
-            <div className="mt-16 pt-12 border-t border-gray-200">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-1 h-8 rounded-full bg-blue-600" />
-                <h2 className="text-2xl font-bold text-gray-900">مقالات ذات صلة</h2>
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {relatedPosts.map((relatedPost) => (
-                  <Link
-                    key={relatedPost.id}
-                    href={`/blog/${relatedPost.slug}`}
-                    className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-gray-100 hover:border-blue-200"
-                  >
-                    {relatedPost.image && (
-                      <div className="relative w-full h-48 overflow-hidden bg-gray-100">
-                        <Image
-                          src={relatedPost.image}
-                          alt={relatedPost.title}
-                          fill
-                          className="object-contain group-hover:scale-105 transition-transform duration-300"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                      </div>
-                    )}
-                    <div className="p-5 flex flex-col flex-1">
-                      {relatedPost.category && (
-                        <Badge 
-                          variant="outline" 
-                          className="mb-3 w-fit text-xs"
-                        >
-                          {relatedPost.category}
-                        </Badge>
+            {/* Related Posts */}
+            {relatedPosts.length > 0 && (
+              <div className="mt-16 pt-12 border-t border-gray-200">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-1 h-8 rounded-full bg-blue-600" />
+                  <h2 className="text-2xl font-bold text-gray-900">مقالات ذات صلة</h2>
+                </div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {relatedPosts.map((relatedPost) => (
+                    <Link
+                      key={relatedPost.id}
+                      href={`/blog/${relatedPost.slug}`}
+                      className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-gray-100 hover:border-blue-200"
+                    >
+                      {relatedPost.image && (
+                        <div className="relative w-full h-48 overflow-hidden bg-gray-100">
+                          <Image
+                            src={relatedPost.image}
+                            alt={relatedPost.title}
+                            fill
+                            className="object-contain group-hover:scale-105 transition-transform duration-300"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
+                        </div>
                       )}
-                      <h3 className="text-lg font-bold mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
-                        {relatedPost.title}
-                      </h3>
-                      {relatedPost.excerpt && (
-                        <p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-1">
-                          {relatedPost.excerpt}
-                        </p>
-                      )}
-                      <div className="flex items-center justify-between text-xs text-gray-500 mt-auto pt-3 border-t border-gray-100">
-                        {relatedPost.publishedAt && (
-                          <span className="flex items-center gap-1">
-                            <Icon icon="solar:calendar-bold" className="w-3.5 h-3.5" />
-                            {formatDate(relatedPost.publishedAt)}
-                          </span>
+                      <div className="p-5 flex flex-col flex-1">
+                        {relatedPost.category && (
+                          <Badge
+                            variant="outline"
+                            className="mb-3 w-fit text-xs"
+                          >
+                            {relatedPost.category}
+                          </Badge>
                         )}
-                        <span className="flex items-center gap-1">
-                          <Icon icon="solar:eye-bold" className="w-3.5 h-3.5" />
-                          {relatedPost.views}
-                        </span>
+                        <h3 className="text-lg font-bold mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
+                          {relatedPost.title}
+                        </h3>
+                        {relatedPost.excerpt && (
+                          <p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-1">
+                            {relatedPost.excerpt}
+                          </p>
+                        )}
+                        <div className="flex items-center justify-between text-xs text-gray-500 mt-auto pt-3 border-t border-gray-100">
+                          {relatedPost.publishedAt && (
+                            <span className="flex items-center gap-1">
+                              <Icon icon="solar:calendar-bold" className="w-3.5 h-3.5" />
+                              {formatDate(relatedPost.publishedAt)}
+                            </span>
+                          )}
+                          <span className="flex items-center gap-1">
+                            <Icon icon="solar:eye-bold" className="w-3.5 h-3.5" />
+                            {relatedPost.views}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Footer */}
-          <div className="mt-16 pt-8 border-t border-gray-200">
-            <div className="flex items-center justify-between flex-wrap gap-4">
-              <Link
-                href="/blog"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FF8A00] text-white font-medium hover:bg-[#e67e00] transition-colors shadow-md hover:shadow-lg"
-              >
+            {/* Footer */}
+            <div className="mt-16 pt-8 border-t border-gray-200">
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <Link
+                  href="/blog"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FF8A00] text-white font-medium hover:bg-[#e67e00] transition-colors shadow-md hover:shadow-lg"
+                >
 
-                <Icon icon="solar:arrow-right-bold" className="w-5 h-5" />
-                العودة إلى المدونة
-              </Link>
-              
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border-gray-300 hover:bg-gray-50 transition-colors"
-                  >
-                    <Icon icon="solar:share-bold" className="w-4 h-4" />
-                    مشاركة المقال
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  {typeof window !== 'undefined' && 'share' in navigator && (
+                  <Icon icon="solar:arrow-right-bold" className="w-5 h-5" />
+                  العودة إلى المدونة
+                </Link>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border-gray-300 hover:bg-gray-50 transition-colors"
+                    >
+                      <Icon icon="solar:share-bold" className="w-4 h-4" />
+                      مشاركة المقال
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    {typeof window !== 'undefined' && 'share' in navigator && (
+                      <DropdownMenuItem
+                        onClick={handleNativeShare}
+                        className="cursor-pointer"
+                      >
+                        <Icon icon="solar:share-bold" className="w-4 h-4 ml-2" />
+                        مشاركة...
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuItem
-                      onClick={handleNativeShare}
+                      onClick={copyLink}
                       className="cursor-pointer"
                     >
-                      <Icon icon="solar:share-bold" className="w-4 h-4 ml-2" />
-                      مشاركة...
+                      <Icon icon="solar:copy-bold" className="w-4 h-4 ml-2" />
+                      نسخ الرابط
                     </DropdownMenuItem>
-                  )}
-                  <DropdownMenuItem
-                    onClick={copyLink}
-                    className="cursor-pointer"
-                  >
-                    <Icon icon="solar:copy-bold" className="w-4 h-4 ml-2" />
-                    نسخ الرابط
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => shareOnPlatform('facebook')}
-                    className="cursor-pointer"
-                  >
-                    <Icon icon="mdi:facebook" className="w-4 h-4 ml-2 text-blue-600" />
-                    فيسبوك
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => shareOnPlatform('twitter')}
-                    className="cursor-pointer"
-                  >
-                    <Icon icon="simple-icons:x" className="w-4 h-4 ml-2" />
-                    تويتر / X
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => shareOnPlatform('whatsapp')}
-                    className="cursor-pointer"
-                  >
-                    <Icon icon="mdi:whatsapp" className="w-4 h-4 ml-2 text-green-600" />
-                    واتساب
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => shareOnPlatform('telegram')}
-                    className="cursor-pointer"
-                  >
-                    <Icon icon="mdi:telegram" className="w-4 h-4 ml-2 text-blue-500" />
-                    تيليجرام
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => shareOnPlatform('linkedin')}
-                    className="cursor-pointer"
-                  >
-                    <Icon icon="mdi:linkedin" className="w-4 h-4 ml-2 text-blue-700" />
-                    لينكد إن
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                    <DropdownMenuItem
+                      onClick={() => shareOnPlatform('facebook')}
+                      className="cursor-pointer"
+                    >
+                      <Icon icon="mdi:facebook" className="w-4 h-4 ml-2 text-blue-600" />
+                      فيسبوك
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => shareOnPlatform('twitter')}
+                      className="cursor-pointer"
+                    >
+                      <Icon icon="simple-icons:x" className="w-4 h-4 ml-2" />
+                      تويتر / X
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => shareOnPlatform('whatsapp')}
+                      className="cursor-pointer"
+                    >
+                      <Icon icon="mdi:whatsapp" className="w-4 h-4 ml-2 text-green-600" />
+                      واتساب
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => shareOnPlatform('telegram')}
+                      className="cursor-pointer"
+                    >
+                      <Icon icon="mdi:telegram" className="w-4 h-4 ml-2 text-blue-500" />
+                      تيليجرام
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => shareOnPlatform('linkedin')}
+                      className="cursor-pointer"
+                    >
+                      <Icon icon="mdi:linkedin" className="w-4 h-4 ml-2 text-blue-700" />
+                      لينكد إن
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
           </div>
-        </div>
-      </article>
+        </article>
       </main>
     </>
   );

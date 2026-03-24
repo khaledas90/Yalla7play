@@ -41,7 +41,7 @@ export async function generateMetadata({
       keywords: [
         "مقال",
         "مدونة",
-        "شيل همي",
+        "يلا7 بلاي",
         post.category || "",
       ].filter(Boolean),
       image,
@@ -49,7 +49,7 @@ export async function generateMetadata({
       type: "article",
       publishedTime: post.publishedAt.toISOString(),
       modifiedTime: post.updatedAt?.toISOString() || post.publishedAt.toISOString(),
-      author: post.author || "شيل همي",
+      author: post.author || "يلا7 بلاي",
     });
   } catch (error) {
     console.error("Error generating metadata for blog post:", error);
