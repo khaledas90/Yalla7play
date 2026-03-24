@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -94,11 +95,12 @@ export default function LoginForm() {
         toast.success("تم تسجيل الدخول بنجاح", {
           description: "مرحباً بك في النظام",
         });
-        if (callbackUrl && result.url) {
-          router.replace(result.url);
-        } else {
-          router.refresh();
-        }
+        const targetUrl =
+          callbackUrl ||
+          (result?.url && result.url.startsWith("/")
+            ? result.url
+            : getRedirectPath(session?.user?.role));
+        router.replace(targetUrl);
         router.refresh();
       }
     } catch {
@@ -237,15 +239,24 @@ export default function LoginForm() {
             </Button>
           </form>
 
-          <div className="pt-4 border-t border-gray-200">
+          <div className="space-y-1 pt-4 border-t border-gray-200">
             <p className="text-xs text-center text-gray-500">
               نسيت كلمة المرور؟{" "}
-              <a
+              <Link
                 href="#"
                 className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
               >
                 استعادة كلمة المرور
-              </a>
+              </Link>
+            </p>
+            <p className="text-xs text-center  text-gray-500">
+              ليس لديك حساب؟{" "}
+              <Link
+                href="/register"
+                className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
+              >
+                انشاء حساب
+              </Link>
             </p>
           </div>
         </CardContent>

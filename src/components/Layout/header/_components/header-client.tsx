@@ -201,13 +201,20 @@ export function HeaderClient() {
           </div>
 
           <div className="hidden lg:flex items-center gap-4 px-3">
-            <Link 
+            <Link
+              href="/register"
+              className="flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-black text-white transition-all hover:bg-blue-700 shadow-lg shadow-blue-500/20 active:scale-95"
+            >
+              <Icon icon="solar:user-bold" className="w-4 h-4" />
+              انشاء حساب
+            </Link>
+            {/* <Link 
               href="/join-us" 
               className="flex items-center gap-2 rounded-xl bg-[#FF8A00] px-5 py-2.5 text-sm font-black text-white transition-all hover:bg-[#e67e00] shadow-lg shadow-orange-500/20 active:scale-95"
             >
               <Icon icon="solar:crown-minimalistic-bold" className="w-4 h-4" />
               انضم إلينا
-            </Link>
+            </Link> */}
             <HeaderSearch brandColor={BRAND} />
           </div>
 
