@@ -43,11 +43,11 @@ export default function JoinUsPage() {
             <div className="flex flex-wrap justify-center gap-4">
               <div className="rounded-2xl bg-white/10 px-6 py-3 backdrop-blur-md">
                 <span className="text-2xl font-black">150+ EGP</span>
-                <p className="text-xs font-bold text-blue-200">أرباح أسبوعية متوقعة</p>
+                <p className="text-xs font-bold text-blue-100">أرباح أسبوعية متوقعة (جنيه مصري)</p>
               </div>
               <div className="rounded-2xl bg-white/10 px-6 py-3 backdrop-blur-md">
-                <span className="text-2xl font-black">50,000 EGP</span>
-                <p className="text-xs font-bold text-blue-200">تم تحويلهم للمبدعين</p>
+                <span className="text-2xl font-black">50,000+ EGP</span>
+                <p className="text-xs font-bold text-blue-100">تم تحويلهم للمبدعين (جنيه مصري)</p>
               </div>
             </div>
           </div>

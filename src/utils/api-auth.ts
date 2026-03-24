@@ -10,7 +10,7 @@ export async function checkAuth(request: NextRequest): Promise<{
   user: {
     id: string;
     email: string;
-    name: string;
+    name: string | null;
     role: string;
     isActive: boolean;
   } | null;
@@ -86,7 +86,7 @@ export async function requireAuth(request: NextRequest): Promise<{
   user: {
     id: string;
     email: string;
-    name: string;
+    name: string | null;
     role: string;
     isActive: boolean;
   };

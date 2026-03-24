@@ -19,7 +19,9 @@ type Settings = {
   secondaryColor: string | null;
   siteTitle: string | null;
   siteDescription: string | null;
+  siteKeywords: string | null;
   adsEnabled: boolean;
+  currency: string;
 };
 
 interface SettingsFormProps {
@@ -111,6 +113,15 @@ export function SettingsForm({ settings, onSuccess }: SettingsFormProps) {
             />
           </div>
           <div>
+            <Label>العملة المستخدمة (مثال: JOD, USD)</Label>
+            <Input
+              value={formData.currency || "JOD"}
+              onChange={(e) =>
+                setFormData({ ...formData, currency: e.target.value })
+              }
+            />
+          </div>
+          <div>
             <Label>وصف SEO</Label>
             <Textarea
               value={formData.siteDescription || ""}
@@ -118,6 +129,17 @@ export function SettingsForm({ settings, onSuccess }: SettingsFormProps) {
                 setFormData({ ...formData, siteDescription: e.target.value })
               }
               rows={3}
+            />
+          </div>
+          <div>
+            <Label>الكلمات المفتاحية (SEO Keywords - مفصولة بفاصلة)</Label>
+            <Textarea
+              value={formData.siteKeywords || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, siteKeywords: e.target.value })
+              }
+              rows={2}
+              placeholder="مثال: خدمة طلابية, حل أسايمنت, أبحاث جامعية"
             />
           </div>
           <div className="flex items-center justify-between">

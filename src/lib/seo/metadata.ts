@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getSettings } from "../settings";
+import { getSettings, PublicSettings } from "../settings";
 
 export interface SEOConfig {
   title?: string;
@@ -25,7 +25,7 @@ const getDefaultImage = () => {
 };
 
 export async function generateSEOMetadata(config: SEOConfig = {}): Promise<Metadata> {
-  const settings = await getSettings();
+  const settings: PublicSettings = await getSettings();
   const siteUrl = getSiteUrl();
 
   const title = config.title

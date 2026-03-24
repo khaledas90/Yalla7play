@@ -28,17 +28,17 @@ const categories: Category[] = [
 ];
 
 const gamesMock: CatalogItem[] = [
-    { id: "g1", title: "قتال الأبطال", slug: "heroes-battle", description: "لعبة أكشن جماعية سريعة.", thumbnail: "/main-bg.jpg", rating: 4.8, ratingCount: 340, views: 9800, downloads: 7400, popularityScore: 0, isFeatured: true, isTrending: true, published: true, createdAt: new Date("2026-03-10"), category: categories[0] },
-    { id: "g2", title: "مدير الكرة", slug: "football-manager-pro", description: "لعبة إدارة فريق كرة قدم.", thumbnail: "/main-bg.jpg", rating: 4.6, ratingCount: 280, views: 8700, downloads: 6900, popularityScore: 0, isFeatured: false, isTrending: true, published: true, createdAt: new Date("2026-03-09"), category: categories[1] },
-    { id: "g3", title: "سرعة المدينة", slug: "city-rush", description: "سباقات شوارع برسوم عالية.", thumbnail: "/main-bg.jpg", rating: 4.7, ratingCount: 310, views: 9100, downloads: 7200, popularityScore: 0, isFeatured: true, isTrending: false, published: true, createdAt: new Date("2026-03-12"), category: categories[2] },
-    { id: "g4", title: "قناص الظل", slug: "shadow-sniper", description: "مهمات تكتيكية متعددة.", thumbnail: "/main-bg.jpg", rating: 4.5, ratingCount: 210, views: 8000, downloads: 6100, popularityScore: 0, isFeatured: false, isTrending: false, published: true, createdAt: new Date("2026-03-08"), category: categories[0] },
+    { id: "g1", title: "قتال الأبطال", slug: "heroes-battle", description: "لعبة أكشن جماعية سريعة.", thumbnail: "/placeholder.svg", rating: 4.8, ratingCount: 340, views: 9800, downloads: 7400, popularityScore: 0, isFeatured: true, isTrending: true, published: true, createdAt: new Date("2026-03-10"), category: categories[0] },
+    { id: "g2", title: "مدير الكرة", slug: "football-manager-pro", description: "لعبة إدارة فريق كرة قدم.", thumbnail: "/placeholder.svg", rating: 4.6, ratingCount: 280, views: 8700, downloads: 6900, popularityScore: 0, isFeatured: false, isTrending: true, published: true, createdAt: new Date("2026-03-09"), category: categories[1] },
+    { id: "g3", title: "سرعة المدينة", slug: "city-rush", description: "سباقات شوارع برسوم عالية.", thumbnail: "/placeholder.svg", rating: 4.7, ratingCount: 310, views: 9100, downloads: 7200, popularityScore: 0, isFeatured: true, isTrending: false, published: true, createdAt: new Date("2026-03-12"), category: categories[2] },
+    { id: "g4", title: "قناص الظل", slug: "shadow-sniper", description: "مهمات تكتيكية متعددة.", thumbnail: "/placeholder.svg", rating: 4.5, ratingCount: 210, views: 8000, downloads: 6100, popularityScore: 0, isFeatured: false, isTrending: false, published: true, createdAt: new Date("2026-03-08"), category: categories[0] },
 ];
 
 const appsMock: CatalogItem[] = [
-    { id: "a1", title: "منظم المهام الذكي", slug: "smart-tasker", description: "تنظيم يومك وإدارة الأعمال.", thumbnail: "/main-bg.jpg", rating: 4.7, ratingCount: 190, views: 7600, downloads: 6200, popularityScore: 0, isFeatured: true, isTrending: true, published: true, createdAt: new Date("2026-03-11"), category: categories[3] },
-    { id: "a2", title: "استوديو التصميم", slug: "design-studio-plus", description: "أدوات تصميم واجهات سريعة.", thumbnail: "/main-bg.jpg", rating: 4.8, ratingCount: 240, views: 6900, downloads: 5800, popularityScore: 0, isFeatured: true, isTrending: false, published: true, createdAt: new Date("2026-03-13"), category: categories[4] },
-    { id: "a3", title: "محول الملفات", slug: "file-convertor", description: "تحويل صيغ الملفات بسهولة.", thumbnail: "/main-bg.jpg", rating: 4.4, ratingCount: 150, views: 5500, downloads: 5000, popularityScore: 0, isFeatured: false, isTrending: false, published: true, createdAt: new Date("2026-03-07"), category: categories[3] },
-    { id: "a4", title: "مفكرة السحابة", slug: "cloud-notes", description: "تدوين ومزامنة عبر الأجهزة.", thumbnail: "/main-bg.jpg", rating: 4.6, ratingCount: 175, views: 6200, downloads: 5300, popularityScore: 0, isFeatured: false, isTrending: true, published: true, createdAt: new Date("2026-03-06"), category: categories[3] },
+    { id: "a1", title: "منظم المهام الذكي", slug: "smart-tasker", description: "تنظيم يومك وإدارة الأعمال.", thumbnail: "/placeholder.svg", rating: 4.7, ratingCount: 190, views: 7600, downloads: 6200, popularityScore: 0, isFeatured: true, isTrending: true, published: true, createdAt: new Date("2026-03-11"), category: categories[3] },
+    { id: "a2", title: "استوديو التصميم", slug: "design-studio-plus", description: "أدوات تصميم واجهات سريعة.", thumbnail: "/placeholder.svg", rating: 4.8, ratingCount: 240, views: 6900, downloads: 5800, popularityScore: 0, isFeatured: true, isTrending: false, published: true, createdAt: new Date("2026-03-13"), category: categories[4] },
+    { id: "a3", title: "محول الملفات", slug: "file-convertor", description: "تحويل صيغ الملفات بسهولة.", thumbnail: "/placeholder.svg", rating: 4.4, ratingCount: 150, views: 5500, downloads: 5000, popularityScore: 0, isFeatured: false, isTrending: false, published: true, createdAt: new Date("2026-03-07"), category: categories[3] },
+    { id: "a4", title: "مفكرة السحابة", slug: "cloud-notes", description: "تدوين ومزامنة عبر الأجهزة.", thumbnail: "/placeholder.svg", rating: 4.6, ratingCount: 175, views: 6200, downloads: 5300, popularityScore: 0, isFeatured: false, isTrending: true, published: true, createdAt: new Date("2026-03-06"), category: categories[3] },
 ];
 
 const blogPostsMock: BlogPost[] = [
@@ -54,13 +54,14 @@ const adsMock = [
         title: "إعلان تجريبي",
         position: "BETWEEN_ITEMS",
         type: "IMAGE",
-        imageUrl: "/main-bg.jpg",
+        imageUrl: "/placeholder.svg",
         link: "#",
         script: null,
         frequency: 5,
         isActive: true,
     },
 ] as const;
+
 
 const POPULARITY_WEIGHTS = {
     views: 0.4,

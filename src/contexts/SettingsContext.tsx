@@ -9,7 +9,9 @@ type PublicSettings = {
   secondaryColor: string | null;
   siteTitle: string | null;
   siteDescription: string | null;
+  siteKeywords: string | null;
   adsEnabled: boolean;
+  currency: string;
 };
 
 type SettingsContextType = {
@@ -42,7 +44,9 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         secondaryColor: null,
         siteTitle: null,
         siteDescription: null,
+        siteKeywords: null,
         adsEnabled: true,
+        currency: "JOD",
       });
     } finally {
       setIsLoading(false);

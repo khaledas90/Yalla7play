@@ -14,7 +14,9 @@ type Settings = {
   secondaryColor: string | null;
   siteTitle: string | null;
   siteDescription: string | null;
+  siteKeywords: string | null;
   adsEnabled: boolean;
+  currency: string;
 };
 
 export default function AdminSettingsPage() {

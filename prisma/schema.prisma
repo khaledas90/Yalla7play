@@ -26,14 +26,26 @@ enum AdPosition {
   POPUP
 }
 
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  REVISION
+}
+
 model User {
-  id        String   @id @default(uuid())
-  name      String?
-  email     String   @unique
-  password  String
-  role      Role     @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                String   @id @default(uuid())
+  name              String?
+  email             String   @unique
+  password          String
+  phone             String?
+  avatar            String?
+  role              Role     @default(USER)
+  isActive          Boolean  @default(true)
+  defaultProfitRate Float?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model Category {
@@ -145,7 +157,9 @@ model Setting {
   secondaryColor String?
   seoTitle       String?
   seoDescription String?
+  siteKeywords   String?
   adsEnabled     Boolean  @default(true)
+  currency       String   @default("JOD")
   updatedAt      DateTime @updatedAt
 }
 
