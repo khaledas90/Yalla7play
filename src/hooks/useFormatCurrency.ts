@@ -3,7 +3,7 @@ import { formatCurrency as formatCurrencyUtil } from "@/lib/utils";
 
 export function useFormatCurrency() {
   const { settings } = useSettings();
-  const currency = settings?.currency || "JOD";
+  const currency = settings?.currency || "EGP";
 
   return (amount: number) => formatCurrencyUtil(amount, currency);
 }
