@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Header } from "./header/header";
 import { Footer } from "./footer/footer";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { SideAds } from "./side-ads";
 
 export function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -17,7 +18,12 @@ export function ConditionalLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <Header />
-      {children}
+      <div className="relative">
+        <SideAds />
+        <div className="relative z-0">
+          {children}
+        </div>
+      </div>
       <Footer />
     </SidebarProvider>
   );

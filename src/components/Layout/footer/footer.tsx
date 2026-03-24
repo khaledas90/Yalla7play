@@ -22,8 +22,8 @@ const socialLinks = [
 const footerLinks = {
   contact: [
     {
-      name: "info@yalla7play.com",
-      href: "mailto:info@yalla7play.com",
+      name: "besopubgmobile@gmail.com",
+      href: "mailto:besopubgmobile@gmail.com",
       icon: "solar:letter-bold",
     },
     {
@@ -52,6 +52,8 @@ const footerLinks = {
   policies: [
     { name: "شروط الاستخدام", href: "/terms" },
     { name: "سياسة الخصوصية", href: "/privacy-policy" },
+    { name: "إخلاء مسؤولية", href: "/disclaimer" },
+
   ],
 };
 

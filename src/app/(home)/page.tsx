@@ -6,6 +6,8 @@ import { CategoryBadge } from "@/components/platform/category-badge";
 import { AdPlaceholder } from "@/components/platform/ad-placeholder";
 import { getPlatformHomeData } from "@/lib/platform";
 import { ChevronLeft, Gamepad2, LayoutGrid, Newspaper, TrendingUp } from "lucide-react";
+import Image from "next/image";
+import game1 from "@/assets/game-1.png";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -67,9 +69,7 @@ export default async function HomePage() {
         {/* Top Banner Ad */}
         <AdPlaceholder className="mb-8" size="mobile-banner" label="إعلان علوي" />
 
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-slate-900 shadow-2xl shadow-orange-900/10">
-          <HeroSlider items={data.featured} />
-        </div>
+        <HeroSlider items={data.featured} />
 
         <Section title="الأكثر شعبية" href="/games?sort=popular" icon={TrendingUp} adAfter>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
@@ -143,7 +143,11 @@ export default async function HomePage() {
             </div>
             <div className="hidden lg:block relative h-64 text-center">
                <div className="flex h-full items-center justify-center">
-                 <Gamepad2 className="w-48 h-48 text-[#FF8A00] opacity-20 rotate-12" />
+                 <Image 
+                    src={game1} 
+                    alt="Game Illustration" 
+                    className="w-auto h-64 object-contain rotate-6" 
+                 />
                </div>
             </div>
           </div>

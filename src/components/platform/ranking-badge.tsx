@@ -9,9 +9,11 @@ const rankStyles: Record<number, string> = {
 export function RankingBadge({ rank }: RankingBadgeProps) {
   return (
     <span
-      className={`absolute left-3 top-3 z-10 rounded-full bg-gradient-to-r px-2.5 py-1 text-xs font-black shadow-lg ${rankStyles[rank] || "from-blue-700 to-blue-500 text-white"}`}
+      className={`z-10 flex items-center gap-1 rounded-full bg-gradient-to-r px-3 py-1.5 text-[10px] font-black shadow-lg shadow-orange-500/20 uppercase tracking-tighter whitespace-nowrap ${rankStyles[rank] || "from-blue-700 to-blue-500 text-white"}`}
     >
-      Top {rank}
+      <span>TOP</span>
+      <span className="text-sm leading-none opacity-80">|</span>
+      <span>{rank}</span>
     </span>
   );
 }
