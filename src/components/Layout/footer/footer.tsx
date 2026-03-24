@@ -52,7 +52,6 @@ const footerLinks = {
   policies: [
     { name: "شروط الاستخدام", href: "/terms" },
     { name: "سياسة الخصوصية", href: "/privacy-policy" },
-    { name: "من نحن", href: "/about-us" },
   ],
 };
 
@@ -135,10 +134,10 @@ export function Footer() {
               ))}
             </div>
             <div className="mt-6">
-               <Link href="/join-us" className="inline-flex items-center gap-2 rounded-xl bg-orange-50 px-4 py-2 text-sm font-black text-orange-600 transition hover:bg-orange-100 border border-orange-100">
-                  <Icon icon="solar:crown-minimalistic-bold" className="w-4 h-4" />
-                  برنامج الناشرين
-               </Link>
+              <Link href="/join-us" className="inline-flex items-center gap-2 rounded-xl bg-orange-50 px-4 py-2 text-sm font-black text-orange-600 transition hover:bg-orange-100 border border-orange-100">
+                <Icon icon="solar:crown-minimalistic-bold" className="w-4 h-4" />
+                برنامج الناشرين
+              </Link>
             </div>
           </AnimatedContent>
           <AnimatedContent distance={18} duration={0.65} delay={0.06} className="sm:col-span-1 lg:col-span-3">
