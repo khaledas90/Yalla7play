@@ -14,7 +14,12 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "okenoisic5wgxte8.public.blob.vercel-storage.com",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
     ],
+
   },
   async redirects() {
     return [

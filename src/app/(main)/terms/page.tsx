@@ -42,9 +42,9 @@ export default function TermsPage() {
   return (
     <main className="min-h-screen pt-32 pb-20">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-[3.5rem] border-4 border-double border-slate-50 bg-white p-8 md:p-16 shadow-2xl">
+        <div className="rounded-[3.5rem] border-4 border-double border-orange-50 bg-white p-8 md:p-16 shadow-2xl">
           <header className="text-center mb-16 space-y-4">
-             <div className="inline-block rounded-2xl bg-indigo-600 px-6 py-2 text-sm font-black text-white shadow-lg shadow-indigo-500/20">قانوني</div>
+             <div className="inline-block rounded-2xl bg-[#FF8A00] px-6 py-2 text-sm font-black text-white shadow-lg shadow-orange-500/20">قانوني</div>
              <h1 className="text-4xl font-black text-slate-800 md:text-5xl">شروط الاستخدام</h1>
           </header>
 
@@ -52,8 +52,8 @@ export default function TermsPage() {
             {sections.map((section, i) => (
               <section key={i} className="group space-y-4">
                 <div className="flex items-center gap-4">
-                   <div className="h-10 w-2 rounded-full bg-indigo-600 shadow-sm" />
-                   <h2 className="text-2xl font-black text-slate-800 group-hover:text-indigo-600 transition-colors">{section.title}</h2>
+                   <div className="h-10 w-2 rounded-full bg-[#FF8A00] shadow-sm" />
+                   <h2 className="text-2xl font-black text-slate-800 group-hover:text-[#FF8A00] transition-colors">{section.title}</h2>
                 </div>
                 <p className="text-lg leading-relaxed text-slate-600 font-bold pr-6 border-r-2 border-slate-50">
                   {section.content}
@@ -62,11 +62,12 @@ export default function TermsPage() {
             ))}
           </div>
 
-          <div className="mt-20 rounded-[2.5rem] border border-slate-100 bg-slate-50 p-8 text-center">
-             <p className="text-slate-400 font-bold">بموافقتك على استخدام الموقع، أنت تلتزم بالقواعد أعلاه لضمان تجربة آمنة للجميع.</p>
+          <div className="mt-20 rounded-[2.5rem] border border-orange-50 bg-[#FFF8EE]/30 p-8 text-center">
+             <p className="text-slate-400 font-bold italic">بموافقتك على استخدام الموقع، أنت تلتزم بالقواعد أعلاه لضمان تجربة آمنة للجميع.</p>
           </div>
         </div>
       </div>
     </main>
+
   );
 }

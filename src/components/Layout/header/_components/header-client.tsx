@@ -5,6 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
+import { HeaderSearch } from "./header-search";
+
 
 const navigation = [
   { name: "الرئيسية", href: "/" },
@@ -15,7 +17,7 @@ const navigation = [
   { name: "اتصل بنا", href: "/contact-us" },
 ];
 
-const BRAND = "#3B82F6";
+const BRAND = "#FF8A00";
 
 const WHATSAPP_NUMBER = "962781858647";
 const WHATSAPP_TEXT = encodeURIComponent(
@@ -23,10 +25,11 @@ const WHATSAPP_TEXT = encodeURIComponent(
 );
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_TEXT}`;
 
+
 export function HeaderClient() {
-  const [search, setSearch] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
 
   // ✅ سلاسة التنقل
   const [isNavigating, setIsNavigating] = useState(false);
@@ -147,7 +150,8 @@ export function HeaderClient() {
           style={{
             width: `${progress}%`,
             background:
-              "linear-gradient(90deg, rgba(0,86,210,0.0), rgba(0,86,210,0.95), rgba(0,86,210,0.0))",
+              "linear-gradient(90deg, rgba(255,138,0,0.0), rgba(255,138,0,0.95), rgba(255,138,0,0.0))",
+
             opacity: isNavigating ? 1 : 0,
           }}
         />
@@ -177,9 +181,10 @@ export function HeaderClient() {
                   onClick={() => handleNavClick(item.href)}
                   disabled={isNavigating}
                   className={`relative cursor-pointer px-4 py-2 rounded-xl text-md font-medium transition ${active
-                    ? "bg-[#EEF5FF]"
+                    ? "bg-[#FFF8EE]"
                     : "text-gray-700 hover:bg-gray-50"
                     } ${isNavigating ? "opacity-70 cursor-not-allowed" : ""}`}
+
                   style={{ color: active ? BRAND : undefined }}
                 >
                   {item.name}
@@ -195,30 +200,30 @@ export function HeaderClient() {
           </div>
 
           <div className="hidden lg:flex items-center px-3">
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="ابحث عن ألعاب وتطبيقات..."
-              className="w-56 rounded-xl border border-gray-200 bg-white/80 px-3 py-2 text-sm text-right text-gray-800 outline-none ring-blue-400/30 focus:ring"
-            />
+            <HeaderSearch brandColor={BRAND} />
           </div>
+
 
           <div className="hidden lg:flex items-center">
 
           </div>
 
-          <button
-            onClick={() => setIsMobileMenuOpen((v) => !v)}
-            className="lg:hidden cursor-pointer p-2.5"
-            style={{ color: BRAND }}
-            disabled={isNavigating}
-          >
-            {isMobileMenuOpen ? (
-              <Icon icon="solar:close-circle-bold" className="w-7 h-7" />
-            ) : (
-              <Icon icon="solar:hamburger-menu-bold" className="w-7 h-7" />
-            )}
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <HeaderSearch brandColor={BRAND} />
+            <button
+              onClick={() => setIsMobileMenuOpen((v) => !v)}
+              className="cursor-pointer p-2.5"
+              style={{ color: BRAND }}
+              disabled={isNavigating}
+            >
+              {isMobileMenuOpen ? (
+                <Icon icon="solar:close-circle-bold" className="w-7 h-7" />
+              ) : (
+                <Icon icon="solar:hamburger-menu-bold" className="w-7 h-7" />
+              )}
+            </button>
+          </div>
+
         </nav>
 
         {/* MOBILE MENU */}
@@ -233,9 +238,10 @@ export function HeaderClient() {
                     onClick={() => handleNavClick(item.href)}
                     disabled={isNavigating}
                     className={`text-right cursor-pointer px-4 py-3 rounded-xl text-sm font-medium transition ${active
-                      ? "bg-[#EEF5FF]"
+                      ? "bg-[#FFF8EE]"
                       : "text-gray-700 hover:bg-gray-50"
                       } ${isNavigating ? "opacity-70 cursor-not-allowed" : ""}`}
+
                     style={{ color: active ? BRAND : undefined }}
                   >
                     {item.name}

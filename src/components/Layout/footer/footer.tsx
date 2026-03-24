@@ -29,10 +29,10 @@ const footerLinks = {
     {
       name: (
         <span dir="ltr" className="inline-block">
-          +966 500 000 000
+          +20 10 35445759
         </span>
       ),
-      href: "tel:+966500000000",
+      href: "tel:+201035445759",
       icon: "solar:phone-calling-bold",
     },
     {

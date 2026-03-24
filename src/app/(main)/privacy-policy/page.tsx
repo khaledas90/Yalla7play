@@ -52,9 +52,9 @@ export default function PrivacyPolicyPage() {
   return (
     <main className="min-h-screen pt-32 pb-20">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-[3.5rem] border-4 border-double border-blue-50 bg-white p-8 md:p-16 shadow-2xl">
+        <div className="rounded-[3.5rem] border-4 border-double border-orange-50 bg-white p-8 md:p-16 shadow-2xl">
           <header className="text-center mb-16 space-y-4">
-             <div className="inline-block rounded-2xl bg-blue-600 px-6 py-2 text-sm font-black text-white shadow-lg shadow-blue-500/20">قانوني</div>
+             <div className="inline-block rounded-2xl bg-[#FF8A00] px-6 py-2 text-sm font-black text-white shadow-lg shadow-orange-500/20">قانوني</div>
              <h1 className="text-4xl font-black text-slate-800 md:text-5xl">سياسة الخصوصية</h1>
              {/* <p className="text-lg text-slate-400 font-bold italic">آخر تحديث: 24 مارس 2026</p> */}
           </header>
@@ -63,8 +63,8 @@ export default function PrivacyPolicyPage() {
             {sections.map((section, i) => (
               <section key={i} className="group space-y-4">
                 <div className="flex items-center gap-4">
-                   <div className="h-10 w-2 rounded-full bg-blue-600 shadow-sm" />
-                   <h2 className="text-2xl font-black text-slate-800 group-hover:text-blue-600 transition-colors">{section.title}</h2>
+                   <div className="h-10 w-2 rounded-full bg-[#FF8A00] shadow-sm" />
+                   <h2 className="text-2xl font-black text-slate-800 group-hover:text-[#FF8A00] transition-colors">{section.title}</h2>
                 </div>
                 <p className="text-lg leading-relaxed text-slate-600 font-bold pr-6 border-r-2 border-slate-50">
                   {section.content}
@@ -73,19 +73,21 @@ export default function PrivacyPolicyPage() {
             ))}
           </div>
 
-          <div className="mt-20 rounded-[2.5rem] bg-slate-900 p-8 text-white shadow-xl shadow-blue-900/10">
-             <div className="grid gap-8 md:grid-cols-2 md:items-center">
+          <div className="mt-20 rounded-[2.5rem] bg-slate-900 p-8 text-white shadow-xl shadow-orange-900/10 relative overflow-hidden">
+             <div className="relative z-10 grid gap-8 md:grid-cols-2 md:items-center">
                  <div className="space-y-4">
                     <h3 className="text-2xl font-black">حماية بياناتك هي أولويتنا</h3>
                     <p className="text-slate-400 font-bold tracking-wide">نستخدم أحدث التقنيات لضمان عدم تعرض بياناتك لأي مخاطر رقمية.</p>
                  </div>
                  <div className="text-left">
-                    <a href="/contact-us" className="inline-block rounded-2xl bg-blue-600 px-8 py-3 font-black transition hover:bg-white hover:text-slate-900 border-2 border-transparent hover:border-blue-600">اتصل بنا للمزيد</a>
+                    <a href="/contact-us" className="inline-block rounded-2xl bg-[#FF8A00] px-8 py-3 font-black transition hover:bg-white hover:text-slate-900 border-2 border-transparent hover:border-[#FF8A00]">اتصل بنا للمزيد</a>
                  </div>
              </div>
+             <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-[#FF8A00]/10 blur-2xl" />
           </div>
         </div>
       </div>
     </main>
+
   );
 }

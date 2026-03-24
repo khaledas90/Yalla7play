@@ -33,14 +33,14 @@ function Section({
       <section className="space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100/50 text-blue-500 backdrop-blur-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FFF8EE] text-[#FF8A00] backdrop-blur-sm">
               <Icon className="h-5 w-5" />
             </div>
             <h2 className="text-2xl font-black tracking-tight text-slate-800">{title}</h2>
           </div>
           <Link 
             href={href} 
-            className="group flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-50"
+            className="group flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-bold text-[#FF8A00] transition-colors hover:bg-[#FFF8EE]"
           >
             عرض الكل
             <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -59,15 +59,15 @@ export default async function HomePage() {
   return (
     <main className="relative min-h-screen pt-28 pb-20">
       {/* Soft Decorative Background Elements */}
-      <div className="pointer-events-none absolute left-0 top-0 -z-10 h-[500px] w-full bg-[radial-gradient(circle_at_50%_0%,rgba(59,130,246,0.08),transparent_70%)]" />
-      <div className="pointer-events-none absolute right-0 top-1/4 -z-10 h-[800px] w-[800px] rounded-full bg-blue-50/40 blur-[120px]" />
-      <div className="pointer-events-none absolute left-0 bottom-1/4 -z-10 h-[800px] w-[800px] rounded-full bg-indigo-50/40 blur-[120px]" />
+      <div className="pointer-events-none absolute left-0 top-0 -z-10 h-[500px] w-full bg-[radial-gradient(circle_at_50%_0%,rgba(255,138,0,0.08),transparent_70%)]" />
+      <div className="pointer-events-none absolute right-0 top-1/4 -z-10 h-[800px] w-[800px] rounded-full bg-[#FFF8EE]/40 blur-[120px]" />
+      <div className="pointer-events-none absolute left-0 bottom-1/4 -z-10 h-[800px] w-[800px] rounded-full bg-slate-50/40 blur-[120px]" />
 
       <div className="mx-auto max-w-7xl space-y-20 px-4 sm:px-6 lg:px-8">
         {/* Top Banner Ad */}
         <AdPlaceholder className="mb-8" size="mobile-banner" label="إعلان علوي" />
 
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-slate-900 shadow-2xl shadow-blue-900/10">
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-slate-900 shadow-2xl shadow-orange-900/10">
           <HeroSlider items={data.featured} />
         </div>
 
@@ -116,7 +116,7 @@ export default async function HomePage() {
             <AdPlaceholder size="rectangle" label="إعلان جانبي" />
             <AdPlaceholder size="rectangle" label="إعلان جانبي" className="opacity-80" />
             
-            <div className="rounded-3xl border border-blue-50 bg-white/50 p-6 backdrop-blur-xl">
+            <div className="rounded-3xl border border-orange-50 bg-white/50 p-6 backdrop-blur-xl">
               <h3 className="mb-4 text-lg font-bold text-slate-800">الأقسام الشائعة</h3>
               <div className="flex flex-wrap gap-2">
                 {data.categories.slice(0, 10).map((category) => (
@@ -127,22 +127,24 @@ export default async function HomePage() {
           </aside>
         </div>
 
-        <section className="rounded-[2.5rem] bg-gradient-to-br from-blue-600 to-indigo-700 p-8 text-white shadow-xl shadow-blue-500/20 md:p-12">
+        <section className="rounded-[2.5rem] bg-gradient-to-br from-[#0b1c3d] to-[#1a237e] p-8 text-white shadow-xl shadow-orange-500/20 md:p-12">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <div className="space-y-6">
               <h2 className="text-3xl font-black md:text-5xl">انضم إلى مجتمع يلا7 بلاي</h2>
-              <p className="text-lg text-blue-100">احصل على آخر التحديثات للألعاب والتطبيقات مباشرة في بريدك الإلكتروني.</p>
+              <p className="text-lg text-blue-50 opacity-90">احصل على آخر التحديثات للألعاب والتطبيقات مباشرة في بريدك الإلكتروني.</p>
               <div className="flex max-w-md gap-2 rounded-2xl bg-white/10 p-2 backdrop-blur-md">
                 <input 
                   type="email" 
                   placeholder="بريدك الإلكتروني" 
                   className="flex-1 bg-transparent px-4 py-2 text-white placeholder:text-blue-200 focus:outline-none"
                 />
-                <button className="rounded-xl bg-white px-6 py-2 font-bold text-blue-600 transition hover:bg-blue-50">إشترك</button>
+                <button className="rounded-xl bg-[#FF8A00] px-6 py-2 font-black text-white transition hover:bg-[#e67e00]">إشترك</button>
               </div>
             </div>
-            <div className="hidden lg:block relative h-64">
-              <img src="/placeholder.svg" alt="Phone Mockup" className="absolute top-1/2 left-1/2 h-full -translate-x-1/2 -translate-y-1/2 rounded-3xl object-contain shadow-2xl rotate-3 transition-transform hover:rotate-0" />
+            <div className="hidden lg:block relative h-64 text-center">
+               <div className="flex h-full items-center justify-center">
+                 <Gamepad2 className="w-48 h-48 text-[#FF8A00] opacity-20 rotate-12" />
+               </div>
             </div>
           </div>
         </section>
@@ -153,21 +155,22 @@ export default async function HomePage() {
               <Link
                 key={post.id}
                 href={`/blog/${post.slug}`}
-                className="group relative overflow-hidden rounded-[2rem] border border-slate-100 bg-white p-6 shadow-sm transition hover:shadow-xl hover:shadow-blue-900/5"
+                className="group relative overflow-hidden rounded-[2rem] border border-slate-100 bg-white p-6 shadow-sm transition hover:shadow-xl hover:shadow-orange-900/5"
               >
                 <div className="mb-4 aspect-video overflow-hidden rounded-2xl">
                   <img src={post.image || "/placeholder.svg"} alt={post.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
                 </div>
-                <h3 className="line-clamp-2 text-xl font-black text-slate-800 group-hover:text-blue-600 transition-colors">{post.title}</h3>
+                <h3 className="line-clamp-2 text-xl font-black text-slate-800 group-hover:text-[#FF8A00] transition-colors">{post.title}</h3>
                 <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-500">{post.excerpt}</p>
-                <div className="mt-6 flex items-center text-xs font-bold text-blue-500">
+                <div className="mt-6 flex items-center text-xs font-bold text-[#FF8A00]">
                   اقرأ المزيد 
-                  <ChevronLeft className="h-3 w-3" />
+                  <ChevronLeft className="h-3 w-3 mr-1" />
                 </div>
               </Link>
             ))}
           </div>
         </Section>
+
 
         {/* Bottom Banner Ad */}
         <AdPlaceholder size="leaderboard" label="إعلان سفلي" />

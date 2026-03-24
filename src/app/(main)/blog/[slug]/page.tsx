@@ -7,7 +7,7 @@ import Link from "next/link";
 import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Icon } from "@iconify/react";
-import { PageHero } from "@/components/common/page-hero";
+import AnimatedContent from "@/components/animated-content";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,6 +33,67 @@ type BlogPost = {
   seoTitle: string | null;
   seoDescription: string | null;
 };
+
+const MOCK_DETAILS: Record<string, BlogPost> = {
+  "earn-money-from-gaming-content": {
+    id: "4",
+    title: "أسرار الربح من صناعة محتوى الألعاب في الوطن العربي",
+    slug: "earn-money-from-gaming-content",
+    excerpt: "اكتشف كيف يمكنك تحويل شغفك بالألعاب إلى مصدر دخل حقيقي ومستدام من خلال المنصات المختلفة واستراتيجيات التسويق الحديثة.",
+    content: `
+      <h2>مقدمة في عالم الربح من الألعاب</h2>
+      <p>لم يعد اللعب مجرد تسلية فحسب، بل أصبح صناعة تدر مليارات الدولارات سنوياً. في عالمنا العربي، هناك فرص هائلة لصناع المحتوى الذين يمتلكون الشغف والقدرة على تقديم محتوى مميز.</p>
+      
+      <h3>1. إنشاء قناة على يوتيوب وتويتش</h3>
+      <p>البث المباشر (Streaming) هو أحد أسرع الطرق لبناء قاعدة جماهيرية. يمكنك من خلال منصة <strong>Twitch</strong> أو <strong>YouTube Gaming</strong> الحصول على دعم مباشر من المتابعين عبر التبرعات أو الاشتراكات الشهرية.</p>
+
+      <blockquote>
+        الصبر والاستمرار هما مفتاح النجاح في عالم صناعة المحتوى. لا تتوقع نتائج سريعة من الشهر الأول.
+      </blockquote>
+
+      <h3>2. التسويق بالعمولة (Affiliate Marketing)</h3>
+      <p>يمكنك مراجعة الأجهزة والملحقات الخاصة بالألعاب ووضع روابط لشراء هذه المنتجات. ستحصل على عمولة مقابل كل عملية شراء تتم من خلالك.</p>
+
+      <h3>3. الانضمام إلى برنامج يلا7 بلاي</h3>
+      <p>نحن في <strong>يلا7 بلاي</strong> نوفر فرصة ذهبية للمبدعين لزيادة أرباحهم من خلال مشاركة روابط الألعاب والتطبيقات الموثوقة والحصول على مكافآت دورية بناءً على الأداء.</p>
+
+      <h3>خاتمة</h3>
+      <p>صناعة محتوى الألعاب تتطلب إبداعاً وتطويراً مستمراً. ابدأ الآن بالأدوات المتاحة لك وطوّر مهاراتك مع مرور الوقت.</p>
+    `,
+    image: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=2070&auto=format&fit=crop",
+    author: "ياسين كريم",
+    publishedAt: "2026-03-12T11:00:00Z",
+    views: 3500,
+    category: "انضم إلينا",
+    tags: ["ربح", "يوتيوب", "ألعاب"],
+    seoTitle: "الربح من محتوى الألعاب",
+    seoDescription: "دليل شامل للربح من صناعة محتوى الألعاب"
+  },
+  "best-action-games-2026": {
+    id: "1",
+    title: "أفضل ألعاب الأكشن لعام 2026 التي يجب عليك تجربتها",
+    slug: "best-action-games-2026",
+    excerpt: "تعرف على قائمة أقوى ألعاب الأكشن والمغامرات التي ستصدر هذا العام مع مراجعة شاملة لأسلوب اللعب والرسوميات.",
+    content: `
+      <p>هذا العام يعد من أقوى الأعوام لمحبي ألعاب الأكشن. إليكم تفاصيل أهم الإصدارات المرتقبة...</p>
+      <h2>ألعاب عالم مفتوح جديدة</h2>
+      <p>شهدنا تطوراً مذهلاً في تقنيات الرسوميات وأسلوب اللعب...</p>
+    `,
+    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop",
+    author: "أحمد علي",
+    publishedAt: "2026-03-20T10:00:00Z",
+    views: 1250,
+    category: "ألعاب",
+    tags: ["أكشن", "2026", "مراجعات"],
+    seoTitle: "أفضل ألعاب 2026",
+    seoDescription: "أفضل ألعاب الأكشن"
+  }
+};
+
+const MOCK_RELATED = [
+  MOCK_DETAILS["earn-money-from-gaming-content"],
+  MOCK_DETAILS["best-action-games-2026"]
+];
 
 export default function BlogPostPage() {
   const params = useParams();
@@ -66,7 +127,7 @@ export default function BlogPostPage() {
 
   useEffect(() => {
     if (post && post.publishedAt) {
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sheelhammy.com";
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yalla7play.com";
       const image = post.image || `${siteUrl}/og-image.jpg`;
       
       const data = generateStructuredData({
@@ -77,7 +138,7 @@ export default function BlogPostPage() {
           image,
           datePublished: post.publishedAt,
           dateModified: post.publishedAt,
-          author: post.author || "شيل همي",
+          author: post.author || "يلا7 بلاي",
         },
       });
       setStructuredData(data);
@@ -85,12 +146,23 @@ export default function BlogPostPage() {
   }, [post]);
 
   const fetchPost = async () => {
+
     setIsLoading(true);
     try {
       const response = await fetch(`/api/blog/${slug}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch post");
+      
+      const contentType = response.headers.get("content-type");
+      if (!response.ok || !contentType || !contentType.includes("application/json")) {
+        // Use Mock Data
+        if (MOCK_DETAILS[slug]) {
+          setPost(MOCK_DETAILS[slug]);
+          setRelatedPosts(MOCK_RELATED.filter(p => p.slug !== slug).slice(0, 3));
+        } else {
+          throw new Error("Post not found or invalid response type");
+        }
+        return;
       }
+
       const data = await response.json();
       setPost(data);
       
@@ -98,6 +170,11 @@ export default function BlogPostPage() {
       fetchRelatedPosts(data.id);
     } catch (error) {
       console.error("Error fetching blog post:", error);
+      // Final fallback to mock if available for this slug
+      if (MOCK_DETAILS[slug]) {
+        setPost(MOCK_DETAILS[slug]);
+        setRelatedPosts(MOCK_RELATED.filter(p => p.slug !== slug).slice(0, 3));
+      }
     } finally {
       setIsLoading(false);
     }
@@ -106,7 +183,8 @@ export default function BlogPostPage() {
   const fetchRelatedPosts = async (currentPostId: string) => {
     try {
       const response = await fetch(`/api/blog?limit=4`);
-      if (response.ok) {
+      const contentType = response.headers.get("content-type");
+      if (response.ok && contentType && contentType.includes("application/json")) {
         const data = await response.json();
         const postsArray = data.posts || (Array.isArray(data) ? data : []);
         // Filter out current post and limit to 3
@@ -119,6 +197,7 @@ export default function BlogPostPage() {
       console.error("Error fetching related posts:", error);
     }
   };
+
  
   const tagsArray = useMemo(() => parseTags(post?.tags || null), [post?.tags]);
 
@@ -220,43 +299,78 @@ export default function BlogPostPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       )}
-      <main>
-        <PageHero
-          title={post.title}
-          description={post.excerpt || undefined}
-          badge={post.category || "المدونة"}
-          badgeIcon="solar:document-text-bold"
-        />
+      <main className="relative min-h-screen pt-32 pb-20 overflow-hidden">
+        {/* Decorative Background Elements */}
+        {/* Background mesh (soft) for the whole page body */}
+        <div className="pointer-events-none absolute left-0 top-0 -z-10 h-full w-full">
+          <div className="absolute left-1/2 top-0 -translate-x-1/2 h-[800px] w-full bg-[radial-gradient(circle_at_50%_0%,rgba(59,130,246,0.05),transparent_70%)]" />
+        </div>
+
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Custom Blog Detail Hero (About Us Style) */}
+          <AnimatedContent distance={22} duration={0.7}>
+          <div className="relative overflow-hidden rounded-[2rem] md:rounded-[3rem] bg-gradient-to-br from-[#0b1c3d] to-[#1a237e] p-8 md:p-12 text-white shadow-2xl mb-12 md:mb-16">
+            <div className="relative z-10 max-w-4xl">
+              {/* Category Badge */}
+              {post.category && (
+                <div className="mb-6">
+                  <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-[10px] md:text-xs font-black text-[#FF8A00] uppercase tracking-widest">
+                    <Icon icon="solar:bookmark-bold" className="w-3.5 h-3.5" />
+                    {post.category}
+                  </span>
+                </div>
+              )}
+
+              
+              <h1 className="text-3xl font-black md:text-6xl mb-6 leading-tight">
+                {post.title}
+              </h1>
+              
+              {post.excerpt && (
+                <p className="text-lg md:text-xl text-blue-100 leading-relaxed font-bold opacity-90 max-w-2xl">
+                  {post.excerpt}
+                </p>
+              )}
+
+              {/* Quick Meta in Hero */}
+              <div className="mt-8 md:mt-10 flex flex-wrap gap-4 md:gap-6 text-xs md:sm font-bold text-blue-200">
+
+                <div className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10">
+                    <Icon icon="solar:user-bold" className="w-4 h-4" />
+                  </div>
+                  <span>{post.author || "فريق يلا7 بلاي"}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/10">
+                    <Icon icon="solar:calendar-bold" className="w-4 h-4" />
+                  </div>
+                  <span>{formatDate(post.publishedAt)}</span>
+                </div>
+              </div>
+            </div>
+            {/* Background elements for hero */}
+            <div className="absolute -right-20 -bottom-20 h-96 w-96 rounded-full bg-white/5 blur-3xl opacity-30" />
+            <div className="absolute -left-10 top-1/4 h-32 w-32 rounded-full bg-[#FF8A00]/10 blur-2xl" />
+          </div>
+          </AnimatedContent>
+
+        </div>
+
+
+
 
       <article dir="rtl" className="py-12 bg-gradient-to-b from-white to-gray-50/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           <div className="mb-8 pb-6 border-b border-gray-200">
-            <div className="flex flex-wrap items-center gap-4 mb-4 text-sm">
-              {post.category && (
-                <Badge 
-                  variant="outline" 
-                  className="px-3 py-1 text-xs font-semibold border-blue-200 text-blue-700 bg-blue-50"
-                >
-                  {post.category}
-                </Badge>
-              )}
-              {post.author && (
-                <span className="flex items-center gap-2 text-gray-600">
-                  <Icon icon="solar:user-bold" className="w-4 h-4 text-gray-400" />
-                  <span className="font-medium">{post.author}</span>
-                </span>
-              )}
-              {post.publishedAt && (
-                <span className="flex items-center gap-2 text-gray-600">
-                  <Icon icon="solar:calendar-bold" className="w-4 h-4 text-gray-400" />
-                  {formatDate(post.publishedAt)}
-                </span>
-              )}
-              <span className="flex items-center gap-2 text-gray-600">
-                <Icon icon="solar:eye-bold" className="w-4 h-4 text-gray-400" />
+            <div className="flex flex-wrap items-center gap-4 mb-4 text-sm justify-center lg:justify-start">
+              <span className="flex items-center gap-2 text-slate-500 font-bold bg-[#FFF8EE] px-3 py-1.5 rounded-xl border border-orange-100">
+                <Icon icon="solar:eye-bold" className="w-4 h-4 text-[#FF8A00]" />
                 {post.views} مشاهدة
               </span>
             </div>
+
+
  
             {tagsArray.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-4">
@@ -377,8 +491,9 @@ export default function BlogPostPage() {
             <div className="flex items-center justify-between flex-wrap gap-4">
               <Link
                 href="/blog"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FF8A00] text-white font-medium hover:bg-[#e67e00] transition-colors shadow-md hover:shadow-lg"
               >
+
                 <Icon icon="solar:arrow-right-bold" className="w-5 h-5" />
                 العودة إلى المدونة
               </Link>

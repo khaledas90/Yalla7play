@@ -109,20 +109,28 @@
   }
 }
 
-* {
-  scroll-behavior: smooth;
-}
-
- 
 /* Platform theme accents */
 :root {
+  --radius: 1.25rem;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  
+  --primary: #ff8a00;
+  --primary-foreground: #ffffff;
+  
   --platform-primary: #0b1c3d;
-  --platform-secondary-from: #1e3a8a;
-  --platform-secondary-to: #3b82f6;
-  --platform-accent-from: #f97316;
-  --platform-accent-to: #facc15;
+  --platform-deep-blue: #0b1c3d;
+  --platform-accent: #ff8a00;
+  --platform-accent-light: #ffaa33;
+  
+  --platform-secondary-from: #0b1c3d;
+  --platform-secondary-to: #1a237e;
+  
+  --platform-accent-from: #ff8a00;
+  --platform-accent-to: #ffcc00;
 }
 
 body {
-  background: #ececec;
-}
+  background: #f1f5f9;
+  font-family: 'Tajawal', sans-serif !important;
+}

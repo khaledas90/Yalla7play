@@ -20,6 +20,57 @@ type BlogPost = {
   tags: string[] | null;
 };
 
+const MOCK_POSTS: BlogPost[] = [
+  {
+    id: "1",
+    title: "أفضل ألعاب الأكشن لعام 2026 التي يجب عليك تجربتها",
+    slug: "best-action-games-2026",
+    excerpt: "تعرف على قائمة أقوى ألعاب الأكشن والمغامرات التي ستصدر هذا العام مع مراجعة شاملة لأسلوب اللعب والرسوميات.",
+    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop",
+    author: "أحمد علي",
+    publishedAt: "2026-03-20T10:00:00Z",
+    views: 1250,
+    category: "ألعاب",
+    tags: ["أكشن", "2026", "مراجعات"]
+  },
+  {
+    id: "2",
+    title: "كيفية حماية هاتفك وتطبيقاتك من الاختراق والبرمجيات الضارة",
+    slug: "protect-your-phone-security",
+    excerpt: "دليل شامل لأهم الخطوات والإجراءات التي تضمن لك أماناً تاماً لهاتفك وحماية بياناتك الشخصية من المتطفلين.",
+    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2070&auto=format&fit=crop",
+    author: "سارة محمود",
+    publishedAt: "2026-03-18T14:30:00Z",
+    views: 840,
+    category: "تقنية",
+    tags: ["أمان", "خصوصية", "نصائح"]
+  },
+  {
+    id: "3",
+    title: "مراجعة شاملة لأفضل تطبيقات المونتاج على الجوال",
+    slug: "best-video-editing-apps-mobile",
+    excerpt: "إذا كنت صانع محتوى، فإليك أفضل التطبيقات التي ستساعدك على إنتاج فيديوهات احترافية مباشرة من هاتفك.",
+    image: "https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=2070&auto=format&fit=crop",
+    author: "محمد حسن",
+    publishedAt: "2026-03-15T09:15:00Z",
+    views: 2100,
+    category: "تطبيقات",
+    tags: ["مونتاج", "صناعة محتوى", "تطبيقات"]
+  },
+  {
+    id: "4",
+    title: "أسرار الربح من صناعة محتوى الألعاب في الوطن العربي",
+    slug: "earn-money-from-gaming-content",
+    excerpt: "اكتشف كيف يمكنك تحويل شغفك بالألعاب إلى مصدر دخل حقيقي ومستدام من خلال المنصات المختلفة.",
+    image: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=2070&auto=format&fit=crop",
+    author: "ياسين كريم",
+    publishedAt: "2026-03-12T11:00:00Z",
+    views: 3500,
+    category: "انضم إلينا",
+    tags: ["ربح", "يوتيوب", "ألعاب"]
+  }
+];
+
 export function BlogList() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -41,219 +92,176 @@ export function BlogList() {
       const response = await fetch(url);
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(
-          errorData.error || errorData.details || "Failed to fetch posts"
-        );
+        // Use Mock Data if API fails or doesn't exist
+        setPosts(MOCK_POSTS);
+        const uniqueCategories = Array.from(
+          new Set(MOCK_POSTS.map((p) => p.category).filter(Boolean))
+        ) as string[];
+        setCategories(uniqueCategories);
+        return;
+      }
+
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Response is not JSON");
       }
 
       const data = await response.json();
-      const postsArray = data.posts || (Array.isArray(data) ? data : []);
-      setPosts(postsArray);
 
-      const uniqueCategories = Array.from(
-        new Set(postsArray.map((p: BlogPost) => p.category).filter(Boolean))
-      ) as string[];
-      setCategories(uniqueCategories);
+      const postsArray = data.posts || (Array.isArray(data) ? data : []);
+      
+      if (postsArray.length === 0) {
+        setPosts(MOCK_POSTS);
+        const uniqueCategories = Array.from(
+          new Set(MOCK_POSTS.map((p) => p.category).filter(Boolean))
+        ) as string[];
+        setCategories(uniqueCategories);
+      } else {
+        setPosts(postsArray);
+        const uniqueCategories = Array.from(
+          new Set(postsArray.map((p: BlogPost) => p.category).filter(Boolean))
+        ) as string[];
+        setCategories(uniqueCategories);
+      }
     } catch (error: any) {
       console.error("Error fetching blog posts:", error);
-      setPosts([]);
+      setPosts(MOCK_POSTS);
+      const uniqueCategories = Array.from(
+        new Set(MOCK_POSTS.map((p) => p.category).filter(Boolean))
+      ) as string[];
+      setCategories(uniqueCategories);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const hasCategories = categories.length > 0;
-
-  const skeletonCards = useMemo(() => [1, 2, 3, 4, 5, 6], []);
+  const skeletonCards = useMemo(() => [1, 2, 3, 4], []);
 
   if (isLoading) {
     return (
-      <section dir="rtl" className="py-16 sm:py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 lg:w-7xl w-full">
-          <div className="mb-8 flex flex-wrap gap-2 justify-center">
-            <div className="h-10 w-20 bg-gray-200 rounded-xl animate-pulse" />
-            <div className="h-10 w-24 bg-gray-200 rounded-xl animate-pulse" />
-            <div className="h-10 w-28 bg-gray-200 rounded-xl animate-pulse" />
-            <div className="h-10 w-24 bg-gray-200 rounded-xl animate-pulse" />
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-            {skeletonCards.map((i) => (
-              <div
-                key={i}
-                className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col h-full"
-              >
-                <div className="w-full aspect-[16/10] bg-gray-200 animate-pulse" />
-                <div className="p-5 flex flex-col flex-1 min-h-[280px]">
-                  <div className="h-5 w-3/4 bg-gray-200 rounded animate-pulse mb-3" />
-                  <div className="h-4 w-full bg-gray-200 rounded animate-pulse mb-2" />
-                  <div className="h-4 w-5/6 bg-gray-200 rounded animate-pulse mb-4" />
-                  <div className="flex gap-1.5 mb-4">
-                    <div className="h-5 w-16 bg-gray-200 rounded-full animate-pulse" />
-                    <div className="h-5 w-20 bg-gray-200 rounded-full animate-pulse" />
-                  </div>
-                  <div className="mt-auto pt-4 border-t border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <div className="flex flex-col gap-1.5">
-                        <div className="h-3 w-24 bg-gray-200 rounded animate-pulse" />
-                        <div className="h-3 w-20 bg-gray-200 rounded animate-pulse" />
-                      </div>
-                      <div className="h-8 w-16 bg-gray-200 rounded-xl animate-pulse" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+      <div className="grid gap-12 lg:grid-cols-[1.5fr,1fr]">
+        <div className="grid md:grid-cols-2 gap-6 items-stretch">
+          {skeletonCards.map((i) => (
+            <div key={i} className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col h-full animate-pulse">
+               <div className="w-full aspect-[16/10] bg-gray-100" />
+               <div className="p-6 space-y-4">
+                 <div className="h-6 w-3/4 bg-gray-100 rounded" />
+                 <div className="h-4 w-full bg-gray-100 rounded" />
+                 <div className="h-4 w-5/6 bg-gray-100 rounded" />
+               </div>
+            </div>
+          ))}
         </div>
-      </section>
+        <div className="space-y-8">
+           <div className="h-64 bg-gray-50 rounded-[3rem] animate-pulse" />
+           <div className="h-48 bg-gray-50 rounded-[3rem] animate-pulse" />
+        </div>
+      </div>
     );
   }
 
   return (
-    <section dir="rtl" className="py-16 sm:py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 lg:w-7xl w-full">
+    <div className="grid gap-12 lg:grid-cols-[1.5fr,1fr]">
+      {/* Blog Posts Column */}
+      <div className="space-y-8">
+        <div className="grid md:grid-cols-2 gap-8 items-stretch">
+          {posts.map((post) => (
+            <Link
+              key={post.id}
+              href={`/blog/${post.slug}`}
+              className="group relative bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full hover:-translate-y-2"
+            >
+              <div className="relative w-full aspect-[16/10] overflow-hidden">
+                {post.image ? (
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-slate-100 flex items-center justify-center">
+                    <Icon icon="solar:document-text-bold" className="w-12 h-12 text-slate-300" />
+                  </div>
+                )}
+                {/* Category Badge Over Image */}
+                {post.category && (
+                  <div className="absolute top-4 right-4 z-10">
+                    <Badge className="bg-white/90 backdrop-blur-md text-[#FF8A00] border-none shadow-lg px-3 py-1 font-bold">
+                      {post.category}
+                    </Badge>
+                  </div>
+                )}
+              </div>
 
-        {/* Empty */}
-        {posts.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="mx-auto w-20 h-20 rounded-2xl bg-gray-50 border border-gray-200 flex items-center justify-center mb-5">
-              <Icon
-                icon="solar:document-text-bold"
-                className="w-10 h-10 text-gray-400"
-              />
-            </div>
-            <p className="text-gray-700 text-lg font-semibold">
-              لا توجد مقالات متاحة
-            </p>
-            <p className="text-gray-500 mt-2">
-              جرّب تغيير التصنيف أو عُد لاحقًا.
-            </p>
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-            {posts.map((post) => (
-              <Link
-                key={post.id}
-                href={`/blog/${post.slug}`}
-                className="group relative bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full hover:-translate-y-1"
-              > 
-                <div className="relative w-full aspect-[16/10] overflow-hidden bg-gray-100">
-                  {post.image ? (
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      className="object-fill transition-transform duration-700"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      priority={false}
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                      <div className="w-20 h-20 rounded-2xl bg-white/80 border-2 border-gray-300 flex items-center justify-center shadow-lg">
-                        <Icon
-                          icon="solar:document-text-bold"
-                          className="w-10 h-10 text-gray-500"
-                        />
-                      </div>
-                    </div>
-                  )}
+              <div className="flex flex-col flex-1 p-6 lg:p-8">
+                <h3 className="text-gray-900 text-xl font-black leading-tight mb-4 group-hover:text-[#FF8A00] transition-colors line-clamp-2">
+                  {post.title}
+                </h3>
+                
+                {post.excerpt && (
+                  <p className="text-gray-500 text-sm font-bold leading-relaxed line-clamp-3 mb-6 flex-1">
+                    {post.excerpt}
+                  </p>
+                )}
 
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
-
-                  {/* Category Badge */}
-                  {post.category && (
-                    <div className="absolute top-3 right-3 z-10">
-                      <Badge className="bg-blue-600/90 hover:bg-blue-600 text-white border-0 backdrop-blur-sm shadow-lg">
-                        <Icon icon="solar:bookmark-bold" className="w-3.5 h-3.5 ml-1" />
-                        {post.category}
-                      </Badge>
-                    </div>
-                  )}
-
-                  {/* Views Badge */}
-                  <div className="absolute top-3 left-3 z-10">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold text-white bg-black/40 backdrop-blur-md border border-white/20 shadow-lg">
-                      <Icon icon="solar:eye-bold" className="w-3.5 h-3.5" />
+                <div className="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
+                  <div className="flex items-center gap-3 text-xs font-bold text-slate-400">
+                    <span className="flex items-center gap-1">
+                      <Icon icon="solar:calendar-linear" className="w-4 h-4 text-[#FF8A00]" />
+                      {formatDate(post.publishedAt)}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Icon icon="solar:eye-linear" className="w-4 h-4 text-[#FF8A00]" />
                       {post.views}
                     </span>
                   </div>
-                </div>
-
-                {/* Content Section - Fixed Height */}
-                <div className="flex flex-col flex-1 p-5 min-h-[280px]">
-                  {/* Title */}
-                  <div className="mb-3">
-                    <h3 className="text-gray-900 text-lg font-extrabold leading-tight line-clamp-2 group-hover:text-blue-600 transition-colors">
-                      {post.title}
-                    </h3>
-                  </div>
-
-                  {/* Excerpt */}
-                  {post.excerpt && (
-                    <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-1">
-                      {post.excerpt}
-                    </p>
-                  )}
-
-                  {/* Tags */}
-                  {!!post.tags?.length && (
-                    <div className="mb-4 flex flex-wrap gap-1.5">
-                      {post.tags.slice(0, 3).map((t) => (
-                        <Badge
-                          key={t}
-                          variant="outline"
-                          className="rounded-full text-xs px-2 py-0.5 border-gray-300 text-gray-700"
-                        >
-                          {t}
-                        </Badge>
-                      ))}
-                      {post.tags.length > 3 && (
-                        <span className="text-xs text-gray-500 px-2 py-0.5">
-                          +{post.tags.length - 3}
-                        </span>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Meta Information */}
-                  <div className="mt-auto pt-4 border-t border-gray-200">
-                    <div className="flex items-center justify-between gap-3">
-                      {/* Author & Date */}
-                      <div className="flex flex-col gap-1.5 flex-1 min-w-0">
-                        {post.author && (
-                          <div className="flex items-center gap-1.5 text-xs text-gray-600">
-                            <Icon icon="solar:user-bold" className="w-3.5 h-3.5 flex-shrink-0" />
-                            <span className="font-medium truncate">{post.author}</span>
-                          </div>
-                        )}
-                        {post.publishedAt && (
-                          <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                            <Icon icon="solar:calendar-bold" className="w-3.5 h-3.5 flex-shrink-0" />
-                            <span>{formatDate(post.publishedAt)}</span>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Read More Button */}
-                      <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-md hover:bg-blue-700 transition-all duration-300 group-hover:shadow-lg group-hover:scale-105 flex-shrink-0">
-                        اقرأ
-                        <Icon
-                          icon="solar:arrow-left-bold"
-                          className="w-3.5 h-3.5"
-                        />
-                      </span>
-                    </div>
+                  <div className="w-10 h-10 rounded-full bg-[#FFF8EE] text-[#FF8A00] flex items-center justify-center group-hover:bg-[#FF8A00] group-hover:text-white transition-colors duration-300">
+                    <Icon icon="solar:arrow-left-linear" className="w-5 h-5" />
                   </div>
                 </div>
-
-              </Link>
-            ))}
-          </div>
-        )}
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
-    </section>
+
+      {/* Sidebar Column (About Us style) */}
+      <aside className="space-y-8">
+        {/* Join Us Ad Card (Copying About Us Sidebar pattern) */}
+        <div className="rounded-[3rem] bg-slate-900 p-8 text-white shadow-xl shadow-orange-900/10 relative overflow-hidden">
+          <div className="relative z-10">
+            <h3 className="text-2xl font-black mb-4 flex items-center gap-3">
+              <Icon icon="solar:crown-minimalistic-bold" className="h-7 w-7 text-[#FF8A00]" />
+              انضم لفريقنا
+            </h3>
+            <p className="text-slate-400 mb-8 font-bold leading-relaxed">
+              هل أنت صانع محتوى؟ هل تحب تجربة الألعاب والتطبيقات؟ يمكنك الآن الربح عبر منصتنا بمشاركة شغفك.
+            </p>
+            <Link href="/join-us" className="inline-block w-full text-center rounded-2xl bg-[#FF8A00] py-4 font-black transition hover:bg-[#e67e00] shadow-lg shadow-orange-500/20">
+              ابدأ رحلتك معنا
+            </Link>
+          </div>
+          <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-[#FF8A00]/10 blur-2xl" />
+        </div>
+
+        {/* Contact/Newsletter Card */}
+        <div className="rounded-[3rem] border border-[#FFEDCC] bg-[#FFF8EE]/30 p-8 border-dashed">
+          <div className="flex flex-col items-center text-center space-y-4">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm text-[#FF8A00]">
+              <Icon icon="solar:letter-bold" className="h-8 w-8" />
+            </div>
+            <h4 className="text-xl font-black text-slate-800">اشترك في النشرة</h4>
+            <p className="text-sm font-bold text-slate-500">احصل على آخر المقالات والتحديثات مباشرة في بريدك.</p>
+            <div className="w-full space-y-2">
+              <input type="email" placeholder="بريدك الإلكتروني" className="w-full px-4 py-3 rounded-xl border border-[#FFEDCC] bg-white outline-none focus:ring-2 ring-[#FF8A00]/20" />
+              <button className="w-full py-3 rounded-xl bg-slate-800 text-white font-black hover:bg-slate-700 transition">إرسال</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
   );
 }
