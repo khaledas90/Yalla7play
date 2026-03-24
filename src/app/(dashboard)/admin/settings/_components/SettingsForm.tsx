@@ -112,15 +112,7 @@ export function SettingsForm({ settings, onSuccess }: SettingsFormProps) {
               }
             />
           </div>
-          <div>
-            <Label>العملة المستخدمة (مثال: JOD, USD)</Label>
-            <Input
-              value={formData.currency || "JOD"}
-              onChange={(e) =>
-                setFormData({ ...formData, currency: e.target.value })
-              }
-            />
-          </div>
+
           <div>
             <Label>وصف SEO</Label>
             <Textarea

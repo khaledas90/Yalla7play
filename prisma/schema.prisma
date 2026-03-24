@@ -9,6 +9,7 @@ datasource db {
 
 enum Role {
   USER
+  WORKER
   SUPER_ADMIN
   ADMIN
 }
@@ -24,6 +25,12 @@ enum AdPosition {
   BETWEEN_ITEMS
   FOOTER
   POPUP
+}
+
+enum StoreType {
+  PLAY_STORE
+  APP_STORE
+  OTHER
 }
 
 enum OrderStatus {
@@ -44,6 +51,13 @@ model User {
   role              Role     @default(USER)
   isActive          Boolean  @default(true)
   defaultProfitRate Float?
+  workerRevenueRate Float?  @default(0)
+  games             Game[]  @relation("WorkerGames")
+  apps              App[]   @relation("WorkerApps")
+  comments          Comment[]
+  ratings           Rating[]
+  workerStats       WorkerDailyStat[]
+  workerEarnings    WorkerEarning[]
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 }
@@ -66,8 +80,22 @@ model Game {
   description   String   @db.Text
   thumbnail     String
   gallery       Json?
-  categoryId    String
-  category      Category @relation(fields: [categoryId], references: [id])
+  categoryId      String
+  category        Category @relation(fields: [categoryId], references: [id])
+  version         String?
+  updateInfo      String?   @db.Text
+  operatingSystem String?
+  developer       String?
+  size            String?
+  storeType       StoreType @default(OTHER)
+  playStoreUrl    String?
+  appStoreUrl     String?
+  downloadUrl     Json?
+  securityCheck   String?
+  workerId        String?
+  worker          User?     @relation("WorkerGames", fields: [workerId], references: [id])
+  comments        Comment[]
+  ratings         Rating[]
   views         Int      @default(0)
   downloads     Int      @default(0)
   rating        Float    @default(0)
@@ -92,8 +120,22 @@ model App {
   description   String   @db.Text
   thumbnail     String
   gallery       Json?
-  categoryId    String
-  category      Category @relation(fields: [categoryId], references: [id])
+  categoryId      String
+  category        Category @relation(fields: [categoryId], references: [id])
+  version         String?
+  updateInfo      String?   @db.Text
+  operatingSystem String?
+  developer       String?
+  size            String?
+  storeType       StoreType @default(OTHER)
+  playStoreUrl    String?
+  appStoreUrl     String?
+  downloadUrl     Json?
+  securityCheck   String?
+  workerId        String?
+  worker          User?     @relation("WorkerApps", fields: [workerId], references: [id])
+  comments        Comment[]
+  ratings         Rating[]
   views         Int      @default(0)
   downloads     Int      @default(0)
   rating        Float    @default(0)
@@ -169,4 +211,61 @@ model ViewLog {
   type      String
   ip        String?
   createdAt DateTime @default(now())
+}
+
+model Comment {
+  id        String    @id @default(uuid())
+  userId    String?
+  user      User?     @relation(fields: [userId], references: [id])
+  gameId    String?
+  game      Game?     @relation(fields: [gameId], references: [id])
+  appId     String?
+  app       App?      @relation(fields: [appId], references: [id])
+  parentId  String?
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies   Comment[] @relation("CommentReplies")
+  content   String    @db.Text
+  likes     Int       @default(0)
+  dislikes  Int       @default(0)
+  createdAt DateTime  @default(now())
+}
+
+model Rating {
+  id        String   @id @default(uuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  gameId    String?
+  game      Game?    @relation(fields: [gameId], references: [id])
+  appId     String?
+  app       App?     @relation(fields: [appId], references: [id])
+  value     Int
+  createdAt DateTime @default(now())
+}
+
+model WorkerDailyStat {
+  id          String   @id @default(uuid())
+  workerId    String
+  worker      User     @relation(fields: [workerId], references: [id])
+  date        DateTime
+  traffic     Int      @default(0)
+  adViews     Int      @default(0)
+  earnings    Float    @default(0)
+  revenueRate Float    @default(0)
+  createdAt   DateTime @default(now())
+
+  @@index([workerId, date])
+}
+
+model WorkerEarning {
+  id          String   @id @default(uuid())
+  workerId    String
+  worker      User     @relation(fields: [workerId], references: [id])
+  sourceType  String
+  sourceId    String?
+  grossAmount Float
+  workerRate  Float
+  workerShare Float
+  createdAt   DateTime @default(now())
+
+  @@index([workerId, createdAt])
 }

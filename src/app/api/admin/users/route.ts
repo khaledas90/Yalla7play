@@ -2,11 +2,21 @@ import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const roleParam = String(searchParams.get("role") || "").trim().toUpperCase();
     const users = await prisma.user.findMany({
+      where:
+        roleParam === "USER" ||
+        roleParam === "ADMIN" ||
+        roleParam === "SUPER_ADMIN" ||
+        roleParam === "WORKER"
+          ? { role: roleParam as any }
+          : undefined,
       select: {
         id: true,
+        name: true,
         email: true,
         role: true,
         createdAt: true,
@@ -31,7 +41,10 @@ export async function POST(request: Request) {
     const password = String(body.password || "").trim();
     const roleRaw = String(body.role || "USER").trim().toUpperCase();
     const role =
-      roleRaw === "SUPER_ADMIN" || roleRaw === "ADMIN" || roleRaw === "USER"
+      roleRaw === "SUPER_ADMIN" ||
+      roleRaw === "ADMIN" ||
+      roleRaw === "USER" ||
+      roleRaw === "WORKER"
         ? roleRaw
         : "USER";
 

@@ -15,7 +15,10 @@ export async function PATCH(request: Request, { params }: Params) {
     const password = String(body.password || "").trim();
     const roleRaw = String(body.role || "USER").trim().toUpperCase();
     const role =
-      roleRaw === "SUPER_ADMIN" || roleRaw === "ADMIN" || roleRaw === "USER"
+      roleRaw === "SUPER_ADMIN" ||
+      roleRaw === "ADMIN" ||
+      roleRaw === "USER" ||
+      roleRaw === "WORKER"
         ? roleRaw
         : "USER";
 
@@ -26,10 +29,10 @@ export async function PATCH(request: Request, { params }: Params) {
       );
     }
 
-    const data: { name: string; email: string; role: "USER" | "ADMIN" | "SUPER_ADMIN"; password?: string } = {
+    const data: { name: string; email: string; role: "USER" | "ADMIN" | "SUPER_ADMIN" | "WORKER"; password?: string } = {
       name,
       email,
-      role: role as "USER" | "ADMIN" | "SUPER_ADMIN",
+      role: role as "USER" | "ADMIN" | "SUPER_ADMIN" | "WORKER",
     };
     if (password) {
       data.password = await bcrypt.hash(password, 10);

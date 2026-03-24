@@ -26,6 +26,8 @@ function getRedirectPath(role: string | undefined): string {
   switch (String(role || "").toUpperCase()) {
     case "USER":
       return "/profile";
+    case "WORKER":
+      return "/worker";
     case "SUPER_ADMIN":
       return "/admin";
     case "ADMIN":

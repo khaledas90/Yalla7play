@@ -33,7 +33,7 @@ export function UserForm({
     name: "",
     email: user?.email || "",
     password: "",
-    role: (user?.role || "USER") as "USER" | "ADMIN" | "SUPER_ADMIN",
+    role: (user?.role || "USER") as "USER" | "WORKER" | "ADMIN" | "SUPER_ADMIN",
   });
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export function UserForm({
         name: user.name || "",
         email: user.email,
         password: "",
-        role: user.role as "USER" | "ADMIN" | "SUPER_ADMIN",
+        role: user.role as "USER" | "WORKER" | "ADMIN" | "SUPER_ADMIN",
       });
       return;
     }
@@ -83,7 +83,7 @@ export function UserForm({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent dir="rtl">
+      <DialogContent className="max-h-[85vh] max-w-2xl overflow-y-auto" dir="rtl">
         <DialogHeader>
           <DialogTitle>{user ? "تعديل المستخدم" : "إضافة مستخدم جديد"}</DialogTitle>
           <DialogDescription>
@@ -134,13 +134,14 @@ export function UserForm({
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    role: e.target.value as "USER" | "ADMIN" | "SUPER_ADMIN",
+                    role: e.target.value as "USER" | "WORKER" | "ADMIN" | "SUPER_ADMIN",
                   })
                 }
                 className="w-full rounded-md border px-3 py-2"
                 disabled={isLoading}
               >
                 <option value="USER">مستخدم</option>
+                <option value="WORKER">عامل</option>
                 <option value="ADMIN">أدمن</option>
                 <option value="SUPER_ADMIN">سوبر أدمن</option>
               </select>

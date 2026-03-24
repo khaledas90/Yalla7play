@@ -30,8 +30,15 @@ export function BlogModel({
       });
 
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || "حدث خطأ");
+        const raw = await response.text();
+        let message = "حدث خطأ";
+        try {
+          const parsed = JSON.parse(raw) as { error?: string };
+          message = parsed.error || message;
+        } catch {
+          message = raw?.slice(0, 200) || message;
+        }
+        throw new Error(message);
       }
 
       toast.success("تم حذف المقال بنجاح");

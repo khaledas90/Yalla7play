@@ -1,26 +1,24 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { PageHeader } from "@/components/common/PageHeader";
 import { StatCard } from "@/components/common/StatCard";
 import {
   AppWindow,
   BarChart3,
+  Boxes,
   CheckCircle2,
   Download,
   Eye,
-  Flame,
   Gamepad2,
-  Megaphone,
   Plus,
   Trash2,
-  TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { toast } from "sonner";
 
 type ContentItem = {
   id: string;
@@ -34,22 +32,79 @@ type ContentItem = {
   isTrending: boolean;
 };
 
-const CONTENT_ITEMS: ContentItem[] = [
-  { id: "g1", type: "game", name: "EA FC 26", category: "Sports", views: 9200, downloads: 4100, rating: 4.8, isFeatured: true, isTrending: true },
-  { id: "g2", type: "game", name: "GTA V", category: "Action", views: 13400, downloads: 6200, rating: 4.9, isFeatured: true, isTrending: true },
-  { id: "g3", type: "game", name: "Red Dead 2", category: "Adventure", views: 7800, downloads: 2900, rating: 4.7, isFeatured: false, isTrending: true },
-  { id: "g4", type: "game", name: "Forza Horizon 5", category: "Racing", views: 6100, downloads: 2600, rating: 4.6, isFeatured: false, isTrending: false },
-  { id: "g5", type: "game", name: "Tekken 8", category: "Fighting", views: 4800, downloads: 1700, rating: 4.4, isFeatured: false, isTrending: false },
-  { id: "a1", type: "app", name: "TikTok Lite", category: "Social", views: 8500, downloads: 9100, rating: 4.3, isFeatured: true, isTrending: true },
-  { id: "a2", type: "app", name: "CapCut", category: "Video", views: 9300, downloads: 9700, rating: 4.7, isFeatured: true, isTrending: true },
-  { id: "a3", type: "app", name: "WhatsApp", category: "Communication", views: 7200, downloads: 8900, rating: 4.8, isFeatured: false, isTrending: true },
-  { id: "a4", type: "app", name: "Telegram", category: "Communication", views: 5300, downloads: 6400, rating: 4.5, isFeatured: false, isTrending: false },
-  { id: "a5", type: "app", name: "Snapseed", category: "Photo", views: 3200, downloads: 4100, rating: 4.2, isFeatured: false, isTrending: false },
-];
+type CategoryItem = {
+  id: string;
+  name: string;
+  gamesCount: number;
+  appsCount: number;
+};
 
 export default function AdminPage() {
-  const [contentItems, setContentItems] = useState<ContentItem[]>(CONTENT_ITEMS);
+  const [contentItems, setContentItems] = useState<ContentItem[]>([]);
+  const [categories, setCategories] = useState<CategoryItem[]>([]);
+  const [activeAds, setActiveAds] = useState(0);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchDashboardData = async () => {
+    setIsLoading(true);
+    try {
+      const [gamesRes, appsRes, categoriesRes, adsRes] = await Promise.all([
+        fetch("/api/admin/games"),
+        fetch("/api/admin/apps"),
+        fetch("/api/admin/categories"),
+        fetch("/api/admin/ads"),
+      ]);
+
+      if (!gamesRes.ok || !appsRes.ok || !categoriesRes.ok || !adsRes.ok) {
+        throw new Error("فشل تحميل بيانات لوحة التحكم");
+      }
+
+      const [gamesData, appsData, categoriesData, adsData] = await Promise.all([
+        gamesRes.json(),
+        appsRes.json(),
+        categoriesRes.json(),
+        adsRes.json(),
+      ]);
+
+      const gameItems: ContentItem[] = gamesData.map((game: any) => ({
+        id: game.id,
+        type: "game",
+        name: game.title,
+        category: game.categoryName || "-",
+        views: Number(game.views || 0),
+        downloads: Number(game.downloads || 0),
+        rating: Number(game.rating || 0),
+        isFeatured: Boolean(game.isFeatured),
+        isTrending: Boolean(game.isTrending),
+      }));
+
+      const appItems: ContentItem[] = appsData.map((app: any) => ({
+        id: app.id,
+        type: "app",
+        name: app.title,
+        category: app.categoryName || "-",
+        views: Number(app.views || 0),
+        downloads: Number(app.downloads || 0),
+        rating: Number(app.rating || 0),
+        isFeatured: Boolean(app.isFeatured),
+        isTrending: Boolean(app.isTrending),
+      }));
+
+      setContentItems([...gameItems, ...appItems]);
+      setCategories(categoriesData);
+      setActiveAds(adsData.filter((ad: any) => ad.isActive).length);
+    } catch (error) {
+      console.error(error);
+      toast.error("حدث خطأ أثناء تحميل بيانات لوحة التحكم");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
 
   const counts = useMemo(() => {
     const games = contentItems.filter((item) => item.type === "game");
@@ -61,9 +116,10 @@ export default function AdminPage() {
       apps: apps.length,
       totalViews,
       totalDownloads,
-      activeAds: 4,
+      activeAds,
+      categories: categories.length,
     };
-  }, [contentItems]);
+  }, [contentItems, activeAds, categories.length]);
 
   const topGames = useMemo(
     () =>
@@ -102,6 +158,14 @@ export default function AdminPage() {
     );
   };
 
+  const topCategories = useMemo(
+    () =>
+      [...categories]
+        .sort((a, b) => b.gamesCount + b.appsCount - (a.gamesCount + a.appsCount))
+        .slice(0, 5),
+    [categories]
+  );
+
   return (
     <div className="space-y-6" dir="rtl">
       <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -131,6 +195,11 @@ export default function AdminPage() {
         <StatCard title="عدد التحميلات" value={counts.totalDownloads.toLocaleString()} icon={Download} />
       </div>
 
+      <div className="grid gap-4 md:grid-cols-2">
+        <StatCard title="عدد التصنيفات" value={counts.categories} icon={Boxes} />
+        <StatCard title="الإعلانات النشطة" value={counts.activeAds} icon={BarChart3} />
+      </div>
+
       <div className="grid gap-4 lg:grid-cols-1">
         <Card className="border-slate-200 bg-white">
           <CardHeader>
@@ -153,6 +222,31 @@ export default function AdminPage() {
 
       </div>
 
+      <Card className="border-slate-200 bg-white">
+        <CardHeader>
+          <CardTitle className="text-black">أكثر التصنيفات استخدامًا</CardTitle>
+          <CardDescription className="text-black">حسب مجموع الألعاب والتطبيقات</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            {topCategories.map((category) => (
+              <div
+                key={category.id}
+                className="flex items-center justify-between rounded-md border border-slate-200 px-3 py-2"
+              >
+                <span className="font-medium text-black">{category.name}</span>
+                <span className="text-sm text-black">
+                  ألعاب: {category.gamesCount} / تطبيقات: {category.appsCount}
+                </span>
+              </div>
+            ))}
+            {topCategories.length === 0 && (
+              <p className="text-sm text-slate-500">لا توجد تصنيفات بعد</p>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
 
       <Card className="border-slate-200 bg-white">
         <CardHeader className="flex flex-row items-center  justify-between">
@@ -172,37 +266,44 @@ export default function AdminPage() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2">
-            {contentItems.map((item) => (
-              <div key={item.id} className="grid grid-cols-12 items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm">
-                <div className="col-span-1">
-                  <Checkbox checked={selectedIds.includes(item.id)} onCheckedChange={() => toggleSelect(item.id)} />
+          {isLoading ? (
+            <p className="text-sm text-slate-500">جاري تحميل البيانات...</p>
+          ) : (
+            <div className="space-y-2">
+              {contentItems.map((item) => (
+                <div key={item.id} className="grid grid-cols-12 items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm">
+                  <div className="col-span-1">
+                    <Checkbox checked={selectedIds.includes(item.id)} onCheckedChange={() => toggleSelect(item.id)} />
+                  </div>
+                  <div className="col-span-3 font-medium text-black">{item.name}</div>
+                  <div className="col-span-2  text-black  ">{item.category}</div>
+                  <div className="col-span-3  text-black">
+                    مشاهدات: {item.views.toLocaleString()} / تحميلات: {item.downloads.toLocaleString()} / تقييم: {item.rating}
+                  </div>
+                  <div className="col-span-1">
+                    <Button variant={item.isFeatured ? "default" : "outline"} size="sm" onClick={() => toggleFlag(item.id, "isFeatured")}>
+                      مميز
+                    </Button>
+                  </div>
+                  <div className="col-span-1">
+                    <Button variant={item.isTrending ? "default" : "outline"} size="sm" onClick={() => toggleFlag(item.id, "isTrending")}>
+                      رائج
+                    </Button>
+                  </div>
+                  <div className="col-span-1 flex justify-end">
+                    <Button variant="default" size="sm" asChild>
+                      <Link href={item.type === "game" ? `/admin/content/games/${item.id}` : `/admin/content/apps/${item.id}`}>
+                        تعديل
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
-                <div className="col-span-3 font-medium text-black">{item.name}</div>
-                <div className="col-span-2  text-black  ">{item.category}</div>
-                <div className="col-span-3  text-black">
-                  مشاهدات: {item.views.toLocaleString()} / تحميلات: {item.downloads.toLocaleString()} / تقييم: {item.rating}
-                </div>
-                <div className="col-span-1">
-                  <Button variant={item.isFeatured ? "default" : "outline"} size="sm" onClick={() => toggleFlag(item.id, "isFeatured")}>
-                    مميز
-                  </Button>
-                </div>
-                <div className="col-span-1">
-                  <Button variant={item.isTrending ? "default" : "outline"} size="sm" onClick={() => toggleFlag(item.id, "isTrending")}>
-                    رائج
-                  </Button>
-                </div>
-                <div className="col-span-1 flex justify-end">
-                  <Button variant="default" size="sm" asChild>
-                    <Link href={item.type === "game" ? `/admin/content/games/${item.id}` : `/admin/content/apps/${item.id}`}>
-                      تعديل
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+              {contentItems.length === 0 && (
+                <p className="text-sm text-slate-500">لا توجد ألعاب أو تطبيقات بعد</p>
+              )}
+            </div>
+          )}
         </CardContent>
       </Card>
 

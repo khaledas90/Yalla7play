@@ -9,7 +9,7 @@ export type UserItem = {
   id: string;
   name: string | null;
   email: string;
-  role: Role | "USER";
+  role: Role | "USER" | "WORKER";
   createdAt: string;
 };
 
@@ -28,7 +28,9 @@ export function getUserColumns(
           ? "سوبر أدمن"
           : row.original.role === "ADMIN"
             ? "أدمن"
-            : "مستخدم",
+            : row.original.role === "WORKER"
+              ? "عامل"
+              : "مستخدم",
     },
     {
       accessorKey: "createdAt",

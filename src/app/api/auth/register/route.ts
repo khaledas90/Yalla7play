@@ -10,7 +10,10 @@ export async function POST(request: Request) {
     const password = String(body.password || "").trim();
     const roleRaw = String(body.role || "USER").trim().toUpperCase();
     const role =
-      roleRaw === "SUPER_ADMIN" || roleRaw === "ADMIN" || roleRaw === "USER"
+      roleRaw === "SUPER_ADMIN" ||
+        roleRaw === "ADMIN" ||
+        roleRaw === "USER" ||
+        roleRaw === "WORKER"
         ? roleRaw
         : "USER";
 

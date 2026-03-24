@@ -71,7 +71,7 @@ export default function BlogPage() {
         title="المدونة"
         description="إدارة مقالات المدونة"
         actions={
-          <Link href="/admin/content/blog/new">
+          <Link href="/admin/blog/new">
             <Button>
               <Plus className="h-4 w-4 ml-2" />
               مقال جديد

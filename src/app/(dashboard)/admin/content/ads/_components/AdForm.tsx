@@ -90,7 +90,7 @@ export function AdForm({ open, onOpenChange, ad, onSuccess }: AdFormProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent dir="rtl">
+      <DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto" dir="rtl">
         <DialogHeader>
           <DialogTitle>{ad ? "تعديل الإعلان" : "إضافة إعلان جديد"}</DialogTitle>
           <DialogDescription>إدارة بيانات الإعلان ومكان ظهوره</DialogDescription>

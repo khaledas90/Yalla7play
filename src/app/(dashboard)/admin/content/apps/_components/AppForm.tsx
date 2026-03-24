@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { FileUploader } from "@/components/common/FileUploader";
 import { toast } from "sonner";
 import { AppItem } from "./AppTable";
+import TextEditor from "@/components/TextEditor";
 
 interface AppFormProps {
   open: boolean;
@@ -23,6 +24,8 @@ interface AppFormProps {
   categories: Array<{ id: string; name: string }>;
   onSuccess: () => void;
 }
+
+type DownloadLink = { name: string; url: string };
 
 export function AppForm({
   open,
@@ -35,8 +38,19 @@ export function AppForm({
   const [formData, setFormData] = useState({
     title: app?.title || "",
     slug: app?.slug || "",
+    description: app?.description || "",
     thumbnail: app?.thumbnail || "",
     categoryId: app?.categoryId || "",
+    version: app?.version || "",
+    updateInfo: app?.updateInfo || "",
+    operatingSystem: app?.operatingSystem || "",
+    developer: app?.developer || "",
+    size: app?.size || "",
+    storeType: app?.storeType || "OTHER",
+    playStoreUrl: app?.playStoreUrl || "",
+    appStoreUrl: app?.appStoreUrl || "",
+    downloadUrl: (app?.downloadUrl as DownloadLink[] | undefined) || [{ name: "", url: "" }],
+    securityCheck: app?.securityCheck || "",
   });
 
   useEffect(() => {
@@ -44,8 +58,19 @@ export function AppForm({
       setFormData({
         title: app.title,
         slug: app.slug,
+        description: app.description || "",
         thumbnail: app.thumbnail,
         categoryId: app.categoryId,
+        version: app.version || "",
+        updateInfo: app.updateInfo || "",
+        operatingSystem: app.operatingSystem || "",
+        developer: app.developer || "",
+        size: app.size || "",
+        storeType: app.storeType || "OTHER",
+        playStoreUrl: app.playStoreUrl || "",
+        appStoreUrl: app.appStoreUrl || "",
+        downloadUrl: (app.downloadUrl as DownloadLink[] | undefined) || [{ name: "", url: "" }],
+        securityCheck: app.securityCheck || "",
       });
       return;
     }
@@ -53,8 +78,19 @@ export function AppForm({
     setFormData({
       title: "",
       slug: "",
+      description: "",
       thumbnail: "",
       categoryId: categories[0]?.id || "",
+      version: "",
+      updateInfo: "",
+      operatingSystem: "",
+      developer: "",
+      size: "",
+      storeType: "OTHER",
+      playStoreUrl: "",
+      appStoreUrl: "",
+      downloadUrl: [{ name: "", url: "" }],
+      securityCheck: "",
     });
   }, [app, open, categories]);
 
@@ -62,12 +98,16 @@ export function AppForm({
     e.preventDefault();
     setIsLoading(true);
     try {
+      const payload = {
+        ...formData,
+        downloadUrl: formData.downloadUrl.filter((item) => item.name.trim() || item.url.trim()),
+      };
       const url = app ? `/api/admin/apps/${app.id}` : "/api/admin/apps";
       const method = app ? "PATCH" : "POST";
       const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -87,7 +127,7 @@ export function AppForm({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent dir="rtl">
+      <DialogContent className="max-h-[90vh] max-w-5xl overflow-y-auto" dir="rtl">
         <DialogHeader>
           <DialogTitle>{app ? "تعديل التطبيق" : "إضافة تطبيق جديد"}</DialogTitle>
           <DialogDescription>
@@ -115,6 +155,16 @@ export function AppForm({
               />
             </div>
             <div>
+              <Label>الوصف</Label>
+              <TextEditor
+                value={formData.description}
+                onChange={(_, htmlValue) =>
+                  setFormData({ ...formData, description: htmlValue })
+                }
+                dir="rtl"
+              />
+            </div>
+            <div>
               <Label>التصنيف</Label>
               <select
                 value={formData.categoryId}
@@ -131,6 +181,149 @@ export function AppForm({
                   </option>
                 ))}
               </select>
+            </div>
+            <div>
+              <Label>نوع المتجر</Label>
+              <select
+                value={formData.storeType}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    storeType: e.target.value as "PLAY_STORE" | "APP_STORE" | "OTHER",
+                  })
+                }
+                className="w-full rounded-md border px-3 py-2"
+                disabled={isLoading}
+              >
+                <option value="PLAY_STORE">Play Store</option>
+                <option value="APP_STORE">App Store</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+            <div>
+              <Label>الإصدار</Label>
+              <Input
+                value={formData.version}
+                onChange={(e) => setFormData({ ...formData, version: e.target.value })}
+                disabled={isLoading}
+              />
+            </div>
+            <div>
+              <Label>معلومات التحديث</Label>
+              <Input
+                value={formData.updateInfo}
+                onChange={(e) => setFormData({ ...formData, updateInfo: e.target.value })}
+                disabled={isLoading}
+              />
+            </div>
+            <div>
+              <Label>نظام التشغيل</Label>
+              <Input
+                value={formData.operatingSystem}
+                onChange={(e) => setFormData({ ...formData, operatingSystem: e.target.value })}
+                disabled={isLoading}
+              />
+            </div>
+            <div>
+              <Label>المطور</Label>
+              <Input
+                value={formData.developer}
+                onChange={(e) => setFormData({ ...formData, developer: e.target.value })}
+                disabled={isLoading}
+              />
+            </div>
+            <div>
+              <Label>الحجم</Label>
+              <Input
+                value={formData.size}
+                onChange={(e) => setFormData({ ...formData, size: e.target.value })}
+                disabled={isLoading}
+              />
+            </div>
+            <div>
+              <div className="mb-2 flex items-center justify-between">
+                <Label>روابط التحميل</Label>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    setFormData({
+                      ...formData,
+                      downloadUrl: [...formData.downloadUrl, { name: "", url: "" }],
+                    })
+                  }
+                  disabled={isLoading}
+                >
+                  + إضافة رابط
+                </Button>
+              </div>
+              <div className="space-y-2">
+                {formData.downloadUrl.map((link, index) => (
+                  <div key={index} className="grid grid-cols-1 gap-2 md:grid-cols-[1fr_2fr_auto]">
+                    <Input
+                      placeholder="اسم الرابط"
+                      value={link.name}
+                      onChange={(e) => {
+                        const nextLinks = [...formData.downloadUrl];
+                        nextLinks[index] = { ...nextLinks[index], name: e.target.value };
+                        setFormData({ ...formData, downloadUrl: nextLinks });
+                      }}
+                      disabled={isLoading}
+                    />
+                    <Input
+                      placeholder="https://example.com"
+                      value={link.url}
+                      onChange={(e) => {
+                        const nextLinks = [...formData.downloadUrl];
+                        nextLinks[index] = { ...nextLinks[index], url: e.target.value };
+                        setFormData({ ...formData, downloadUrl: nextLinks });
+                      }}
+                      disabled={isLoading}
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      onClick={() =>
+                        setFormData({
+                          ...formData,
+                          downloadUrl:
+                            formData.downloadUrl.length > 1
+                              ? formData.downloadUrl.filter((_, i) => i !== index)
+                              : [{ name: "", url: "" }],
+                        })
+                      }
+                      disabled={isLoading}
+                    >
+                      حذف
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <Label>رابط Play Store</Label>
+              <Input
+                value={formData.playStoreUrl}
+                onChange={(e) => setFormData({ ...formData, playStoreUrl: e.target.value })}
+                disabled={isLoading}
+              />
+            </div>
+            <div>
+              <Label>رابط App Store</Label>
+              <Input
+                value={formData.appStoreUrl}
+                onChange={(e) => setFormData({ ...formData, appStoreUrl: e.target.value })}
+                disabled={isLoading}
+              />
+            </div>
+            <div>
+              <Label>نص الفحص الأمني</Label>
+              <Input
+                value={formData.securityCheck}
+                onChange={(e) => setFormData({ ...formData, securityCheck: e.target.value })}
+                disabled={isLoading}
+              />
             </div>
             <FileUploader
               value={formData.thumbnail}

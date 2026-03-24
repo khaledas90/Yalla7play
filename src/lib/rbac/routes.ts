@@ -1,9 +1,10 @@
 import { Role } from "@prisma/client";
 
-type AppRole = Role | "USER";
+type AppRole = Role | "USER" | "WORKER";
 
 export const roleRoutes: Record<AppRole, string[]> = {
   USER: ["/profile"],
+  WORKER: ["/worker"],
   SUPER_ADMIN: ["/admin"],
   ADMIN: ["/admin"],
 };
@@ -28,6 +29,9 @@ export function canAccessRoute(role: AppRole, pathname: string): boolean {
   if (normalizedRole === "USER") {
     return pathname.startsWith("/profile");
   }
+  if (normalizedRole === "WORKER") {
+    return pathname.startsWith("/worker");
+  }
 
   if (normalizedRole === "SUPER_ADMIN" || normalizedRole === "ADMIN") {
     return pathname.startsWith("/admin");
@@ -46,6 +50,8 @@ export function getRedirectPath(role: AppRole): string {
       return "/admin";
     case "ADMIN":
       return "/admin";
+    case "WORKER":
+      return "/worker";
     default:
       return "/login";
   }

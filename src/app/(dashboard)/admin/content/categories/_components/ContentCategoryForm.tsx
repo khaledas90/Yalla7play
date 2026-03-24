@@ -83,7 +83,7 @@ export function ContentCategoryForm({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent dir="rtl">
+      <DialogContent className="max-h-[85vh] max-w-2xl overflow-y-auto" dir="rtl">
         <DialogHeader>
           <DialogTitle>{category ? "تعديل التصنيف" : "إضافة تصنيف جديد"}</DialogTitle>
           <DialogDescription>

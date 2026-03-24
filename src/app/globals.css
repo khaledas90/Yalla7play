@@ -133,4 +133,298 @@
 body {
   background: #f1f5f9;
   font-family: 'Tajawal', sans-serif !important;
-}
+}
+
+
+
+.tiptap-table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.tiptap-table td,
+.tiptap-table th {
+  min-width: 1em;
+  border: 1px solid #d1d5db;
+  padding: 8px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.tiptap-table th {
+  font-weight: bold;
+  text-align: left;
+  background-color: #f9fafb;
+}
+
+.tiptap-table .selectedCell:after {
+  z-index: 2;
+  position: absolute;
+  content: "";
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(200, 200, 255, 0.4);
+  pointer-events: none;
+}
+
+.tiptap-table .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: -2px;
+  width: 4px;
+  background-color: #3b82f6;
+  pointer-events: none;
+}
+
+.tiptap-table p {
+  margin: 0;
+}
+
+.tiptap ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.tiptap ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.tiptap li {
+  margin: 0.25rem 0;
+  display: list-item;
+}
+
+.tiptap ul ul {
+  list-style-type: circle;
+}
+
+.tiptap ul ul ul {
+  list-style-type: square;
+}
+
+.tiptap ol ol {
+  list-style-type: lower-alpha;
+}
+
+.tiptap ol ol ol {
+  list-style-type: lower-roman;
+}
+
+.tiptap h1,
+.tiptap h2,
+.tiptap h3,
+.tiptap h4,
+.tiptap h5,
+.tiptap h6 {
+  margin: 1rem 0 0.5rem 0;
+  font-weight: bold;
+}
+
+.tiptap h1 {
+  font-size: 1.875rem;
+}
+.tiptap h2 {
+  font-size: 1.5rem;
+}
+.tiptap h3 {
+  font-size: 1.25rem;
+}
+.tiptap h4 {
+  font-size: 1.125rem;
+}
+.tiptap h5 {
+  font-size: 1rem;
+}
+.tiptap h6 {
+  font-size: 0.875rem;
+}
+
+.tiptap blockquote {
+  border-left: 4px solid #d1d5db;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+}
+
+.tiptap code {
+  background-color: #f3f4f6;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+}
+
+.tiptap pre {
+  background-color: #1f2937;
+  color: #f9fafb;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.tiptap pre code {
+  background-color: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.tiptap hr {
+  border: none;
+  border-top: 2px solid #d1d5db;
+  margin: 1.5rem 0;
+}
+
+.tiptap .link {
+  color: #3b82f6;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tiptap .link:hover {
+  color: #1d4ed8;
+}
+
+.tiptap img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.25rem;
+}
+
+/* Ensure lists are properly displayed */
+.tiptap ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tiptap ul[data-type="taskList"] li {
+  display: flex;
+  align-items: flex-start;
+}
+
+.tiptap ul[data-type="taskList"] li > label {
+  flex: 0 0 auto;
+  margin-right: 0.5rem;
+  user-select: none;
+}
+
+.tiptap ul[data-type="taskList"] li > div {
+  flex: 1 1 auto;
+}
+
+.tiptap .prose ul {
+  list-style-type: disc !important;
+}
+
+.tiptap .prose ol {
+  list-style-type: decimal !important;
+}
+
+.tiptap .prose li {
+  display: list-item !important;
+}
+
+.tiptap ul:not([data-type="taskList"]) {
+  list-style-type: disc !important;
+  list-style-position: outside !important;
+}
+
+.tiptap ol:not([data-type="taskList"]) {
+  list-style-type: decimal !important;
+  list-style-position: outside !important;
+}
+
+.tiptap li:not([data-type="taskItem"]) {
+  display: list-item !important;
+  list-style-position: outside !important;
+}
+
+.tiptap ul ul,
+.tiptap ol ol,
+.tiptap ul ol,
+.tiptap ol ul {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+.rich-text-content ul,
+.rich-text-content ol {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.rich-text-content ol {
+  list-style-type: decimal;
+}
+
+.rich-text-content li {
+  margin: 0.25rem 0;
+  display: list-item;
+  list-style-position: outside;
+}
+
+.rich-text-content ul ul {
+  list-style-type: circle;
+}
+
+.rich-text-content ul ul ul {
+  list-style-type: square;
+}
+
+.rich-text-content ol ol {
+  list-style-type: lower-alpha;
+}
+
+.rich-text-content ol ol ol {
+  list-style-type: lower-roman;
+}
+
+.rich-text-content p {
+  margin: 0.5rem 0;
+}
+
+.rich-text-content p + p {
+  margin-top: 0.75rem;
+}
+
+.rich-text-content br {
+  line-height: 1.5;
+}
+
+[class*="text-"] ul,
+[class*="text-"] ol,
+p[class*="text-"] ul,
+p[class*="text-"] ol,
+div[class*="text-"] ul,
+div[class*="text-"] ol,
+span[class*="text-"] ul,
+span[class*="text-"] ol {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+[class*="text-"] ol,
+p[class*="text-"] ol,
+div[class*="text-"] ol,
+span[class*="text-"] ol {
+  list-style-type: decimal;
+}
+
+[class*="text-"] li,
+p[class*="text-"] li,
+div[class*="text-"] li,
+span[class*="text-"] li {
+  margin: 0.25rem 0;
+  display: list-item;
+  list-style-position: outside;
+}
