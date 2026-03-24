@@ -58,7 +58,6 @@ export async function PATCH(request: Request, { params }: Params) {
         isPublished: Boolean(body.isPublished),
         publishedAt: body.publishedAt ? new Date(body.publishedAt) : null,
         category: body.category ? String(body.category) : null,
-        tags: toTags(body.tags),
         seoTitle: body.seoTitle ? String(body.seoTitle) : null,
         seoDescription: body.seoDescription ? String(body.seoDescription) : null,
       },

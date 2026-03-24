@@ -99,47 +99,61 @@ function withScore(items: CatalogItem[]) {
 }
 
 export async function getPlatformHomeData() {
-    const [categories, games, apps, blogPosts] = await Promise.all([
-        prisma.category.findMany({ orderBy: { createdAt: "desc" } }),
-        prisma.game.findMany({
-            where: { published: true, deletedAt: null },
-            include: { category: true },
-            orderBy: { createdAt: "desc" },
-            take: 40,
-        }),
-        prisma.app.findMany({
-            where: { published: true, deletedAt: null },
-            include: { category: true },
-            orderBy: { createdAt: "desc" },
-            take: 40,
-        }),
-        prisma.blog.findMany({
-            where: { isPublished: true },
-            orderBy: { publishedAt: "desc" },
-            take: 8,
-        }),
-    ]);
+    try {
+        const [categories, games, apps, blogPosts] = await Promise.all([
+            prisma.category.findMany({ orderBy: { createdAt: "desc" } }),
+            prisma.game.findMany({
+                where: { published: true, deletedAt: null },
+                include: { category: true },
+                orderBy: { createdAt: "desc" },
+                take: 40,
+            }),
+            prisma.app.findMany({
+                where: { published: true, deletedAt: null },
+                include: { category: true },
+                orderBy: { createdAt: "desc" },
+                take: 40,
+            }),
+            prisma.blog.findMany({
+                where: { isPublished: true },
+                orderBy: { publishedAt: "desc" },
+                take: 8,
+            }),
+        ]);
 
-    const merged = withScore([...games.map(mapCatalogItem), ...apps.map(mapCatalogItem)]).sort(
-        (a, b) => b.popularityScore - a.popularityScore
-    );
+        const merged = withScore([...games.map(mapCatalogItem), ...apps.map(mapCatalogItem)]).sort(
+            (a, b) => b.popularityScore - a.popularityScore
+        );
 
-    return {
-        categories: categories.map((c) => ({ id: c.id, name: c.name, slug: c.slug })),
-        featured: merged.filter((item) => item.isFeatured).slice(0, 6),
-        mostPopular: [...merged].sort((a, b) => b.views - a.views).slice(0, 8),
-        trending: merged.filter((item) => item.isTrending).slice(0, 8),
-        mostDownloaded: [...merged].sort((a, b) => b.downloads - a.downloads).slice(0, 8),
-        mostViewed: [...merged].sort((a, b) => b.views - a.views).slice(0, 8),
-        latestAdded: [...merged].sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt)).slice(0, 8),
-        blogPosts: blogPosts.map((post) => ({
-            id: post.id,
-            title: post.title,
-            slug: post.slug,
-            excerpt: post.excerpt || "",
-            image: post.image || "/placeholder.svg",
-        })),
-    };
+        return {
+            categories: categories.map((c) => ({ id: c.id, name: c.name, slug: c.slug })),
+            featured: merged.filter((item) => item.isFeatured).slice(0, 6),
+            mostPopular: [...merged].sort((a, b) => b.views - a.views).slice(0, 8),
+            trending: merged.filter((item) => item.isTrending).slice(0, 8),
+            mostDownloaded: [...merged].sort((a, b) => b.downloads - a.downloads).slice(0, 8),
+            mostViewed: [...merged].sort((a, b) => b.views - a.views).slice(0, 8),
+            latestAdded: [...merged].sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt)).slice(0, 8),
+            blogPosts: blogPosts.map((post) => ({
+                id: post.id,
+                title: post.title,
+                slug: post.slug,
+                excerpt: post.excerpt || "",
+                image: post.image || "/placeholder.svg",
+            })),
+        };
+    } catch (error) {
+        console.error("getPlatformHomeData failed, returning empty fallback:", error);
+        return {
+            categories: [],
+            featured: [],
+            mostPopular: [],
+            trending: [],
+            mostDownloaded: [],
+            mostViewed: [],
+            latestAdded: [],
+            blogPosts: [],
+        };
+    }
 }
 
 export async function getCatalogData(options: {
@@ -166,49 +180,65 @@ export async function getCatalogData(options: {
                 ? { rating: "desc" as const }
                 : { createdAt: "desc" as const };
 
-    const [categories, total, rows] = await Promise.all([
-        prisma.category.findMany({ orderBy: { createdAt: "desc" } }),
-        options.type === "games"
-            ? prisma.game.count({ where })
-            : prisma.app.count({ where }),
-        options.type === "games"
-            ? prisma.game.findMany({
-                where,
-                include: { category: true },
-                orderBy,
-                skip: (page - 1) * pageSize,
-                take: pageSize,
-            })
-            : prisma.app.findMany({
-                where,
-                include: { category: true },
-                orderBy,
-                skip: (page - 1) * pageSize,
-                take: pageSize,
-            }),
-    ]);
+    try {
+        const [categories, total, rows] = await Promise.all([
+            prisma.category.findMany({ orderBy: { createdAt: "desc" } }),
+            options.type === "games"
+                ? prisma.game.count({ where })
+                : prisma.app.count({ where }),
+            options.type === "games"
+                ? prisma.game.findMany({
+                    where,
+                    include: { category: true },
+                    orderBy,
+                    skip: (page - 1) * pageSize,
+                    take: pageSize,
+                })
+                : prisma.app.findMany({
+                    where,
+                    include: { category: true },
+                    orderBy,
+                    skip: (page - 1) * pageSize,
+                    take: pageSize,
+                }),
+        ]);
 
-    const items = withScore((rows as any[]).map(mapCatalogItem)).sort((a, b) =>
-        sort === "popular" ? b.popularityScore - a.popularityScore : 0
-    );
+        const items = withScore((rows as any[]).map(mapCatalogItem)).sort((a, b) =>
+            sort === "popular" ? b.popularityScore - a.popularityScore : 0
+        );
 
-    return {
-        items,
-        total,
-        page,
-        pageSize,
-        categories: categories.map((c) => ({ id: c.id, name: c.name, slug: c.slug })),
-    };
+        return {
+            items,
+            total,
+            page,
+            pageSize,
+            categories: categories.map((c) => ({ id: c.id, name: c.name, slug: c.slug })),
+        };
+    } catch (error) {
+        console.error("getCatalogData failed, returning empty fallback:", error);
+        return {
+            items: [],
+            total: 0,
+            page,
+            pageSize,
+            categories: [],
+        };
+    }
 }
 
 export async function getAdsByPlacement(placement: string) {
-    return prisma.ad.findMany({
-        where: {
-            position: placement as any,
-            isActive: true,
-        },
-        orderBy: { createdAt: "desc" },
-    });
+    try {
+        return await prisma.ad.findMany({
+            where: {
+                position: placement as any,
+                isActive: true,
+            },
+            orderBy: { createdAt: "desc" },
+        });
+    } catch (error) {
+        console.error("getAdsByPlacement failed, returning empty fallback:", error);
+        return [];
+    }
 }
 
 export function shouldRenderInlineAd(index: number, frequency: number) {
@@ -221,51 +251,61 @@ export function isImageAd(ad: { type: string }) {
 }
 
 export async function getGameBySlug(slug: string) {
-    const game = await prisma.game.findFirst({
-        where: { slug, published: true, deletedAt: null },
-        include: { category: true },
-    });
-    if (!game) return null;
-    const base = withScore([mapCatalogItem(game)])[0];
-    return {
-        ...base,
-        updatedAt: game.updatedAt,
-        version: game.version,
-        updateInfo: game.updateInfo,
-        operatingSystem: game.operatingSystem,
-        developer: game.developer,
-        size: game.size,
-        storeType: game.storeType,
-        playStoreUrl: game.playStoreUrl,
-        appStoreUrl: game.appStoreUrl,
-        downloadUrl: toDownloadLinks(game.downloadUrl),
-        securityCheck: game.securityCheck,
-        seoTitle: game.seoTitle,
-        seoDescription: game.seoDescription,
-    } as ContentDetailsItem;
+    try {
+        const game = await prisma.game.findFirst({
+            where: { slug, published: true, deletedAt: null },
+            include: { category: true },
+        });
+        if (!game) return null;
+        const base = withScore([mapCatalogItem(game)])[0];
+        return {
+            ...base,
+            updatedAt: game.updatedAt,
+            version: game.version,
+            updateInfo: game.updateInfo,
+            operatingSystem: game.operatingSystem,
+            developer: game.developer,
+            size: game.size,
+            storeType: game.storeType,
+            playStoreUrl: game.playStoreUrl,
+            appStoreUrl: game.appStoreUrl,
+            downloadUrl: toDownloadLinks(game.downloadUrl),
+            securityCheck: game.securityCheck,
+            seoTitle: game.seoTitle,
+            seoDescription: game.seoDescription,
+        } as ContentDetailsItem;
+    } catch (error) {
+        console.error("getGameBySlug failed:", error);
+        return null;
+    }
 }
 
 export async function getAppBySlug(slug: string) {
-    const app = await prisma.app.findFirst({
-        where: { slug, published: true, deletedAt: null },
-        include: { category: true },
-    });
-    if (!app) return null;
-    const base = withScore([mapCatalogItem(app)])[0];
-    return {
-        ...base,
-        updatedAt: app.updatedAt,
-        version: app.version,
-        updateInfo: app.updateInfo,
-        operatingSystem: app.operatingSystem,
-        developer: app.developer,
-        size: app.size,
-        storeType: app.storeType,
-        playStoreUrl: app.playStoreUrl,
-        appStoreUrl: app.appStoreUrl,
-        downloadUrl: toDownloadLinks(app.downloadUrl),
-        securityCheck: app.securityCheck,
-        seoTitle: app.seoTitle,
-        seoDescription: app.seoDescription,
-    } as ContentDetailsItem;
+    try {
+        const app = await prisma.app.findFirst({
+            where: { slug, published: true, deletedAt: null },
+            include: { category: true },
+        });
+        if (!app) return null;
+        const base = withScore([mapCatalogItem(app)])[0];
+        return {
+            ...base,
+            updatedAt: app.updatedAt,
+            version: app.version,
+            updateInfo: app.updateInfo,
+            operatingSystem: app.operatingSystem,
+            developer: app.developer,
+            size: app.size,
+            storeType: app.storeType,
+            playStoreUrl: app.playStoreUrl,
+            appStoreUrl: app.appStoreUrl,
+            downloadUrl: toDownloadLinks(app.downloadUrl),
+            securityCheck: app.securityCheck,
+            seoTitle: app.seoTitle,
+            seoDescription: app.seoDescription,
+        } as ContentDetailsItem;
+    } catch (error) {
+        console.error("getAppBySlug failed:", error);
+        return null;
+    }
 }
