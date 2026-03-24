@@ -43,6 +43,36 @@ export function CatalogUI({
           <div className="absolute -right-20 -bottom-20 h-96 w-96 rounded-full bg-white/5 blur-3xl opacity-30" />
           <div className="absolute left-10 top-10 h-24 w-24 rounded-full bg-[#FF8A00]/10 blur-2xl opacity-40" />
         </div>
+        
+                    {/* Categories Card */}
+            <div className="rounded-[3rem] border border-orange-50 bg-white p-8 shadow-sm mb-16">
+              <h3 className="text-2xl font-black text-slate-800 border-b-4 border-[#FF8A00] w-fit pb-2 mb-8">التصنيفات</h3>
+              <div className="flex flex-wrap gap-2">
+                <Link 
+                  href={`/${type}`}
+                  className={`rounded-xl px-5 py-2.5 text-sm font-black transition ${
+                    !currentCategory 
+                      ? "bg-[#FF8A00] text-white shadow-lg shadow-orange-500/20" 
+                      : "bg-slate-50 text-slate-500 border border-transparent hover:border-orange-100 hover:text-[#FF8A00]"
+                  }`}
+                >
+                  الكل
+                </Link>
+                {categories.map((c) => (
+                  <Link
+                    key={c.id}
+                    href={`/${type}?category=${c.slug}`}
+                    className={`rounded-xl px-5 py-2.5 text-sm font-black transition ${
+                      currentCategory === c.slug
+                        ? "bg-[#FF8A00] text-white shadow-lg shadow-orange-500/20"
+                        : "bg-slate-50 text-slate-500 border border-transparent hover:border-orange-100 hover:text-[#FF8A00]"
+                    }`}
+                  >
+                    {c.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
 
         <div className="grid gap-12 lg:grid-cols-[1.5fr,1fr]">
           {/* Main Content (Cards) */}
@@ -101,36 +131,6 @@ export function CatalogUI({
                   placeholder={`ابحث عن ${type === "games" ? "لعبة" : "تطبيق"}...`} 
                   className="flex-1 bg-transparent px-2 py-2 font-bold text-slate-800 focus:outline-none placeholder:text-slate-400"
                 />
-              </div>
-            </div>
-
-            {/* Categories Card */}
-            <div className="rounded-[3rem] border border-orange-50 bg-white p-8 shadow-sm">
-              <h3 className="text-2xl font-black text-slate-800 border-b-4 border-[#FF8A00] w-fit pb-2 mb-8">التصنيفات</h3>
-              <div className="flex flex-wrap gap-2">
-                <Link 
-                  href={`/${type}`}
-                  className={`rounded-xl px-5 py-2.5 text-sm font-black transition ${
-                    !currentCategory 
-                      ? "bg-[#FF8A00] text-white shadow-lg shadow-orange-500/20" 
-                      : "bg-slate-50 text-slate-500 border border-transparent hover:border-orange-100 hover:text-[#FF8A00]"
-                  }`}
-                >
-                  الكل
-                </Link>
-                {categories.map((c) => (
-                  <Link
-                    key={c.id}
-                    href={`/${type}?category=${c.slug}`}
-                    className={`rounded-xl px-5 py-2.5 text-sm font-black transition ${
-                      currentCategory === c.slug
-                        ? "bg-[#FF8A00] text-white shadow-lg shadow-orange-500/20"
-                        : "bg-slate-50 text-slate-500 border border-transparent hover:border-orange-100 hover:text-[#FF8A00]"
-                    }`}
-                  >
-                    {c.name}
-                  </Link>
-                ))}
               </div>
             </div>
 

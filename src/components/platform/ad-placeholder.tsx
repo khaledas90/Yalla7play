@@ -2,7 +2,7 @@ import React from "react";
 
 interface AdPlaceholderProps {
   className?: string;
-  size?: "leaderboard" | "rectangle" | "square" | "mobile-banner";
+  size?: "leaderboard" | "rectangle" | "square" | "mobile-banner" | "skyscraper" | "vertical";
   label?: string;
 }
 
@@ -16,6 +16,8 @@ export function AdPlaceholder({
     rectangle: "w-full max-w-[336px] h-72",
     square: "w-72 h-72",
     "mobile-banner": "w-full h-20",
+    skyscraper: "w-full h-full min-h-[600px]",
+    vertical: "w-full h-full",
   };
 
   return (
